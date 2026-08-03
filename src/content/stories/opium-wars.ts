@@ -1,0 +1,436 @@
+import type { Story } from '../types'
+
+export const opiumWars: Story = {
+  slug: 'opium-wars',
+  title: 'The Opium Wars',
+  subtitle: 'How a national addiction to tea turned into a war over a drug — and made Hong Kong.',
+  hook: 'Britain went to war with China because Britain could not stop drinking tea.',
+  era: 'industrial',
+  years: [1839, 1860],
+  regions: ['China', 'Britain', 'India'],
+  nodes: ['opium-wars', 'opium-trade', 'tea-trade', 'east-india-company', 'hong-kong'],
+  tags: ['trade', 'empire', 'drugs', 'economics', 'china', 'britain'],
+  readingMinutes: 11,
+  reviewed: '2026-08-03',
+
+  beats: {
+    worldBefore: {
+      heading: 'The world before',
+      paragraphs: [
+        'In 1750, China was not a country that needed anything from Europe.',
+        'It made the finest silk in the world. It made porcelain so good that Europeans spent two hundred years failing to copy it. And it grew tea — which Britain had recently discovered it could not live without.',
+        'So the trade worked in one direction. British ships arrived at the port of Canton, in the south, and offered wool, clocks, and iron. Chinese merchants looked at the wool and politely declined. It rains differently in Guangdong. There was almost nothing Britain made that China wanted.',
+        'There was one thing China would take: silver.',
+        'And so, for over a century, that is what happened. British ships sailed east loaded with silver and sailed home loaded with tea. Every year, more silver left. Every year, more tea arrived. In Britain, tea stopped being a luxury and became breakfast.',
+      ],
+      aside: {
+        kind: 'analogy',
+        label: 'Picture it like this',
+        body: 'Imagine a shop on your street that sells the one thing your whole family drinks every morning — and refuses to buy anything you make. Every month you hand over money and get nothing back but the drink. That is fine, until you notice the money running out.',
+      },
+      sourceIds: ['platt-2018', 'lovell-2011'],
+    },
+
+    problem: {
+      heading: 'The problem',
+      paragraphs: [
+        'Britain in the eighteenth century believed something that sounds strange now: that a country grew rich by holding on to silver and gold, and grew poor by letting it leave. Trade was not an exchange. It was a contest, and Britain was losing it every single year to a country it had never fought.',
+        'This was not only a theory in a book. The tax on tea was one of the British government’s most dependable sources of money. Warships were paid for with it. A trade that emptied the treasury to fund the treasury was not a stable arrangement.',
+        'Meanwhile the trade itself ran under Chinese rules, and the rules were strict. Foreigners could trade at one port only — Canton — and only through a licensed group of Chinese merchant houses. They could not learn Chinese from an official teacher. They could not bring their wives. They could not stay through the winter. They could not speak to the government directly, only petition it.',
+        'To British merchants this felt like an insult. To the Qing it was simply administration: a large empire managing a small, distant trade at its edge, the way it managed everything else.',
+        'What Britain needed was something — anything — that Chinese buyers would want as badly as Britain wanted tea.',
+        'The East India Company already grew it.',
+      ],
+      aside: {
+        kind: 'caution',
+        label: 'Not "closed to the world"',
+        body: 'The Canton System is often described as China shutting itself off. It was not. It was a regulated, functioning, extremely profitable trade — with terms set by the host country, as trade terms usually are. It looked like isolation mostly to the people who were not allowed to set them.',
+      },
+      sourceIds: ['platt-2018', 'lovell-2011'],
+    },
+
+    story: {
+      heading: 'The story',
+      paragraphs: [
+        'Opium was not new in China. It had been used as medicine for centuries, and the Chinese state had banned smoking it as early as 1729 — long before Britain had anything to do with it.',
+        'What was new was the scale.',
+        'The East India Company held a monopoly on opium grown in Bengal and Bihar, in India. Company-licensed farmers grew the poppies. Company factories processed the paste into chests. And then the Company did something careful: it did not smuggle the opium into China itself. It auctioned the chests in Calcutta to private traders, and let them do it.',
+        'That gap mattered. It meant the Company could keep its legal trade in Canton while its product arrived in Chinese creeks aboard someone else’s ship. Everyone knew. The paperwork was clean.',
+        'The numbers stopped being small. Around 1800, a few thousand chests a year reached China. By 1838 it was roughly forty thousand — well over two thousand tonnes of processed opium in a single year, moving into a country where it was illegal.',
+        'And the silver turned around. It began flowing *out* of China to pay for it.',
+        'In March 1839 the Daoguang Emperor sent an official named Lin Zexu to Canton with orders to end the trade for good. Lin was not a firebrand. He was the most respected administrator of his generation, chosen precisely because he could not be bought.',
+        'He surrounded the foreign warehouses, cut off supplies, and refused to move until the opium was surrendered. He got it: 20,283 chests. Then he did something no one expected. Rather than burn it — burning leaves residue worth stealing — he had trenches dug at Humen, mixed the opium with salt and lime, let it dissolve for weeks, and flushed roughly a thousand tonnes of it into the sea. He wrote an apology to the sea gods for the pollution.',
+        'He also wrote to Queen Victoria. The letter asked a simple question: opium is banned in your country too, so how can you allow your subjects to bring to mine what you will not allow at home? There is no evidence it ever reached her.',
+        'Here the story turns on one man’s decision. Charles Elliot, the British Superintendent of Trade, had ordered the merchants to hand their opium over — but he promised them that the British government would pay for it. In an afternoon, a private loss of smugglers became a public debt of the Crown. London now had a bill it had never agreed to, owed to angry constituents with excellent lobbyists.',
+        'In April 1840 Parliament argued about it for three days. A young William Gladstone stood up and said he did not know of a war more unjust in its origin, or more calculated to cover his country with permanent disgrace. The motion censuring the government was defeated by nine votes: 271 to 262.',
+        'The fleet was already sailing.',
+        'What followed was less a war than a demonstration. China had a large army, but it was spread across an enormous land border and designed for a different kind of threat. Britain arrived with something China had no answer to at sea: the *Nemesis*, an iron-hulled steamer that drew so little water it could sail up rivers, and did not care which way the wind blew.',
+        'The British did not march on Beijing. They did something quieter and far more effective — they sailed up the Yangtze in 1842 and cut the Grand Canal, the artery that carried grain to the capital. Beijing could be starved without a shot fired at it.',
+        'The Qing sued for peace. On 29 August 1842, aboard a British warship anchored at Nanking, officials signed a treaty that opened five ports, abolished the merchant monopoly, fixed tariffs Britain approved of, paid an indemnity of twenty-one million silver dollars, and handed Britain a rocky, thinly-populated island with a superb deep-water harbour: Hong Kong.',
+        'The treaty does not mention opium once.',
+        'Fourteen years later it happened again. British authorities in Canton used the boarding of a Chinese-owned ship registered in Hong Kong — the *Arrow* — as grounds for a second war, this time with France alongside. It ended in 1860 with foreign troops in Beijing, the Kowloon peninsula added to Hong Kong, an emperor in flight, and the Old Summer Palace looted and burned on the orders of Lord Elgin.',
+        'This time the treaties legalised the opium trade outright.',
+      ],
+      aside: {
+        kind: 'voice',
+        label: 'Lin Zexu to Queen Victoria, 1839',
+        body: '“Let us ask, where is your conscience? I have heard that the smoking of opium is very strictly forbidden by your country… Since it is not permitted to do harm to your own country, then even less should you let it be passed on to the harm of other countries.”',
+        sourceId: 'lin-1839',
+      },
+      sourceIds: ['lovell-2011', 'platt-2018', 'hansard-1840', 'nanking-1842'],
+    },
+
+    whyItHappened: {
+      heading: 'Why it happened',
+      paragraphs: [
+        'It is tempting to say Britain went to war to sell drugs. That is close, but it misses the machinery — and the machinery is the interesting part.',
+        '**Money had to come back.** Tea was not a fashion; it was a tax base. A trade that only ran outward could not continue forever, and nobody in London could think of a legitimate product that would reverse it.',
+        '**Nobody had to feel responsible.** The Company grew the opium and sold it at auction, then washed its hands. Private traders carried it. Chinese smugglers landed it. Chinese officials were paid to look away. A chain of small, deniable decisions produced an outcome that no single person had to own.',
+        '**A government debt turned a crime into a cause.** Elliot’s promise is the hinge. Before it, Britain was defending smugglers. After it, Britain was defending the Exchequer — and that is an argument a Parliament will vote for.',
+        '**"Free trade" was a genuinely held belief, and a very convenient one.** Many MPs voted believing they were defending open commerce and national dignity against arbitrary treatment. That the commerce in question was contraband narcotics was, for them, a detail. Motives can be sincere and self-serving at once.',
+        '**And the technology had quietly changed.** In 1793 Britain could not have won this war. By 1839, steam power, iron hulls and industrial gunnery meant a small force could impose terms on the largest empire on earth. The Industrial Revolution did not just build factories. It changed what was worth trying.',
+      ],
+      sourceIds: ['platt-2018', 'lovell-2011', 'hansard-1840'],
+    },
+
+    consequences: {
+      heading: 'What changed',
+      paragraphs: [
+        'The immediate results were written into a treaty. The lasting ones were written into how a fifth of humanity understands its own past.',
+      ],
+      shortTerm: [
+        'Five Chinese ports opened to foreign trade and residence, and Hong Kong Island passed to Britain — later joined by Kowloon in 1860.',
+        'An indemnity of twenty-one million silver dollars, on top of the destroyed cargo, was charged to a treasury already under strain.',
+        'Foreigners in China became answerable to their own consuls rather than Chinese courts — extraterritoriality, granted in the 1843 supplementary treaty.',
+        'Lin Zexu, who had done exactly what he was ordered to do, was blamed for the defeat and exiled to the far north-west.',
+      ],
+      longTerm: [
+        'The Treaty of Nanking became a template. Over the next century France, the United States, Russia, Germany and Japan negotiated their own versions — the "unequal treaties".',
+        'Opium was legalised after 1860, and imports kept rising until Chinese domestic cultivation overtook them entirely. By the late nineteenth century the biggest supplier of opium to China was China.',
+        'The Qing state spent its remaining seventy years paying indemnities and fighting rebellions with a treasury that could not recover, and fell in 1912.',
+        'Hong Kong, taken as a harbour and dismissed in London as a barren rock, became one of the wealthiest cities on earth — and was handed back in 1997.',
+      ],
+      unexpected: [
+        'The war produced modern China’s founding story. The period from 1839 is taught there as the "Century of Humiliation", and it remains a live element of Chinese foreign policy — a country that was carved up once tends to notice when it is being asked to open up again.',
+        'Britain’s own anti-opium movement grew out of the scandal, and Parliament eventually turned against the trade it had fought for — the India-China opium traffic was wound down in the early twentieth century.',
+        'The idea that a foreign power might simply set another country’s tariffs shaped how China built its state afterwards, and why control of its own economy became non-negotiable.',
+        'Tea itself escaped. Britain, tired of depending on China, had plant hunters smuggle tea out and establish it in Assam and Ceylon — which is why "British tea" today mostly comes from India and Sri Lanka.',
+      ],
+      sourceIds: ['lovell-2011', 'nanking-1842', 'platt-2018'],
+    },
+
+    whyItMatters: {
+      heading: 'Why it still matters',
+      paragraphs: [
+        'Every time China refuses to let a foreign company operate on foreign terms, or reacts sharply to lectures about opening its markets, it is answering a question that was first put to it by a fleet in 1840.',
+        'That is not a metaphor. Chinese schoolchildren learn the modern era as beginning here. The handover of Hong Kong in 1997 was presented at home not as a transfer of administration but as the closing of a wound opened in 1842. The word used is not "acquisition". It is "return".',
+        'And there is a second, less comfortable lesson, which has nothing to do with China. This was a drug empire built entirely out of respectable institutions: a chartered company, licensed farmers, an auction house, insurance, a navy, and a parliamentary vote. No one in the chain thought of themselves as a criminal. Every step was somebody’s ordinary job.',
+        'That is usually how large harms are actually organised. Not by villains — by paperwork.',
+      ],
+      sourceIds: ['lovell-2011'],
+    },
+  },
+
+  timeline: [
+    { year: 1637, title: 'The first British ships reach Canton', detail: 'They arrive with almost nothing China wants to buy, and the pattern is set.' },
+    { year: 1729, title: 'China bans opium smoking', detail: 'The Yongzheng Emperor prohibits the sale and smoking of opium — a century before the trade peaks.', pivotal: true },
+    { year: 1757, title: 'The Canton System is formalised', detail: 'Foreign trade is confined to one port and routed through licensed Chinese merchant houses.' },
+    { year: 1773, title: 'The East India Company takes the Bengal opium monopoly', detail: 'The Company controls production, then auctions the chests to private traders who carry them to China.', pivotal: true },
+    { year: 1793, title: 'The Macartney embassy fails', detail: 'Britain asks for open trade and a resident ambassador. The Qianlong Emperor declines, noting China lacks for nothing.' },
+    { year: 1834, title: 'The Company’s China monopoly ends', detail: 'Trade opens to all British merchants, and the volume of smuggled opium rises sharply.' },
+    { year: 1839, date: '1839-03', title: 'Lin Zexu arrives in Canton', detail: 'Sent by the Daoguang Emperor with orders to end the opium trade permanently.', pivotal: true },
+    { year: 1839, date: '1839-06-03', title: 'The opium is destroyed at Humen', detail: '20,283 confiscated chests are dissolved in salt and lime and flushed to the sea over twenty-three days.', pivotal: true },
+    { year: 1839, title: 'Elliot promises compensation', detail: 'The British Superintendent of Trade guarantees the merchants government payment, converting a private loss into a Crown debt.', pivotal: true },
+    { year: 1840, date: '1840-04', title: 'Parliament votes', detail: 'After three days of debate, and Gladstone’s speech against, the censure motion fails 271 to 262. The fleet is already at sea.' },
+    { year: 1841, title: 'The Nemesis changes the war', detail: 'An iron-hulled shallow-draft steamer lets Britain fight up rivers, independent of wind and tide.' },
+    { year: 1842, date: '1842-07', title: 'The Grand Canal is cut', detail: 'British forces sever the grain route to Beijing. The capital can be starved without being attacked.', pivotal: true },
+    { year: 1842, date: '1842-08-29', title: 'The Treaty of Nanking', detail: 'Five ports opened, an indemnity of twenty-one million silver dollars, Hong Kong ceded. Opium is not mentioned.', pivotal: true },
+    { year: 1843, title: 'Extraterritoriality', detail: 'The supplementary Treaty of the Bogue exempts British subjects from Chinese law and adds most-favoured-nation terms.' },
+    { year: 1856, title: 'The Arrow incident', detail: 'The boarding of a Chinese-owned, Hong Kong-registered ship becomes the pretext for a second war, with France joining.' },
+    { year: 1860, date: '1860-10', title: 'Beijing occupied, the Summer Palace burned', detail: 'The Convention of Peking legalises opium, cedes Kowloon, and opens more ports. The Yuanmingyuan is destroyed on Elgin’s order.', pivotal: true },
+    { year: 1997, title: 'Hong Kong returns to China', detail: 'Presented in Beijing as the closing of the period that began in 1839.' },
+  ],
+
+  causeEffect: [
+    { cause: 'Britain develops a national taste for tea', effect: 'Silver drains east year after year', because: 'China would accept payment in silver and had little interest in British manufactures.' },
+    { cause: 'A permanent trade deficit', effect: 'The East India Company builds an opium industry in India', because: 'It was the one product Britain controlled that Chinese buyers would pay for in quantity.' },
+    { cause: 'Opium arrives in volume', effect: 'The silver flow reverses and China moves to enforce its ban', because: 'Imports were now large enough to disturb the currency and alarm the state.' },
+    { cause: 'Lin Zexu destroys the confiscated opium', effect: 'Elliot guarantees the merchants government compensation', because: 'Without a guarantee the merchants would not surrender the cargo he had promised to hand over.' },
+    { cause: 'A private loss becomes a Crown debt', effect: 'Parliament votes for war by nine votes', because: 'Defending the Exchequer and national dignity is a case an MP can make; defending smugglers is not.' },
+    { cause: 'Britain wins at sea and cuts the Grand Canal', effect: 'The Qing accept treaty terms in six weeks', because: 'Beijing’s grain supply, not its army, was the vulnerable point.' },
+    { cause: 'The Treaty of Nanking sets a precedent', effect: 'A century of unequal treaties follows', because: 'Every other power now had a template and a most-favoured-nation clause to copy it with.' },
+  ],
+
+  myths: [
+    {
+      myth: 'Britain introduced opium to China.',
+      reality: 'Opium had been in China for centuries as a medicine, and smoking it was already banned in 1729. What Britain changed was the volume — from a few thousand chests a year around 1800 to roughly forty thousand by 1838.',
+      whyItPersists: 'It makes a cleaner story with one villain, and the scale of the increase really was Britain’s doing.',
+      sourceIds: ['dikotter-2004', 'lovell-2011'],
+    },
+    {
+      myth: 'The wars were formally fought over opium.',
+      reality: 'Britain argued the case as one of trade rights, diplomatic equality and compensation for seized property. The Treaty of Nanking does not mention opium at all — it was only legalised after the second war.',
+      whyItPersists: 'The name "Opium War" was applied later, and it is a better description of the cause than of the stated casus belli.',
+      sourceIds: ['nanking-1842', 'hansard-1840'],
+    },
+    {
+      myth: 'Queen Victoria read Lin Zexu’s letter and ignored it.',
+      reality: 'There is no evidence the letter reached her. It was published in Canton and later printed in The Times, which is how most people have ever read it.',
+      whyItPersists: 'The letter is so well argued that the image of it being received and dismissed is irresistible.',
+      sourceIds: ['lin-1839'],
+    },
+    {
+      myth: 'China was a closed, backward empire that refused to modernise.',
+      reality: 'The Qing ran a large, sophisticated regulated trade and did attempt reform. The gap in 1839 was narrow and specific — steam-powered warships and industrial artillery — not general.',
+      whyItPersists: 'It flatters the victors, and it was the story told at the time to justify the war.',
+      sourceIds: ['platt-2018'],
+    },
+  ],
+
+  disagreements: [
+    {
+      question: 'Did opium imports actually cause China’s silver crisis?',
+      positions: [
+        { view: 'Yes — opium payments reversed the flow of silver and destabilised the currency.', heldBy: 'The traditional account, in both Chinese and Western textbooks', sourceId: 'lovell-2011' },
+        { view: 'Only partly — global silver supply collapsed in the same decades as Latin American independence disrupted mining, and China was caught in a worldwide shortage.', heldBy: 'Lin Man-houng and subsequent economic historians', sourceId: 'linmh-2006' },
+      ],
+      atlasPosition: 'The atlas states that silver left China and that opium was a major reason. It does not state that opium was the only reason, because the evidence does not support that.',
+    },
+    {
+      question: 'How much damage did opium actually do to Chinese society?',
+      positions: [
+        { view: 'Catastrophic — mass addiction hollowed out communities and the state’s capacity to function.', heldBy: 'Qing officials at the time, and most nationalist historiography since', sourceId: 'lovell-2011' },
+        { view: 'Overstated — most consumption was moderate, and the "opium plague" was partly a moral panic amplified by missionaries and later by reformers.', heldBy: 'Frank Dikötter and co-authors', sourceId: 'dikotter-2004' },
+      ],
+      atlasPosition: 'This one is genuinely open. The atlas reports the trade’s scale, which is well documented, and flags the harm as contested rather than picking a number.',
+    },
+  ],
+
+  didYouKnow: [
+    'Lin Zexu wrote a formal apology to the sea gods before flushing a thousand tonnes of dissolved opium into the ocean.',
+    'The Treaty of Nanking was signed on the deck of a British warship, HMS Cornwallis, moored in the Yangtze.',
+    'Britain’s answer to depending on Chinese tea was to smuggle the plant out and grow it in India — which is why "English breakfast" tea is mostly Indian.',
+    'Hong Kong was considered such a poor prize in London that the Foreign Secretary called it a barren island with hardly a house upon it.',
+    'By the end of the nineteenth century, China’s largest supplier of opium was no longer India. It was China.',
+    'Gladstone, who denounced the war in 1840 as a permanent disgrace, later served four separate terms as Prime Minister of the empire that fought it.',
+  ],
+
+  lenses: [
+    {
+      id: 'one-minute',
+      label: 'In one minute',
+      kind: 'length',
+      paragraphs: [
+        'Britain loved tea. China sold it, but wanted nothing Britain made in return — only silver. So silver drained out of Britain year after year.',
+        'The East India Company found a product China would buy: opium, grown in India. It was illegal in China, so the Company auctioned it to private smugglers and kept its own hands clean. By 1838 around forty thousand chests a year were arriving.',
+        'In 1839 the official Lin Zexu confiscated and destroyed over a thousand tonnes of it. The British trade superintendent had promised the merchants that London would pay for whatever they surrendered — turning a smugglers’ loss into a government debt. Parliament voted for war by nine votes.',
+        'Steam-powered gunboats won it quickly. The 1842 Treaty of Nanking opened five ports, imposed a huge indemnity and handed Britain Hong Kong. A second war in 1856–60 legalised opium outright. China calls the century that followed the Century of Humiliation, and still teaches its modern history as beginning here.',
+      ],
+    },
+    {
+      id: 'age-16',
+      label: 'Explain like I’m 16',
+      kind: 'age',
+      paragraphs: [
+        'The core problem was a balance-of-payments crisis inside a mercantilist worldview. Britain ran a structural deficit with China because Chinese demand for British manufactures was near zero while British demand for tea was inelastic and rising — and tea duty was a major revenue line for the state.',
+        'Opium solved the arithmetic. It was the one commodity with enough Chinese demand to reverse the flow, and Britain controlled its supply through the Bengal monopoly. Crucially, the East India Company structured the trade so that it never smuggled anything: it produced and auctioned, and independent "country traders" carried the risk.',
+        'The trigger was institutional rather than moral. When Charles Elliot indemnified the merchants for the opium Lin Zexu demanded, he converted contraband held by private citizens into a liability of the British state — which is what made war politically arguable in Parliament, where the vote still only passed by nine.',
+        'The outcome was decided by asymmetric military technology and a correct choice of target: rather than assault the capital, British forces cut the Grand Canal and threatened Beijing’s grain supply. The resulting treaty system — indemnities, treaty ports, fixed tariffs, extraterritoriality — became the model for a century of foreign concessions.',
+      ],
+    },
+    {
+      id: 'scholar',
+      label: 'University level',
+      kind: 'age',
+      paragraphs: [
+        'The historiography has moved decisively away from a monocausal opium narrative. Lin Man-houng’s work on currency situates the Daoguang-era silver crisis within a global contraction in specie supply following the disruption of Spanish American mining, making the opium-drain thesis a contributing rather than sufficient explanation.',
+        'Platt reframes the pre-war decades as a period of substantial Anglo-Chinese accommodation, in which the Canton System functioned tolerably for both sides, and locates the rupture in the post-1834 dissolution of Company monopoly and the resulting entry of unregulated private traders with direct access to Parliament.',
+        'Lovell’s central contribution is to the afterlife rather than the event: the "Opium War" as a coherent national trauma is substantially a twentieth-century construction, assembled by Nationalist and later Communist historiography, which found in 1839–42 a usable origin point for a narrative of victimhood and recovery.',
+        'The Dikötter revisionist position on consumption remains contested and is treated here as such: it usefully destabilises missionary-derived addiction statistics without displacing the documented scale of import volumes.',
+      ],
+    },
+    {
+      id: 'follow-the-money',
+      label: 'Follow the money',
+      kind: 'angle',
+      paragraphs: [
+        'Three balance sheets explain this war better than any battle does.',
+        '**The British Treasury.** Tea duty was reliable revenue. A trade that pulled silver out of the country to generate that revenue was self-undermining, and mercantilist theory made the outflow look like a national injury rather than a preference.',
+        '**The Government of India.** Opium was for decades one of the largest single revenue sources for British India. The trade was not a side business by the 1830s — an Indian administration was partly funded by Chinese consumption, which meant ending it had a cost that officials in Calcutta could calculate precisely.',
+        '**The merchants’ ledgers.** Firms like Jardine, Matheson & Co. carried the cargo and the risk. When Elliot guaranteed their losses, they became creditors of the British state with a direct interest in a war that would recover the money — and the lobbying power to argue for it.',
+      ],
+    },
+    {
+      id: 'technology',
+      label: 'The technology angle',
+      kind: 'angle',
+      paragraphs: [
+        'This war was decided by draught — how deep a ship sits in the water.',
+        'China’s defences assumed that deep-hulled sailing warships could be stopped at forts guarding river mouths, and that inland waterways were effectively unreachable. Against wooden sail that was true.',
+        'The *Nemesis* broke the assumption. Built of iron, driven by a steam paddle engine, and drawing around five feet of water, she could move upriver against wind and current, stand off in shallows where forts could not reach her, and carry heavier guns than her size suggested.',
+        'The lesson generalises. The Industrial Revolution’s decisive military effect was not better weapons in a straight fight — it was the ability to project a small force into places that had previously been safe by geography.',
+      ],
+    },
+    {
+      id: 'from-china',
+      label: 'From the Chinese side',
+      kind: 'contrast',
+      paragraphs: [
+        'Seen from Beijing, this is not a story about trade policy. It is a story about a functioning legal system being told that it does not apply to foreigners.',
+        'The Qing had banned a narcotic, as states do. They appointed an incorruptible official to enforce the ban, which is what a working bureaucracy looks like. He enforced it against traffickers, seized contraband, and destroyed it — and the traffickers’ government sent a fleet.',
+        'The specific humiliation of the treaties was not the money. It was extraterritoriality: the principle that a foreigner committing a crime in China would answer to his own consul. A state that cannot apply its law inside its own borders is a state only partly.',
+        'That is the thread running to the present. When modern China insists on sovereignty in terms that sound disproportionate to outsiders, the proportion was set here.',
+      ],
+    },
+  ],
+
+  beforeAfter: {
+    label: 'China’s terms of trade, before and after',
+    before: {
+      title: 'Before 1839',
+      points: [
+        'One port open to European trade, at Canton',
+        'Chinese merchant houses licensed by the state as intermediaries',
+        'Tariffs set by China',
+        'Foreigners subject to Chinese law',
+        'Opium illegal and formally suppressed',
+      ],
+    },
+    after: {
+      title: 'After 1860',
+      points: [
+        'Dozens of treaty ports, plus foreign legations in Beijing',
+        'Merchant monopoly abolished; foreigners trade directly',
+        'Tariffs fixed by treaty at rates Britain approved',
+        'Foreigners answerable to their own consuls, not Chinese courts',
+        'Opium a legal import',
+      ],
+    },
+  },
+
+  whatIf: [
+    {
+      question: 'What if Charles Elliot had never promised compensation?',
+      reasoning: 'The confiscated opium would have stayed a private loss to a few dozen trading firms. They would have lobbied hard, but Parliament had just spent three days proving how uncomfortable it was voting to protect smugglers — the censure motion failed by nine votes with a Crown debt on the table.',
+      constraint: 'The underlying pressures do not disappear. The trade deficit, the end of the Company monopoly, and a growing body of merchants with direct parliamentary access all point at a confrontation. Elliot changed the timing and the pretext; he probably did not create the collision.',
+    },
+    {
+      question: 'What if China had won the first war?',
+      reasoning: 'A Qing victory in 1842 would most plausibly have preserved the Canton System for another generation and delayed the treaty-port template that France, the United States and Russia later copied.',
+      constraint: 'It is hard to see how it could have been won at sea in 1842, and the industrial gap was widening rather than closing. A delay is easier to imagine than a reversal.',
+    },
+  ],
+
+  quiz: [
+    {
+      question: 'Why was silver leaving Britain for China in the first place?',
+      options: [
+        'China demanded tribute from European traders',
+        'Britain wanted tea, and China wanted almost nothing Britain made',
+        'Britain was repaying a loan to the Qing government',
+        'Silver was worth more in China than in Europe',
+      ],
+      answerIndex: 1,
+      explains: 'Trade only ran one way. British ships arrived with goods China declined and left with tea, so the balance was settled in silver, year after year.',
+    },
+    {
+      question: 'How did the East India Company avoid the crime of smuggling opium into China?',
+      options: [
+        'It obtained a Qing licence for medical opium',
+        'It shipped only to Hong Kong, which was British',
+        'It grew and auctioned the opium in India and let private traders carry it',
+        'It bribed the Cohong merchants to register the cargo as tea',
+      ],
+      answerIndex: 2,
+      explains: 'The Company produced the opium and sold it at auction in Calcutta. Independent "country traders" took it from there — which kept the Company’s legal trade at Canton untouched.',
+    },
+    {
+      question: 'What finally forced the Qing to accept peace terms in 1842?',
+      options: [
+        'The capture of Beijing',
+        'The destruction of the Chinese army in a single battle',
+        'A cholera epidemic in the southern provinces',
+        'British forces cutting the Grand Canal, which supplied Beijing with grain',
+      ],
+      answerIndex: 3,
+      explains: 'The capital was never assaulted. Severing the grain route made starving Beijing a credible threat, and the court negotiated within weeks.',
+    },
+    {
+      question: 'What does the Treaty of Nanking say about opium?',
+      options: [
+        'It legalises the trade',
+        'It bans the trade permanently',
+        'Nothing at all',
+        'It sets a tariff on opium imports',
+      ],
+      answerIndex: 2,
+      explains: 'Opium is absent from the treaty. Britain argued the war on trade rights and compensation; the drug was only legalised after the second war, in 1860.',
+    },
+  ],
+
+  sources: [
+    {
+      id: 'lovell-2011',
+      kind: 'book',
+      author: 'Julia Lovell',
+      title: 'The Opium War: Drugs, Dreams and the Making of China',
+      year: 2011,
+      detail: 'Picador. ISBN 978-0-330-45747-7',
+      note: 'The standard modern account, and the best treatment of how the war was later turned into a national origin story.',
+    },
+    {
+      id: 'platt-2018',
+      kind: 'book',
+      author: 'Stephen R. Platt',
+      title: 'Imperial Twilight: The Opium War and the End of China’s Last Golden Age',
+      year: 2018,
+      detail: 'Alfred A. Knopf. ISBN 978-0-307-96173-0',
+      note: 'Strongest on the decades before 1839 and on how workable the Canton System actually was.',
+    },
+    {
+      id: 'linmh-2006',
+      kind: 'book',
+      author: 'Lin Man-houng',
+      title: 'China Upside Down: Currency, Society, and Ideologies, 1808–1856',
+      year: 2006,
+      detail: 'Harvard University Asia Center. ISBN 978-0-674-02268-2',
+      note: 'The economic-history case that the silver crisis was partly a global monetary event, not purely an opium one.',
+    },
+    {
+      id: 'dikotter-2004',
+      kind: 'book',
+      author: 'Frank Dikötter, Lars Laamann and Zhou Xun',
+      title: 'Narcotic Culture: A History of Drugs in China',
+      year: 2004,
+      detail: 'Hurst / University of Chicago Press. ISBN 978-1-85065-725-3',
+      note: 'The revisionist argument on consumption and harm. Cited here as a contested position, not as settled.',
+    },
+    {
+      id: 'lin-1839',
+      kind: 'primary',
+      author: 'Lin Zexu',
+      title: 'Letter to Queen Victoria',
+      year: 1839,
+      note: 'Written in Canton and published there; later printed in The Times. No evidence exists that it reached the Queen.',
+    },
+    {
+      id: 'nanking-1842',
+      kind: 'primary',
+      author: 'Great Britain and the Qing Empire',
+      title: 'Treaty of Nanking',
+      year: 1842,
+      detail: 'Signed 29 August 1842 aboard HMS Cornwallis',
+      note: 'The operative text: five ports, twenty-one million silver dollars, cession of Hong Kong Island. No mention of opium.',
+    },
+    {
+      id: 'hansard-1840',
+      kind: 'primary',
+      author: 'UK Parliament',
+      title: 'House of Commons debate on the China trade, 7–9 April 1840',
+      year: 1840,
+      detail: 'Hansard, 3rd series, vol. 53',
+      note: 'Contains Gladstone’s speech against the war and the division defeating the censure motion, 271 to 262.',
+    },
+  ],
+}
