@@ -111,6 +111,14 @@ Pushing to `main` builds and publishes to GitHub Pages via
 to match the repository name — a mismatch there serves a blank page. For a
 root-served host, build with `BASE=/ npm run build`.
 
+**One-time setup on a new repository:** Settings → Pages → Build and deployment →
+Source → **GitHub Actions**, then re-run the Deploy workflow. Until that is done
+the workflow fails at `configure-pages` with "Get Pages site failed"; the build
+and the content checks before it still run, so a red first deploy on a fresh
+clone means the Pages source, not a broken build. `enablement: true` is set on
+that step and creates the site automatically where the workflow token is allowed
+to — on a fresh personal repository it usually is not.
+
 The AI and semantic search stay dormant until `VITE_ATLAS_API` points at deployed
 Supabase functions. Without it the site is fully usable: written lenses, local
 search, the whole corpus.

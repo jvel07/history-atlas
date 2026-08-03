@@ -37,10 +37,15 @@ jobs:
       # Serving the app as the 404 body makes every path work.
       - run: cp dist/index.html dist/404.html
 
-      # `enablement` turns Pages on via the API using the pages:write permission
-      # above. Without it the first run of this workflow on a fresh repository
-      # fails with "Get Pages site failed", because nobody has visited Settings →
-      # Pages yet to switch the source to GitHub Actions.
+      # On a repository where Pages has never been configured, this step fails
+      # with "Get Pages site failed". `enablement: true` asks the action to
+      # create the site itself, which works only where the workflow token is
+      # allowed to — on a fresh personal repository GITHUB_TOKEN is refused with
+      # "Resource not accessible by integration".
+      #
+      # If that happens, it is a one-time manual step and not a workflow bug:
+      # Settings → Pages → Build and deployment → Source: GitHub Actions. Then
+      # re-run this workflow. Every push after that deploys with no interaction.
       - uses: actions/configure-pages@v5
         with:
           enablement: true
