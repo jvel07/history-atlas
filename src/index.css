@@ -155,6 +155,12 @@
   }
 }
 
+/* The reel is a full-screen experience: while one is open the nav's mobile link
+   row steps aside so the reel starts immediately under the header. */
+body.reel-open [data-nav-mobile] {
+  display: none;
+}
+
 /* Used by the timeline rail and the connection map to hide overflow scrollbars
    without hiding the ability to scroll. */
 .scrollbar-slim {

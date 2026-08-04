@@ -2,10 +2,57 @@
 
 The product is the writing. Everything else exists to serve it.
 
-## The one test
+## Write the reel first
 
-After every paragraph, the reader should want the next one. If a paragraph can be
-deleted without anyone missing it, delete it.
+**The reel is the story.** It is what a reader gets by default: 25–35 cards, one
+idea each, about a minute end to end, flicked through with a thumb. The long
+article is the optional director's cut behind `?full`.
+
+This ordering is not a preference. Write the article first and the reel becomes a
+summary of it — hedged, connective, full of "meanwhile" and "it is worth noting".
+Write the reel first and it comes out as a sequence of things that happen, which
+is what a story is.
+
+`npm run verify` enforces the shape: 12–40 cards, 450 words total, 32 words per
+card maximum, opens on the hook, reaches `story` and `whyItMatters`.
+
+### What a card is
+
+One idea. One breath. If it needs a second clause to land, it is two cards.
+
+```ts
+{ beat: 'story', text: 'One problem. China banned opium in 1729.' },
+{ beat: 'story', text: 'So the Company does not smuggle anything. It grows the opium and auctions the chests in Calcutta.' },
+{ beat: 'story', text: 'Other people smuggle it. The paperwork stays clean.' },
+```
+
+Not:
+
+```ts
+{ beat: 'story', text: 'Although opium had been banned in China since 1729, the East India Company avoided legal exposure by growing it in India and auctioning it in Calcutta to private traders, who then smuggled it.' },
+```
+
+Same facts. The first is three beats a reader falls through; the second is a
+sentence they bounce off.
+
+Rules that follow:
+
+- **Present tense, mostly.** "China sends its most incorruptible official." It
+  puts the reader in the moment instead of the archive.
+- **Short sentences. Full stops over commas.** A comma invites a subordinate
+  clause; a full stop invites a swipe.
+- **Numbers land on their own card.** "Forty thousand chests a year" is a card.
+- **Set `punch: true` on the turns.** They render in the accent, and they should
+  be the lines someone would screenshot. Roughly one in five.
+- **`kicker` carries the date**, so the sentence does not have to.
+- **End on the reach**, not on a summary. The last card should make the reader
+  feel the present tense of it.
+
+### The one test
+
+After every card, the reader should want the next one. After every paragraph in
+the article, the same. If either can be deleted without anyone missing it,
+delete it.
 
 The second test is harder and matters more: **would a historian who studies this
 period find anything to object to?** Not "is it simplified" — simplification is
@@ -47,8 +94,12 @@ Rules that follow from that:
 
 ## The eight beats
 
-Enforced by the type system. `Story['beats']` is an object of named fields, so a
-story missing one will not compile.
+The reel carries the same eight beats as the article — each card is tagged with
+which one it belongs to, and the beat label shows at the bottom of the screen so
+a reader always knows roughly where they are in the arc.
+
+Below is the long-form version. `Story['beats']` is an object of named fields, so
+an article missing one will not compile.
 
 **1. Hook** (`hook`) — one or two sentences, rendered at hero size. The surprising
 thing. If it would not make a stranger stop scrolling, it is not the hook.
@@ -172,10 +223,10 @@ For each node your story touches:
 npm run verify
 ```
 
-That builds and runs the structural checks: unresolved citation ids, nodes that
-do not exist, quizzes with an off-by-one answer, unlabelled edges, quoted asides
-with no source, timelines whose dates disagree with their years, stories with no
-way out.
+That builds and runs the structural checks: reel length and word budget,
+unresolved citation ids, nodes that do not exist, quizzes with an off-by-one
+answer, unlabelled edges, quoted asides with no source, timelines whose dates
+disagree with their years, stories with no way out.
 
 Then set `reviewed` to today's date. It is displayed at the bottom of the story,
 and it is a claim that a person read the whole thing.

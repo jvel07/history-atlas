@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
 import { Link } from '@tanstack/react-router'
 import { motion } from 'motion/react'
-import { ArrowRightIcon, SparklesIcon } from 'lucide-react'
+import { ArrowRightIcon, SparklesIcon, ZapIcon } from 'lucide-react'
+import { reelSeconds } from '@/components/StoryReel'
 import { ATLAS_STATS, CURIOS, STORIES, hubs } from '@/content'
 import { NODE_KIND_LABEL } from '@/content/types'
 import { Badge } from '@/components/ui/badge'
@@ -53,9 +54,8 @@ export function Home() {
           transition={{ duration: 0.5, delay: 0.12 }}
           className="text-ink-soft mt-5 max-w-2xl text-lg leading-relaxed"
         >
-          Why things happened. Who gained, who paid, what it broke, and how it reaches the world you
-          woke up in this morning. Written to be understood by a curious ten-year-old and to survive
-          being checked by a historian.
+          About a minute each. Why it happened, who paid, what it broke — and where to go next.
+          Simple enough for a ten-year-old, sourced well enough for a historian.
         </motion.p>
 
         <motion.div
@@ -66,7 +66,7 @@ export function Home() {
         >
           <Button size="lg" asChild>
             <Link to="/story/$slug" params={{ slug: featured.slug }}>
-              Start with {featured.title}
+              {featured.title} · {reelSeconds(featured)}s
               <ArrowRightIcon />
             </Link>
           </Button>
@@ -108,9 +108,11 @@ export function Home() {
               params={{ slug: story.slug }}
               className="group border-rule bg-paper-raised hover:border-ember/45 flex flex-col rounded-[calc(var(--radius)+2px)] border p-5 transition-colors"
             >
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="outline">{formatSpan(story.years)}</Badge>
-                <Badge variant="outline">{story.readingMinutes} min</Badge>
+                <Badge variant="ember">
+                  <ZapIcon /> {reelSeconds(story)} seconds
+                </Badge>
               </div>
               <h3 className="font-display text-ink group-hover:text-ember mt-3 text-xl leading-snug font-semibold transition-colors">
                 {story.title}

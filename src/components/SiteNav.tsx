@@ -87,7 +87,10 @@ export function SiteNav() {
 
         {/* Mobile links live under the bar rather than behind a menu button:
             four destinations do not justify a drawer. */}
-        <ul className="border-rule scrollbar-slim flex items-center gap-1 overflow-x-auto border-t px-4 py-1.5 sm:hidden">
+        <ul
+          data-nav-mobile
+          className="border-rule scrollbar-slim flex items-center gap-1 overflow-x-auto border-t px-4 py-1.5 sm:hidden"
+        >
           {LINKS.map((link) => (
             <li key={link.to}>
               <Link

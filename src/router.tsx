@@ -70,6 +70,17 @@ const storyRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/story/$slug',
   component: StoryPage,
+  // The reel is the default. `?full` opts into the long article, and being a
+  // real URL means someone can share the long version deliberately.
+  //
+  // Accept every spelling of "yes": the default search parser turns `?full=1`
+  // into the number 1 and bare `?full` into an empty string, so a strict
+  // comparison silently serves the reel to someone who asked for the article.
+  validateSearch: (search: Record<string, unknown>): { full?: boolean } => {
+    const raw = search.full
+    const on = raw === true || raw === 1 || raw === '' || raw === 'true' || raw === '1'
+    return on ? { full: true } : {}
+  },
 })
 
 const exploreRoute = createRoute({

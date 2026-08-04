@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from '@tanstack/react-router'
-import { BookmarkIcon } from 'lucide-react'
+import { BookmarkIcon, ZapIcon } from 'lucide-react'
+import { reelSeconds } from '@/components/StoryReel'
 import { STORIES, unwrittenNodes } from '@/content'
 import { ERA_LABEL } from '@/content/types'
 import { Badge } from '@/components/ui/badge'
@@ -24,8 +25,7 @@ export function Stories() {
     <div className="mx-auto max-w-3xl px-4 pt-10 pb-20 sm:px-6">
       <h1 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">Stories</h1>
       <p className="text-ink-soft mt-3 leading-relaxed">
-        Each one is written to be understood by a curious ten-year-old, and sourced well enough to
-        survive a historian reading it.
+        About a minute each. The long version is one tap away if you want it.
       </p>
 
       <ul className="mt-8 space-y-4">
@@ -37,9 +37,11 @@ export function Stories() {
               className="group border-rule bg-paper-raised hover:border-ember/45 block rounded-[calc(var(--radius)+2px)] border p-5 transition-colors"
             >
               <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="ember">{ERA_LABEL[story.era]}</Badge>
+                <Badge variant="ember">
+                  <ZapIcon /> {reelSeconds(story)} seconds
+                </Badge>
+                <Badge variant="outline">{ERA_LABEL[story.era]}</Badge>
                 <Badge variant="outline">{formatSpan(story.years)}</Badge>
-                <Badge variant="outline">{story.readingMinutes} min</Badge>
                 {saved.includes(story.slug) && (
                   <Badge variant="outline">
                     <BookmarkIcon /> Saved
@@ -54,10 +56,10 @@ export function Stories() {
               <p className="text-ink-soft mt-3 text-[0.875rem]">{story.subtitle}</p>
 
               <div className="text-ink-soft mt-4 flex flex-wrap gap-x-4 gap-y-1 text-xs">
+                <span>{story.reel.length} cards</span>
                 <span>{story.sources.length} sources</span>
-                <span>{story.timeline.length} events</span>
                 <span>{story.myths.length} myths corrected</span>
-                <span>{story.lenses.length} lenses</span>
+                <span>{story.readingMinutes} min if you want all of it</span>
               </div>
             </Link>
           </li>

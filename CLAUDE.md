@@ -43,6 +43,21 @@ nvm use && npm install && npm run verify
 | `npm run lint:content` | just the corpus checks |
 | `node scripts/ingest.mjs` | push the corpus into Postgres and embed it |
 
+## The reel is the story
+
+`/story/$slug` renders the **reel** — about thirty cards, one idea each, roughly
+a minute. The long article lives behind `?full`. That is the default and it
+should stay the default: nobody arrives wanting eleven minutes.
+
+- **Write the reel first.** Written second, it comes out as a summary of the
+  article — hedged, connective, full of "meanwhile". Written first, it comes out
+  as a sequence of things that happen.
+- **One card, one idea, one breath.** A card needing a second clause is two cards.
+- The limits in `check-content.mjs` (12–40 cards, 450 words, 32 per card) are the
+  feature. If a reel fails them, cut it; do not raise them.
+- Both formats carry the same eight beats and the same facts. The reel is
+  shorter, never looser.
+
 ## Data rules
 
 These keep the site citable. Breaking one is a real bug, not a style question.
@@ -93,7 +108,12 @@ The generative half is the easiest way to destroy this project, so it is fenced:
 - `src/content/graph.ts` — nodes and **labelled, directed** edges. Every edge note
   is a sentence, because the note is what the reader sees and "related topic" is
   what makes them close the tab.
-- `src/content/stories/*.ts` — the actual writing. This is the product.
+- `src/content/stories/*.ts` — the actual writing. This is the product. `reel` is
+  what almost everyone reads; `beats` is the long version.
+- `src/components/StoryReel.tsx` — the reel player. CSS scroll-snap, not a
+  gesture library, so thumb, wheel, spacebar and arrow keys all work and it
+  degrades to a scrollable list. It pins itself to the viewport rather than
+  subtracting a nav height, because the mobile nav is two rows.
 - `src/content/index.ts` — registry, plus `nextSteps` and `relatedStories`, both
   derived from the graph.
 - `src/lib/search.ts` — local index, and the provider interface the vector backend

@@ -142,6 +142,45 @@ export interface QuizQuestion {
   explains: string
 }
 
+/**
+ * One card of the reel. The reel is the *default* way a story is told: a stack
+ * of single-idea cards you flick through with a thumb, about a minute end to
+ * end. The long-form article still exists behind it, but almost nobody arrives
+ * wanting eleven minutes — they arrive wanting to know what happened.
+ *
+ * The constraint that makes it work: one card, one idea, one breath. If a card
+ * needs a comma-spliced second clause to land, it is two cards.
+ */
+export interface ReelCard {
+  /** The line. Hard-capped at 32 words by `check-content.mjs`, usually far under. */
+  text: string
+  /** Small label above the line: a year, a place, a number. */
+  kicker?: string
+  /** Which narrative beat this card belongs to, for the progress rail. */
+  beat: ReelBeat
+  /** A turn in the story. Rendered in the accent colour, and given more air. */
+  punch?: boolean
+}
+
+export type ReelBeat =
+  | 'hook'
+  | 'worldBefore'
+  | 'problem'
+  | 'story'
+  | 'whyItHappened'
+  | 'consequences'
+  | 'whyItMatters'
+
+export const REEL_BEAT_LABEL: Record<ReelBeat, string> = {
+  hook: 'The hook',
+  worldBefore: 'Before',
+  problem: 'The problem',
+  story: 'What happened',
+  whyItHappened: 'Why',
+  consequences: 'What changed',
+  whyItMatters: 'Why it matters',
+}
+
 export interface Story {
   slug: string
   title: string
@@ -162,6 +201,11 @@ export interface Story {
   readingMinutes: number
   /** ISO date of the last review by a person. */
   reviewed: string
+  /**
+   * The story at reel length — what a reader gets unless they ask for more.
+   * Same eight beats, same facts, roughly a fiftieth of the words.
+   */
+  reel: ReelCard[]
   beats: {
     worldBefore: Beat
     problem: Beat

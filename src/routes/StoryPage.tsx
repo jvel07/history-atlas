@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { Link, useParams } from '@tanstack/react-router'
+import { Link, useParams, useSearch } from '@tanstack/react-router'
 import { motion, useScroll, useSpring } from 'motion/react'
-import { ArrowLeftIcon, BookmarkIcon, ClockIcon, MapIcon } from 'lucide-react'
+import { ArrowLeftIcon, BookmarkIcon, ClockIcon, MapIcon, ZapIcon } from 'lucide-react'
 import { nextSteps, relatedStories, storyBySlug } from '@/content'
 import { ERA_LABEL } from '@/content/types'
+import { StoryReel, reelSeconds } from '@/components/StoryReel'
 import { Timeline } from '@/components/Timeline'
 import { ConnectionRail } from '@/components/ConnectionRail'
 import { LensPicker } from '@/components/LensPicker'
@@ -54,6 +55,7 @@ function useBookmark(slug: string) {
 
 export function StoryPage() {
   const { slug } = useParams({ from: '/story/$slug' })
+  const { full } = useSearch({ from: '/story/$slug' })
   const story = storyBySlug(slug)
   const { scrollYProgress } = useScroll()
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 })
@@ -81,6 +83,9 @@ export function StoryPage() {
   const steps = nextSteps(story)
   const related = relatedStories(slug)
 
+  // The reel is what a story *is* unless the reader asks for the long version.
+  if (!full) return <StoryReel story={story} steps={steps} />
+
   return (
     <>
       <motion.div
@@ -90,13 +95,22 @@ export function StoryPage() {
       />
 
       <article className="mx-auto max-w-2xl px-4 pt-10 pb-20 sm:px-6">
-        <Link
-          to="/stories"
-          className="text-ink-soft hover:text-ember inline-flex items-center gap-1.5 text-sm transition-colors"
-        >
-          <ArrowLeftIcon className="size-3.5" />
-          All stories
-        </Link>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <Link
+            to="/stories"
+            className="text-ink-soft hover:text-ember inline-flex items-center gap-1.5 text-sm transition-colors"
+          >
+            <ArrowLeftIcon className="size-3.5" />
+            All stories
+          </Link>
+
+          <Button variant="outline" size="sm" asChild>
+            <Link to="/story/$slug" params={{ slug: story.slug }} search={{}}>
+              <ZapIcon />
+              {reelSeconds(story)}-second version
+            </Link>
+          </Button>
+        </div>
 
         <header className="mt-6">
           <div className="flex flex-wrap items-center gap-2">
