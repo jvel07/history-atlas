@@ -13,8 +13,9 @@ summary of it — hedged, connective, full of "meanwhile" and "it is worth notin
 Write the reel first and it comes out as a sequence of things that happen, which
 is what a story is.
 
-`npm run verify` enforces the shape: 12–40 cards, 450 words total, 32 words per
-card maximum, opens on the hook, reaches `story` and `whyItMatters`.
+`npm run verify` enforces the shape: 12–30 cards, 450 words total, 32 words per
+card maximum, median card 14 words or fewer, opens on the hook, reaches `story`
+and `whyItMatters`.
 
 ### Use steps as the spine, not as punctuation
 
@@ -75,6 +76,24 @@ Rules that follow:
   card runs over fourteen words. The failure mode is not one bloated card; it is
   every card drifting to a comfortable medium length until the whole thing reads
   at one pace.
+
+### Only the important events
+
+The reel is not a shorter telling of everything. It is *only the beats that
+carry the story* — the ones where each line makes you need the next. `verify`
+caps a reel at 30 cards for this reason. If a card is context, texture, or a
+second example, cut it; the long article is where those live. The test is
+brutal and simple: read the reel out loud, and delete any card whose removal you
+would not notice.
+
+### Backgrounds
+
+A card can carry a background photograph (`image`, see
+`public/reel/README.md`). Public-domain historical photography only, with a
+licence and a credit — the same sourcing rule as everything else, because a
+background is still content. Cards without one get a procedural field from the
+story's mood, so images are optional and partial: use them where a real
+photograph exists and earns its place, not everywhere.
 
 ### The one test
 

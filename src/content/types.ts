@@ -168,6 +168,29 @@ export interface ReelCard {
    */
   step?: number
   /**
+   * A background photograph for this card.
+   *
+   * Every field here is required together, and `check-content.mjs` enforces it:
+   * an image without a licence and a credit is a liability, not an asset. Files
+   * live in `public/reel/<slug>/`. Public-domain historical photography is the
+   * natural fit — Wikimedia Commons, the Library of Congress, national archives
+   * — because it is both free to use and actually of the thing being described.
+   *
+   * Cards without one get a procedural background derived from the story's mood.
+   */
+  image?: {
+    /** Path under `public/`, e.g. "/reel/united-fruit/port.jpg". */
+    src: string
+    /** What it shows. Required — this is a background, but it is still content. */
+    alt: string
+    /** Who made it, as it should appear on screen. */
+    credit: string
+    /** e.g. "Public domain", "CC BY-SA 4.0". */
+    licence: string
+    /** Where it came from, so the claim can be checked. */
+    source: string
+  }
+  /**
    * An abstract mark drawn above the line. These are *diagrams of the sentence*,
    * not pictures of the scene — a hub with spokes for a company holding every
    * utility, arrows leaving a vessel for silver draining east. Illustration

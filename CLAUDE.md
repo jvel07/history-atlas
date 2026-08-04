@@ -53,7 +53,7 @@ should stay the default: nobody arrives wanting eleven minutes.
   article — hedged, connective, full of "meanwhile". Written first, it comes out
   as a sequence of things that happen.
 - **One card, one idea, one breath.** A card needing a second clause is two cards.
-- The limits in `check-content.mjs` (12–40 cards, 450 words, 32 per card, median
+- The limits in `check-content.mjs` (12–30 cards, 450 words, 32 per card, median
   14) are the feature. If a reel fails them, cut it; do not raise them. The
   median is the one that matters — it catches every card drifting to the same
   comfortable length.
@@ -115,10 +115,12 @@ The generative half is the easiest way to destroy this project, so it is fenced:
   what makes them close the tab.
 - `src/content/stories/*.ts` — the actual writing. This is the product. `reel` is
   what almost everyone reads; `beats` is the long version.
-- `src/components/StoryReel.tsx` — the reel player. CSS scroll-snap, not a
-  gesture library, so thumb, wheel, spacebar and arrow keys all work and it
-  degrades to a scrollable list. It pins itself to the viewport rather than
-  subtracting a nav height, because the mobile nav is two rows.
+- `src/components/StoryReel.tsx` — the reel player. Autoplays with a continuous
+  progress bar; tap pauses. `src/components/ReelBackdrop.tsx` draws the card
+  background — a sourced photo when the card has one, a procedural mood field
+  otherwise. Images live in `public/reel/<slug>/` and need a licence + credit.
+  It is CSS scroll-snap, not a gesture library, so thumb, wheel, spacebar and
+  arrow keys all work; it pins to the viewport because the mobile nav is two rows.
 - `src/content/index.ts` — registry, plus `nextSteps` and `relatedStories`, both
   derived from the graph.
 - `src/lib/search.ts` — local index, and the provider interface the vector backend

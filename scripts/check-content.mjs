@@ -128,7 +128,7 @@ for (const story of STORIES) {
   check(MOODS.includes(story.mood), `${where}: unknown reel mood "${story.mood}"`)
 
   check(story.reel.length >= 12, `${where}: reel has only ${story.reel.length} cards; it needs at least 12`)
-  check(story.reel.length <= 40, `${where}: reel has ${story.reel.length} cards; over 40 stops being a reel`)
+  check(story.reel.length <= 30, `${where}: reel has ${story.reel.length} cards; over 30 is no longer only the important events`)
   check(reelWords <= 450, `${where}: reel is ${reelWords} words; the budget is 450`)
 
   // The cap catches the worst card; the median catches the real failure mode,
@@ -147,6 +147,19 @@ for (const story of STORIES) {
     check(card.text.trim().length > 0, `${where}: reel card ${cardIndex + 1} is empty`)
     if (card.mark) {
       check(MARKS.has(card.mark), `${where}: reel card ${cardIndex + 1} uses unknown mark "${card.mark}"`)
+    }
+    // An image without a licence and a credit is a liability, not an asset.
+    if (card.image) {
+      for (const field of ['src', 'alt', 'credit', 'licence', 'source']) {
+        check(
+          typeof card.image[field] === 'string' && card.image[field].trim().length > 0,
+          `${where}: reel card ${cardIndex + 1} has an image missing "${field}"`,
+        )
+      }
+      check(
+        card.image.src.startsWith('/reel/'),
+        `${where}: reel card ${cardIndex + 1} image should live under /reel/, got "${card.image.src}"`,
+      )
     }
   }
 

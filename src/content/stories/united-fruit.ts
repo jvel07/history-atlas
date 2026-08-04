@@ -16,29 +16,23 @@ export const unitedFruit: Story = {
 
   reel: [
     { beat: 'hook', punch: true, text: 'A country offered to buy land back at its owner’s own price.' },
-    { beat: 'hook', text: 'That was the crime. Everything follows from it.' },
+    { beat: 'hook', text: 'That was the crime.' },
 
     { beat: 'worldBefore', step: 1, text: 'Arrive, and be useful.' },
     { beat: 'worldBefore', kicker: '1899', text: 'An American company starts growing bananas in Central America.' },
     { beat: 'worldBefore', text: 'Bananas rot. So it builds railways. Railways need ports. So it builds those.' },
 
     { beat: 'worldBefore', step: 2, text: 'Own the way in, and the way out.' },
-    { beat: 'problem', text: 'Then the telegraph lines. Then the only Caribbean port.' },
-    { beat: 'problem', mark: 'web', text: 'Everyone else’s coffee now moves at its price.' },
+    { beat: 'problem', mark: 'web', text: 'Then the telegraph. Then the only Caribbean port. Everyone else exports at its price.' },
     { beat: 'problem', punch: true, text: 'Guatemalans call it El Pulpo. The octopus.' },
 
     { beat: 'problem', step: 3, text: 'Own more than you use.' },
     { beat: 'problem', mark: 'imbalance', text: 'It becomes the largest landowner in the country.' },
-    { beat: 'problem', text: 'Most of that land is never planted. It is held so nobody else can farm it.' },
 
     { beat: 'problem', step: 4, text: 'Wait for someone to add it up.' },
     { beat: 'problem', kicker: '1944', text: 'Guatemala overthrows its dictator and starts voting.' },
-    { beat: 'problem', text: 'Guatemalans still call the ten years that follow the Ten Years of Spring.' },
     { beat: 'story', kicker: '1951', text: 'Jacobo Árbenz is elected with two-thirds of the vote.' },
-    { beat: 'story', text: 'He is no revolutionary. He wants a modern capitalist country.' },
-    { beat: 'story', text: 'For that, idle land has to be farmed.' },
     { beat: 'story', kicker: '1952', text: 'Decree 900. The state buys unused land and gives it to farmers.' },
-    { beat: 'story', text: 'Not seized. Bought, in government bonds.' },
     { beat: 'story', punch: true, text: 'At the price the owner had put on his own tax form.' },
     { beat: 'story', mark: 'reversal', text: 'United Fruit had been telling the tax office its land was nearly worthless.' },
     { beat: 'story', punch: true, text: 'Guatemala offers $600,000. The company says $16 million.' },
@@ -46,10 +40,8 @@ export const unitedFruit: Story = {
 
     { beat: 'whyItHappened', step: 5, text: 'Change the subject.' },
     { beat: 'whyItHappened', text: 'It hires Edward Bernays, the man who named public relations.' },
-    { beat: 'whyItHappened', text: 'He flies American reporters down and hands them the story.' },
     { beat: 'whyItHappened', mark: 'echo', text: 'Soviet beachhead. Ninety miles from the canal. It runs everywhere.' },
-    { beat: 'whyItHappened', text: 'The Secretary of State had been a partner at the company’s law firm.' },
-    { beat: 'whyItHappened', text: 'His brother ran the CIA. Same firm.' },
+    { beat: 'whyItHappened', text: 'The Secretary of State and the CIA director had both worked for its law firm.' },
     { beat: 'whyItHappened', punch: true, text: 'Eisenhower’s secretary was married to the company’s PR chief.' },
 
     { beat: 'consequences', step: 6, text: 'Do not send an army. Send the sound of one.' },
@@ -58,10 +50,8 @@ export const unitedFruit: Story = {
     { beat: 'consequences', punch: true, text: 'Guatemala had a real army. It just believed the radio.' },
     { beat: 'consequences', text: 'Árbenz resigns on 27 June, undefeated. The land goes back within a year.' },
 
-    { beat: 'whyItMatters', text: 'The civil war begins six years later and runs thirty-six.' },
-    { beat: 'whyItMatters', punch: true, text: 'Around 200,000 die. A UN commission calls part of it genocide.' },
+    { beat: 'whyItMatters', punch: true, text: 'A thirty-six year civil war follows. Around 200,000 die.' },
     { beat: 'whyItMatters', text: 'You have probably eaten one of their bananas. The company is called Chiquita now.' },
-    { beat: 'whyItMatters', punch: true, text: 'And "banana republic"? Coined in 1904. Fifty years before any of this.' },
   ],
 
   beats: {

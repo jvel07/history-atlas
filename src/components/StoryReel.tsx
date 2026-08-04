@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from '@tanstack/react-router'
-import { motion, useReducedMotion } from 'motion/react'
+import { animate, motion, useMotionValue, useReducedMotion } from 'motion/react'
 import {
   ArrowRightIcon,
   BookOpenIcon,
@@ -15,6 +15,7 @@ import type { NextStep } from '@/content'
 import type { Story } from '@/content/types'
 import { REEL_BEAT_LABEL } from '@/content/types'
 import { ReelMark } from '@/components/ReelMarks'
+import { ReelBackdrop, ReelCredit } from '@/components/ReelBackdrop'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { cn, formatSpan } from '@/lib/utils'
@@ -121,6 +122,24 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
   const dwell = card ? dwellFor(card.text) : MIN_DWELL_MS
 
   /**
+   * The bar fills continuously: it jumps to where the current card starts, then
+   * eases across that card's own dwell. Pausing stops the animation and leaves
+   * it exactly where it was, which is the whole reason this is a motion value
+   * and not a CSS transition.
+   */
+  const progress = useMotionValue(0)
+  useEffect(() => {
+    const span = Math.max(total - 1, 1)
+    progress.set(index / span)
+    if (!playing || onLastCard || narrating) return
+    const controls = animate(progress, Math.min(index + 1, total - 1) / span, {
+      duration: dwell / 1000,
+      ease: 'linear',
+    })
+    return () => controls.stop()
+  }, [index, playing, narrating, onLastCard, dwell, total, progress])
+
+  /**
    * Advance. With narration on, the sentence ending is the cue — that is what
    * paces the reference, and it means a long card is not cut off mid-thought.
    */
@@ -167,24 +186,13 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
 
   return (
     <div data-mood={story.mood} className="fixed inset-x-0 top-14 bottom-0 z-30 transition-colors duration-500">
-      {/* Segmented progress. The active tick fills over the card's own dwell
-          time, so the pacing is visible rather than a surprise. */}
-      <div className="absolute top-0 right-0 left-0 z-20 flex gap-[3px] px-3 pt-3" aria-hidden>
-        {Array.from({ length: total }, (_, i) => (
-          <span key={i} className="h-[3px] flex-1 overflow-hidden rounded-full bg-[var(--reel-rule)]">
-            <span
-              key={`${i}-${index}-${playing}-${narrating}`}
-              className={cn('block h-full origin-left bg-[var(--reel-accent)]', i < index && 'w-full')}
-              style={
-                i === index && playing && !narrating && !onLastCard
-                  ? { animation: `reel-tick ${dwell}ms linear forwards` }
-                  : i === index
-                    ? { width: '100%' }
-                    : undefined
-              }
-            />
-          </span>
-        ))}
+      {/* One continuous bar. It was a segment per card, and at forty cards that
+          renders as a dashed line across the top rather than as progress. */}
+      <div className="absolute top-0 right-0 left-0 z-20 h-[3px] bg-[var(--reel-rule)]" aria-hidden>
+        <motion.div
+          style={{ scaleX: progress }}
+          className="h-full origin-left bg-[var(--reel-accent)]"
+        />
       </div>
 
       <div
@@ -236,12 +244,16 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
             )}
             aria-label={`Card ${i + 1} of ${story.reel.length}`}
           >
+            <ReelBackdrop card={item} index={i} />
             <motion.div
               initial={reduceMotion ? false : { opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ root: scroller, amount: 0.6, once: false }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className={cn('mx-auto w-full max-w-2xl', item.step !== undefined && 'text-center')}
+              className={cn(
+                'relative z-10 mx-auto w-full max-w-2xl',
+                item.step !== undefined && 'text-center',
+              )}
             >
               {/* A chapter break. The reference uses these as plain cards that
                   say "Step 2", and they do a lot of work: they turn a sequence
@@ -377,6 +389,8 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
                 ? 'Keep going'
                 : 'The end'}
         </span>
+
+        <ReelCredit card={card} />
 
         <div className="flex items-center gap-1.5">
           {canNarrate && (
