@@ -515,6 +515,73 @@ export const NODES: GraphNode[] = [
     era: 'contemporary',
     years: [1960, 1996],
   },
+
+  /* ------------------------------------------ the warning ignored ---- */
+  {
+    id: 'harry-markopolos',
+    label: 'Harry Markopolos',
+    kind: 'person',
+    blurb: 'A financial analyst who proved Bernie Madoff was a fraud in an afternoon, and spent nine years being ignored.',
+    era: 'contemporary',
+    years: [1956, 2026],
+    story: 'markopolos',
+  },
+  {
+    id: 'madoff-fraud',
+    label: 'The Madoff fraud',
+    kind: 'event',
+    blurb: 'The largest Ponzi scheme in history — and one that a single analyst had reported to the regulator for years.',
+    era: 'contemporary',
+    years: [1990, 2008],
+  },
+  {
+    id: 'bernie-madoff',
+    label: 'Bernie Madoff',
+    kind: 'person',
+    blurb: 'A former NASDAQ chairman whose respectability was the disguise. He never traded; he only took the money.',
+    era: 'contemporary',
+    years: [1938, 2021],
+  },
+  {
+    id: 'sec',
+    label: 'The SEC',
+    kind: 'organisation',
+    blurb: 'The US markets regulator, which examined Madoff repeatedly and cleared him every time.',
+    era: 'contemporary',
+    years: [1934, 2026],
+  },
+  {
+    id: 'ponzi-scheme',
+    label: 'The Ponzi scheme',
+    kind: 'idea',
+    blurb: 'Pay the old investors with the new ones’ money. It looks like genius until the new money stops.',
+    era: 'modern',
+    years: [1920, 2026],
+  },
+  {
+    id: 'charles-ponzi',
+    label: 'Charles Ponzi',
+    kind: 'person',
+    blurb: 'A Boston swindler whose 1920 scheme with postal coupons was so notorious it named the structure.',
+    era: 'modern',
+    years: [1882, 1949],
+  },
+  {
+    id: 'nasdaq',
+    label: 'NASDAQ',
+    kind: 'organisation',
+    blurb: 'The electronic stock market Madoff helped build and briefly chaired — the credential that made him unquestionable.',
+    era: 'modern',
+    years: [1971, 2026],
+  },
+  {
+    id: 'financial-crisis-2008',
+    label: 'The 2008 financial crisis',
+    kind: 'event',
+    blurb: 'The crash that made frightened investors ask for their money back — and found there was none.',
+    era: 'contemporary',
+    years: [2007, 2009],
+  },
 ]
 
 export const EDGES: GraphEdge[] = [
@@ -981,6 +1048,63 @@ export const EDGES: GraphEdge[] = [
     to: 'public-relations',
     relation: 'inspired',
     note: 'Four centuries apart, the same mechanism: a motivated author, a receptive audience, and a distribution technology that rewards the extreme version.',
+    confidence: 'contested',
+  },
+
+  /* ------------------------------------------ the warning ignored ---- */
+  {
+    from: 'bernie-madoff',
+    to: 'madoff-fraud',
+    relation: 'ran',
+    note: 'For years there was no trading at all — just new money paying old investors, and statements printed to match.',
+  },
+  {
+    from: 'bernie-madoff',
+    to: 'nasdaq',
+    relation: 'led',
+    note: 'He was its non-executive chairman in the early 1990s. That credential was the reason no one looked twice.',
+  },
+  {
+    from: 'harry-markopolos',
+    to: 'madoff-fraud',
+    relation: 'exposed',
+    note: 'Asked to copy Madoff’s returns, he found them mathematically impossible instead — and never let it go.',
+  },
+  {
+    from: 'harry-markopolos',
+    to: 'sec',
+    relation: 'warned',
+    note: 'Five submissions from 2000 on, including a 2005 report titled "The World’s Largest Hedge Fund Is a Fraud".',
+  },
+  {
+    from: 'sec',
+    to: 'harry-markopolos',
+    relation: 'ignored',
+    note: 'It examined Madoff repeatedly and cleared him each time. The failure was never a shortage of warning.',
+  },
+  {
+    from: 'madoff-fraud',
+    to: 'ponzi-scheme',
+    relation: 'was',
+    note: 'The oldest structure there is, run at a scale nobody thought a structure that simple could reach.',
+  },
+  {
+    from: 'charles-ponzi',
+    to: 'ponzi-scheme',
+    relation: 'named',
+    note: 'His 1920 Boston swindle with international postal coupons was notorious enough to name the whole idea.',
+  },
+  {
+    from: 'financial-crisis-2008',
+    to: 'madoff-fraud',
+    relation: 'exposed',
+    note: 'When frightened investors asked for about seven billion dollars back, there was nothing behind the statements to send.',
+  },
+  {
+    from: 'public-relations',
+    to: 'madoff-fraud',
+    relation: 'enabled',
+    note: 'Not Bernays’ doing — the same currency. Madoff was believed because of who he was, not because anyone checked the returns.',
     confidence: 'contested',
   },
 ]

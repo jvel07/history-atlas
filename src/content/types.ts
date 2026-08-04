@@ -213,11 +213,12 @@ export type MarkName =
   | 'gate'
   | 'press'
   | 'echo'
+  | 'toosmooth'
 
 /** Reel colour registers. Defined in `index.css`, one block per theme. */
-export type Mood = 'ember' | 'noir' | 'lapis' | 'jungle'
+export type Mood = 'ember' | 'noir' | 'lapis' | 'jungle' | 'ledger'
 
-export const MOODS: Mood[] = ['ember', 'noir', 'lapis', 'jungle']
+export const MOODS: Mood[] = ['ember', 'noir', 'lapis', 'jungle', 'ledger']
 
 export type ReelBeat =
   | 'hook'
@@ -350,6 +351,12 @@ export type EdgeRelation =
   | 'named'
   | 'held'
   | 'fought'
+  | 'ran'
+  | 'led'
+  | 'warned'
+  | 'ignored'
+  | 'exposed'
+  | 'was'
 
 export const RELATION_PHRASE: Record<EdgeRelation, string> = {
   caused: 'caused',
@@ -367,6 +374,12 @@ export const RELATION_PHRASE: Record<EdgeRelation, string> = {
   named: 'gave its name to',
   held: 'held captive',
   fought: 'fought',
+  ran: 'ran',
+  led: 'led',
+  warned: 'warned',
+  ignored: 'ignored',
+  exposed: 'exposed',
+  was: 'was a',
 }
 
 export interface GraphEdge {

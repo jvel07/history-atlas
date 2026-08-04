@@ -19,6 +19,16 @@ this.
       Constantinople reaches both `european-renaissance` and `mongol-invasion`.
       The graph is now a map rather than two lines.
 
+- [x] **A "Cassandra" strand — the warning that was ignored.** Opened with
+      Nine Years Early (Harry Markopolos and the Madoff fraud): someone saw the
+      disaster coming, with proof, and the institution built to act could not
+      hear it. This is a distinct shape from "beyond the legend" — not a myth to
+      correct, but a failure to explain — and it has its own colour register
+      (ledger, a trading-terminal slate). Candidates that fit and are
+      documented: the Challenger O-ring engineers (Roger Boisjoly warned the
+      night before), the analysts who called the 2008 crash, Ignaz Semmelweis
+      and handwashing, the intelligence warnings before specific attacks.
+
 - [ ] **More "beyond the legend" stories.** The strongest strand the atlas has —
       a famous legend on the outside, real history underneath, and the myth's
       own origin as the punchline. Vlad is the template. Candidates where the

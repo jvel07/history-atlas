@@ -36,7 +36,7 @@ const { STORIES, NODES, EDGES, nextSteps, MOODS } = content
 
 /** Marks are drawn by hand in ReelMarks.tsx; a typo would silently render nothing. */
 const MARKS = new Set([
-  'imbalance', 'drain', 'reversal', 'chain', 'spike', 'collapse', 'web', 'gate', 'press', 'echo',
+  'imbalance', 'drain', 'reversal', 'chain', 'spike', 'collapse', 'web', 'gate', 'press', 'echo', 'toosmooth',
 ])
 
 const failures = []

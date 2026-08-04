@@ -80,6 +80,12 @@ const PATHS: Record<MarkName, { d: string; label: string }[]> = {
     { d: 'M60 38 v14 m-6 -6 l6 6 l6 -6', label: '' },
     { d: 'M26 62 h68 M22 74 h72 M26 86 h68 M22 98 h72', label: '' },
   ],
+  // A ruler-straight rise over a jagged one: the fraud's own signature. Real
+  // returns zigzag; Madoff's went up in a line, which is the tell.
+  toosmooth: [
+    { d: 'M12 100 L34 82 L48 90 L64 58 L78 66 L94 34 L108 44', label: '' },
+    { d: 'M12 104 L108 20', label: '' },
+  ],
   // The same thing, again, and again.
   echo: [
     { d: 'M60 60 m-6 0 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0', label: '' },

@@ -238,6 +238,23 @@ body.reel-open [data-nav-mobile] {
   --reel-rule: oklch(27% 0.035 155);
 }
 
+/* Madoff. A cold trading-terminal slate with a phosphor-green accent — the
+   colour of a screen full of numbers that nobody was checking. */
+[data-mood='ledger'] {
+  --reel-bg: oklch(97% 0.006 220);
+  --reel-ink: oklch(20% 0.02 235);
+  --reel-dim: oklch(43% 0.02 235);
+  --reel-accent: oklch(47% 0.13 160);
+  --reel-rule: oklch(87% 0.012 220);
+}
+.dark [data-mood='ledger'] {
+  --reel-bg: oklch(14% 0.014 235);
+  --reel-ink: oklch(93% 0.008 190);
+  --reel-dim: oklch(70% 0.015 190);
+  --reel-accent: oklch(80% 0.16 160);
+  --reel-rule: oklch(26% 0.018 235);
+}
+
 /* The progress tick fills over the card's own dwell time, so a reader can see
    how long they have rather than being surprised by the cut. */
 @keyframes reel-tick {

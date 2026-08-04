@@ -25,13 +25,13 @@ Node 22 or newer.
 | **Reels** | The default way a story is told: ~30 cards, one idea each, about a minute, flicked through with a thumb. Nobody arrives wanting eleven minutes — they arrive wanting to know what happened, holding a phone. |
 | **The long version** | Behind `?full`. Same story with the sources, the myth corrections and the parts historians argue about. One tap from the end of the reel. |
 | **Storytelling engine** | Eight narrative beats — hook, the world before, the problem, the story, why it happened, consequences, why it still matters, continue the journey — carried by both formats and enforced as named fields in the type system rather than as a style guide nobody reads. |
-| **Knowledge graph** | 61 topics, 74 labelled and directed relationships. Every link carries the *reason* it exists, in a sentence. "Continue the journey" is derived from it, never hand-written. |
-| **Four written stories** | El Pulpo, Vlad Țepeș, the Opium Wars and Al-Khwārizmī — 27 sources between them. The stories are the product; the framework exists to serve them. |
+| **Knowledge graph** | 69 topics, 83 labelled and directed relationships. Every link carries the *reason* it exists, in a sentence. "Continue the journey" is derived from it, never hand-written. |
+| **Five written stories** | Nine Years Early (Madoff), El Pulpo, Vlad Țepeș, the Opium Wars and Al-Khwārizmī — 34 sources between them. The stories are the product; the framework exists to serve them. |
 | **Adaptive explanations** | Pre-written lenses ship with each story and work offline. Free-text requests ("focus on the economics", "explain it like I'm 10") go through a server-side RAG pipeline over the story's own reviewed text. |
 | **Search** | A local index with synonym expansion out of the box; pgvector semantic search when the backend is configured. |
 | **Interactive pieces** | Timeline positioned by real dates, cause→effect chains with mechanisms, myth corrections, historian disagreements, before/after, "what if?" speculation, quizzes, bookmarks. |
 
-Four stories is not an oversight. It takes an afternoon to generate a thousand
+Five stories is not an oversight. It takes an afternoon to generate a thousand
 articles and about the same to discover a tenth of them contain confident
 invented detail. One wrong citation costs more trust than fifty correct pages
 earn. Topics appear on the map before they have a story, and say so.
