@@ -131,6 +131,13 @@ for (const story of STORIES) {
   check(story.reel.length <= 40, `${where}: reel has ${story.reel.length} cards; over 40 stops being a reel`)
   check(reelWords <= 450, `${where}: reel is ${reelWords} words; the budget is 450`)
 
+  // The cap catches the worst card; the median catches the real failure mode,
+  // which is every card creeping up to fourteen or fifteen words at once. A
+  // reel is short sentences with a few long ones, not uniformly medium ones.
+  const lengths = story.reel.map((card) => card.text.split(/\s+/).length).sort((a, b) => a - b)
+  const median = lengths[Math.floor(lengths.length / 2)]
+  check(median <= 14, `${where}: median card is ${median} words; it should be 14 or fewer`)
+
   for (const [cardIndex, card] of story.reel.entries()) {
     const words = card.text.split(/\s+/).length
     check(

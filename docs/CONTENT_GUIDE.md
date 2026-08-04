@@ -16,6 +16,28 @@ is what a story is.
 `npm run verify` enforces the shape: 12–40 cards, 450 words total, 32 words per
 card maximum, opens on the hook, reaches `story` and `whyItMatters`.
 
+### Use steps as the spine, not as punctuation
+
+The strongest reels are structured as a numbered procedure. Not "here is what
+happened" but "here is how it was done, in six moves". Set `step` on the card
+that opens each move and let the cards under it do the work.
+
+```
+Step 1  Arrive, and be useful.
+Step 2  Own the way in, and the way out.
+Step 3  Own more than you use.
+Step 4  Wait for someone to add it up.
+Step 5  Change the subject.
+Step 6  Do not send an army. Send the sound of one.
+```
+
+Two reasons this earns its place. It gives a reader a map they can hold in their
+head at speed, and — more importantly — it is often the honest reading. Nobody
+stumbled into the Guatemalan coup or the opium trade. People took steps.
+
+Do not force it. If the story is a collision rather than a procedure, numbering
+it is a lie about agency.
+
 ### What a card is
 
 One idea. One breath. If it needs a second clause to land, it is two cards.
@@ -46,7 +68,13 @@ Rules that follow:
   be the lines someone would screenshot. Roughly one in five.
 - **`kicker` carries the date**, so the sentence does not have to.
 - **End on the reach**, not on a summary. The last card should make the reader
-  feel the present tense of it.
+  feel the present tense of it. Reaching into the reader's own life is fair when
+  it is true — "you have probably eaten one of their bananas" is a fact about
+  Chiquita, not a rhetorical flourish.
+- **Watch the median, not just the maximum.** `verify` fails a reel whose median
+  card runs over fourteen words. The failure mode is not one bloated card; it is
+  every card drifting to a comfortable medium length until the whole thing reads
+  at one pace.
 
 ### The one test
 

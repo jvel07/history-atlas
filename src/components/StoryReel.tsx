@@ -17,7 +17,7 @@ import { REEL_BEAT_LABEL } from '@/content/types'
 import { ReelMark } from '@/components/ReelMarks'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { cn, formatSpan } from '@/lib/utils'
 
 /**
  * The story, at reel length — and it plays itself.
@@ -57,8 +57,8 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
   const [narrating, setNarrating] = useState(false)
   const reduceMotion = useReducedMotion()
 
-  // +2 for the two closing cards: where this goes next, and how to go deeper.
-  const total = story.reel.length + 2
+  // +1 opening title card, +2 closing cards (where this goes next, go deeper).
+  const total = story.reel.length + 3
   const onLastCard = index >= total - 1
 
   const canNarrate = useMemo(
@@ -116,7 +116,8 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
     return () => window.removeEventListener('keydown', onKey)
   }, [index, takeOver])
 
-  const card = index < story.reel.length ? story.reel[index] : undefined
+  // Index 0 is the title card; the reel proper starts at 1.
+  const card = index >= 1 && index <= story.reel.length ? story.reel[index - 1] : undefined
   const dwell = card ? dwellFor(card.text) : MIN_DWELL_MS
 
   /**
@@ -198,6 +199,34 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
         role="region"
         aria-label={`${story.title} — ${total} cards, playing automatically. Space pauses; arrow keys move.`}
       >
+        {/* The opening card. The reference format does this and it earns its
+            place: it says what you are about to get and how long it takes,
+            before asking for any attention. A hook with no frame around it is
+            just a sentence someone shouted at you. */}
+        <section
+          className="flex h-full snap-start snap-always items-center px-6 sm:px-10"
+          aria-label="Title"
+        >
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ root: scroller, amount: 0.6, once: false }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="mx-auto w-full max-w-2xl"
+          >
+            <p className="mb-4 font-mono text-sm tracking-widest text-[var(--reel-accent)] uppercase">
+              {formatSpan(story.years)}
+            </p>
+            <h1 className="font-display text-[clamp(2.5rem,9vw,4.5rem)] leading-[1.05] font-semibold tracking-tight text-balance text-[var(--reel-ink)]">
+              {story.title}
+            </h1>
+            <p className="mt-4 text-lg leading-relaxed text-[var(--reel-dim)]">{story.subtitle}</p>
+            <p className="mt-8 font-mono text-xs tracking-widest text-[var(--reel-dim)] uppercase">
+              {reelSeconds(story)} seconds · {story.reel.length} cards · {story.sources.length} sources
+            </p>
+          </motion.div>
+        </section>
+
         {story.reel.map((item, i) => (
           <section
             key={i}
@@ -205,7 +234,7 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
               'flex h-full snap-start snap-always items-center px-6 sm:px-10',
               item.step !== undefined && 'justify-center',
             )}
-            aria-label={`Card ${i + 1} of ${total}`}
+            aria-label={`Card ${i + 1} of ${story.reel.length}`}
           >
             <motion.div
               initial={reduceMotion ? false : { opacity: 0, y: 14 }}
@@ -340,11 +369,13 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
           data-reel-beat
           className="pointer-events-none font-mono text-[0.6875rem] tracking-widest text-[var(--reel-dim)] uppercase"
         >
-          {index < story.reel.length
-            ? REEL_BEAT_LABEL[story.reel[index]!.beat]
-            : index === story.reel.length
-              ? 'Keep going'
-              : 'The end'}
+          {index === 0
+            ? `${reelSeconds(story)} seconds`
+            : card
+              ? REEL_BEAT_LABEL[card.beat]
+              : index === story.reel.length + 1
+                ? 'Keep going'
+                : 'The end'}
         </span>
 
         <div className="flex items-center gap-1.5">

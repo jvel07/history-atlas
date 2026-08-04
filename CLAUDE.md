@@ -53,8 +53,13 @@ should stay the default: nobody arrives wanting eleven minutes.
   article — hedged, connective, full of "meanwhile". Written first, it comes out
   as a sequence of things that happen.
 - **One card, one idea, one breath.** A card needing a second clause is two cards.
-- The limits in `check-content.mjs` (12–40 cards, 450 words, 32 per card) are the
-  feature. If a reel fails them, cut it; do not raise them.
+- The limits in `check-content.mjs` (12–40 cards, 450 words, 32 per card, median
+  14) are the feature. If a reel fails them, cut it; do not raise them. The
+  median is the one that matters — it catches every card drifting to the same
+  comfortable length.
+- **Steps are the spine where the story allows it.** A numbered procedure beats a
+  chronology, and it is usually the honest reading: nobody stumbled into the
+  Guatemalan coup. Do not force it onto a story that was a collision.
 - Both formats carry the same eight beats and the same facts. The reel is
   shorter, never looser.
 
