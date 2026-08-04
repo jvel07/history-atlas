@@ -25,13 +25,13 @@ Node 22 or newer.
 | **Reels** | The default way a story is told: ~30 cards, one idea each, about a minute, flicked through with a thumb. Nobody arrives wanting eleven minutes — they arrive wanting to know what happened, holding a phone. |
 | **The long version** | Behind `?full`. Same story with the sources, the myth corrections and the parts historians argue about. One tap from the end of the reel. |
 | **Storytelling engine** | Eight narrative beats — hook, the world before, the problem, the story, why it happened, consequences, why it still matters, continue the journey — carried by both formats and enforced as named fields in the type system rather than as a style guide nobody reads. |
-| **Knowledge graph** | 39 topics, 44 labelled and directed relationships. Every link carries the *reason* it exists, in a sentence. "Continue the journey" is derived from it, never hand-written. |
-| **Two written stories** | The Opium Wars and Al-Khwārizmī, fully sourced. The stories are the product; the framework exists to serve them. |
+| **Knowledge graph** | 61 topics, 74 labelled and directed relationships. Every link carries the *reason* it exists, in a sentence. "Continue the journey" is derived from it, never hand-written. |
+| **Four written stories** | El Pulpo, Vlad Țepeș, the Opium Wars and Al-Khwārizmī — 27 sources between them. The stories are the product; the framework exists to serve them. |
 | **Adaptive explanations** | Pre-written lenses ship with each story and work offline. Free-text requests ("focus on the economics", "explain it like I'm 10") go through a server-side RAG pipeline over the story's own reviewed text. |
 | **Search** | A local index with synonym expansion out of the box; pgvector semantic search when the backend is configured. |
 | **Interactive pieces** | Timeline positioned by real dates, cause→effect chains with mechanisms, myth corrections, historian disagreements, before/after, "what if?" speculation, quizzes, bookmarks. |
 
-Two stories is not an oversight. It takes an afternoon to generate a thousand
+Four stories is not an oversight. It takes an afternoon to generate a thousand
 articles and about the same to discover a tenth of them contain confident
 invented detail. One wrong citation costs more trust than fifty correct pages
 earn. Topics appear on the map before they have a story, and say so.
@@ -53,7 +53,8 @@ Every real content bug compiles perfectly. The check bundles the corpus and
 verifies the references *between* pieces resolve:
 
 - a reel that has drifted back into being an article: over 40 cards, over 450
-  words total, or a single card over 32 words
+  words total, a single card over 32 words, or a *median* card over 14 — the
+  median is the one that catches every card creeping to the same medium length
 - a reel that never reaches the hook, the story, or why it still matters
 - a `sourceId` pointing at a citation that was renamed
 - a story listing a graph node that no longer exists, or a node pointing at a
