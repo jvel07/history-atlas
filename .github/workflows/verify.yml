@@ -3,7 +3,10 @@ name: Verify
 on:
   pull_request:
   push:
-    branches-ignore: [main]
+    # `main` is covered by the deploy workflow, which verifies before publishing.
+    # `gh-pages` holds build output and has no package.json — running here would
+    # fail on every deploy.
+    branches-ignore: [main, gh-pages]
 
 jobs:
   verify:

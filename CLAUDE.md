@@ -135,7 +135,15 @@ The generative half is the easiest way to destroy this project, so it is fenced:
 ## Deploying
 
 `.github/workflows/deploy.yml` runs `npm run verify`, copies `index.html` to
-`404.html` (Pages has no SPA rewrite), and publishes on push to `main`.
+`404.html` (Pages has no SPA rewrite), and force-pushes `dist/` to the
+`gh-pages` branch on every push to `main`. Live at
+https://jvel07.github.io/history-atlas/.
+
+**Do not switch this back to the Pages artifact route without checking the Pages
+source first.** The artifact route (`configure-pages` and friends) needs
+Settings → Pages → Source set to "GitHub Actions". It is not, and eight
+consecutive deploys failed on that single step while the site quietly served a
+months-old branch. Branch publishing needs no setting anyone has to go and find.
 
 The backend is written and **not yet deployed**. Until it is, `VITE_ATLAS_API` is
 unset and the site runs on written lenses and the local search index — which is a
