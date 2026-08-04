@@ -1,7 +1,16 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from '@tanstack/react-router'
 import { motion, useReducedMotion } from 'motion/react'
-import { ArrowRightIcon, BookOpenIcon, ChevronDownIcon, MapIcon, RotateCcwIcon } from 'lucide-react'
+import {
+  ArrowRightIcon,
+  BookOpenIcon,
+  MapIcon,
+  PauseIcon,
+  PlayIcon,
+  RotateCcwIcon,
+  Volume2Icon,
+  VolumeXIcon,
+} from 'lucide-react'
 import type { NextStep } from '@/content'
 import type { Story } from '@/content/types'
 import { REEL_BEAT_LABEL } from '@/content/types'
@@ -10,33 +19,51 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 /**
- * The story, at reel length.
+ * The story, at reel length — and it plays itself.
  *
- * This is the default way a story is told. The long article still exists, but
- * the honest observation is that almost nobody arrives wanting eleven minutes —
- * they arrive wanting to know what happened, and they are holding a phone.
+ * Measured against the format this is imitating: a 110-second reel cut 57 times,
+ * one image every 1.93 seconds, over continuous narration. The thing that makes
+ * it work is that the reader does nothing. A card stack you have to flick is a
+ * slideshow; a card stack that advances on its own is a video.
  *
- * Mechanically it is CSS scroll-snap rather than a gesture library: a flick of
- * the thumb, a mouse wheel, a spacebar and the arrow keys all already do the
- * right thing, and it degrades to a plain scrollable list if anything fails.
- * The one thing added on top is that a click anywhere advances, because on a
- * phone the thumb is already there.
+ * So it runs on a timer by default, tap pauses, and any deliberate navigation
+ * (swipe, wheel, arrow keys) hands control back. Optional narration uses the
+ * browser's own speech synthesis and, when it is on, cards advance when the
+ * sentence *finishes* rather than on a clock — which is how the reference is
+ * actually paced.
+ *
+ * Mechanically it is CSS scroll-snap, so thumb, wheel, spacebar and arrow keys
+ * already work and it degrades to a plain scrollable list.
  */
 
-/** Roughly how long a card is on screen when someone is actually reading. */
-const SECONDS_PER_CARD = 2.4
+/** Floor, and per-word allowance, for how long a card stays up. */
+const MIN_DWELL_MS = 1900
+const MS_PER_WORD = 55
+
+function dwellFor(text: string) {
+  return MIN_DWELL_MS + text.split(/\s+/).length * MS_PER_WORD
+}
 
 export function reelSeconds(story: Story) {
-  return Math.round((story.reel.length * SECONDS_PER_CARD) / 5) * 5
+  const total = story.reel.reduce((ms, card) => ms + dwellFor(card.text), 0)
+  return Math.round(total / 1000 / 5) * 5
 }
 
 export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] }) {
   const scroller = useRef<HTMLDivElement>(null)
   const [index, setIndex] = useState(0)
+  const [playing, setPlaying] = useState(true)
+  const [narrating, setNarrating] = useState(false)
   const reduceMotion = useReducedMotion()
 
   // +2 for the two closing cards: where this goes next, and how to go deeper.
   const total = story.reel.length + 2
+  const onLastCard = index >= total - 1
+
+  const canNarrate = useMemo(
+    () => typeof window !== 'undefined' && 'speechSynthesis' in window,
+    [],
+  )
 
   const goTo = useCallback(
     (next: number) => {
@@ -48,15 +75,19 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
     [total, reduceMotion],
   )
 
+  /** Deliberate navigation always hands control back to the reader. */
+  const takeOver = useCallback((next: number) => {
+    setPlaying(false)
+    goTo(next)
+  }, [goTo])
+
   useEffect(() => {
     const node = scroller.current
     if (!node) return
     let frame = 0
     function onScroll() {
       cancelAnimationFrame(frame)
-      frame = requestAnimationFrame(() => {
-        setIndex(Math.round(node!.scrollTop / node!.clientHeight))
-      })
+      frame = requestAnimationFrame(() => setIndex(Math.round(node!.scrollTop / node!.clientHeight)))
     }
     node.addEventListener('scroll', onScroll, { passive: true })
     return () => {
@@ -69,29 +100,62 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
     function onKey(event: KeyboardEvent) {
       const target = event.target as HTMLElement | null
       if (target?.tagName === 'INPUT' || target?.tagName === 'TEXTAREA') return
-      if (event.key === 'ArrowDown' || event.key === 'PageDown' || event.key === ' ') {
+      if (event.key === 'ArrowDown' || event.key === 'PageDown') {
         event.preventDefault()
-        goTo(index + 1)
+        takeOver(index + 1)
       } else if (event.key === 'ArrowUp' || event.key === 'PageUp') {
         event.preventDefault()
-        goTo(index - 1)
+        takeOver(index - 1)
+      } else if (event.key === ' ') {
+        event.preventDefault()
+        setPlaying((value) => !value)
       }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [index, goTo])
+  }, [index, takeOver])
 
-  // The reel owns the viewport while it is mounted. Subtracting a nav height in
-  // CSS was wrong twice over: the mobile nav is two rows, not one, so every card
-  // ran past the fold and took the swipe hint with it. Pinning to the viewport
-  // instead means the box is exactly right on any chrome.
+  const card = index < story.reel.length ? story.reel[index] : undefined
+  const dwell = card ? dwellFor(card.text) : MIN_DWELL_MS
+
+  /**
+   * Advance. With narration on, the sentence ending is the cue — that is what
+   * paces the reference, and it means a long card is not cut off mid-thought.
+   */
+  useEffect(() => {
+    if (!playing || onLastCard) return
+
+    if (narrating && canNarrate && card) {
+      const utterance = new SpeechSynthesisUtterance(card.text)
+      utterance.rate = 1.02
+      utterance.onend = () => goTo(index + 1)
+      window.speechSynthesis.cancel()
+      window.speechSynthesis.speak(utterance)
+      // A fallback timer, because `onend` does not fire reliably everywhere.
+      const bail = window.setTimeout(() => goTo(index + 1), dwell + 9000)
+      return () => {
+        window.clearTimeout(bail)
+        window.speechSynthesis.cancel()
+      }
+    }
+
+    const timer = window.setTimeout(() => goTo(index + 1), dwell)
+    return () => window.clearTimeout(timer)
+  }, [playing, narrating, canNarrate, card, dwell, index, onLastCard, goTo])
+
+  // Never leave a voice talking to an empty room.
+  useEffect(() => {
+    return () => {
+      if (canNarrate) window.speechSynthesis.cancel()
+    }
+  }, [canNarrate])
+
   useEffect(() => {
     const previous = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     // `reel-open` also hides the nav's mobile link row (see index.css). That row
     // sits at z-50 and was painting over the progress rail; hiding it is the
-    // right answer anyway, because a reel should own the screen. The header
-    // above it stays, so there is always a way out.
+    // right answer anyway, because a reel should own the screen.
     document.body.classList.add('reel-open')
     return () => {
       document.body.style.overflow = previous
@@ -100,37 +164,46 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
   }, [])
 
   return (
-    <div className="fixed inset-x-0 top-14 bottom-0 z-30 bg-paper">
-      {/* Segmented progress, one tick per card. Borrowed from the format the
-          whole thing is imitating, and it is genuinely the clearest signal of
-          "how much is left" at this length. */}
+    <div className="bg-paper fixed inset-x-0 top-14 bottom-0 z-30">
+      {/* Segmented progress. The active tick fills over the card's own dwell
+          time, so the pacing is visible rather than a surprise. */}
       <div className="absolute top-0 right-0 left-0 z-20 flex gap-[3px] px-3 pt-3" aria-hidden>
         {Array.from({ length: total }, (_, i) => (
-          <span
-            key={i}
-            className={cn(
-              'h-[3px] flex-1 rounded-full transition-colors duration-300',
-              i < index ? 'bg-ember' : i === index ? 'bg-ember' : 'bg-rule',
-            )}
-          />
+          <span key={i} className="bg-rule h-[3px] flex-1 overflow-hidden rounded-full">
+            <span
+              key={`${i}-${index}-${playing}-${narrating}`}
+              className={cn('bg-ember block h-full origin-left', i < index && 'w-full')}
+              style={
+                i === index && playing && !narrating && !onLastCard
+                  ? { animation: `reel-tick ${dwell}ms linear forwards` }
+                  : i === index
+                    ? { width: '100%' }
+                    : undefined
+              }
+            />
+          </span>
         ))}
       </div>
 
       <div
         ref={scroller}
         onClick={(event) => {
-          // Let links and buttons do their own thing; anywhere else advances.
           if ((event.target as HTMLElement).closest('a, button')) return
-          goTo(index + 1)
+          setPlaying((value) => !value)
         }}
+        onWheel={() => setPlaying(false)}
+        onTouchStart={() => undefined}
         className="scrollbar-slim h-full snap-y snap-mandatory overflow-y-scroll overscroll-contain"
         role="region"
-        aria-label={`${story.title} — ${total} cards. Use the arrow keys to move through them.`}
+        aria-label={`${story.title} — ${total} cards, playing automatically. Space pauses; arrow keys move.`}
       >
-        {story.reel.map((card, i) => (
+        {story.reel.map((item, i) => (
           <section
             key={i}
-            className="flex h-full snap-start snap-always items-center px-6 sm:px-10"
+            className={cn(
+              'flex h-full snap-start snap-always items-center px-6 sm:px-10',
+              item.step !== undefined && 'justify-center',
+            )}
             aria-label={`Card ${i + 1} of ${total}`}
           >
             <motion.div
@@ -138,21 +211,38 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ root: scroller, amount: 0.6, once: false }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="mx-auto w-full max-w-2xl"
+              className={cn('mx-auto w-full max-w-2xl', item.step !== undefined && 'text-center')}
             >
-              {card.kicker && (
-                <p className="text-ember mb-3 font-mono text-sm tracking-widest uppercase">{card.kicker}</p>
+              {/* A chapter break. The reference uses these as plain cards that
+                  say "Step 2", and they do a lot of work: they turn a sequence
+                  of events into a procedure someone followed on purpose. */}
+              {item.step !== undefined ? (
+                <>
+                  <span className="border-rule text-ink-soft inline-block rounded-md border px-4 py-1.5 font-mono text-sm tracking-widest uppercase">
+                    Step {item.step}
+                  </span>
+                  <p className="font-display text-ink mt-6 text-[clamp(1.75rem,6vw,3rem)] leading-[1.15] font-semibold text-balance">
+                    {item.text}
+                  </p>
+                </>
+              ) : (
+                <>
+                  {item.kicker && (
+                    <p className="text-ember mb-3 font-mono text-sm tracking-widest uppercase">
+                      {item.kicker}
+                    </p>
+                  )}
+                  <p
+                    className={cn(
+                      'font-display leading-[1.12] font-semibold tracking-tight text-balance',
+                      'text-[clamp(2.125rem,7vw,3.5rem)]',
+                      item.punch ? 'text-ember' : 'text-ink',
+                    )}
+                  >
+                    {item.text}
+                  </p>
+                </>
               )}
-              <p
-                className={cn(
-                  'font-display leading-[1.12] font-semibold tracking-tight text-balance',
-                  // Reel type is loud. 34px is the floor on the narrowest phone.
-                  'text-[clamp(2.125rem,7vw,3.5rem)]',
-                  card.punch ? 'text-ember' : 'text-ink',
-                )}
-              >
-                {card.text}
-              </p>
             </motion.div>
           </section>
         ))}
@@ -227,7 +317,13 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
                   See it on the map
                 </Link>
               </Button>
-              <Button variant="ghost" onClick={() => goTo(0)}>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  goTo(0)
+                  setPlaying(true)
+                }}
+              >
                 <RotateCcwIcon />
                 Again
               </Button>
@@ -236,9 +332,12 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
         </section>
       </div>
 
-      {/* Beat label, bottom left: quiet orientation without a table of contents. */}
-      <div className="pointer-events-none absolute right-0 bottom-4 left-0 z-20 flex items-end justify-between px-6 sm:px-10">
-        <span className="text-ink-soft font-mono text-[0.6875rem] tracking-widest uppercase">
+      {/* Controls and orientation, bottom edge. */}
+      <div className="absolute right-0 bottom-4 left-0 z-20 flex items-end justify-between gap-3 px-6 sm:px-10">
+        <span
+          data-reel-beat
+          className="text-ink-soft pointer-events-none font-mono text-[0.6875rem] tracking-widest uppercase"
+        >
           {index < story.reel.length
             ? REEL_BEAT_LABEL[story.reel[index]!.beat]
             : index === story.reel.length
@@ -246,16 +345,32 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
               : 'The end'}
         </span>
 
-        {index === 0 && (
-          <motion.span
-            animate={reduceMotion ? undefined : { y: [0, 5, 0] }}
-            transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
-            className="text-ink-soft flex items-center gap-1.5 text-[0.6875rem] tracking-widest uppercase"
+        <div className="flex items-center gap-1.5">
+          {canNarrate && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => {
+                window.speechSynthesis.cancel()
+                setNarrating((value) => !value)
+              }}
+              aria-pressed={narrating}
+              aria-label={narrating ? 'Turn narration off' : 'Read it aloud'}
+              title={narrating ? 'Narration on — cards wait for the sentence to finish' : 'Read it aloud'}
+            >
+              {narrating ? <Volume2Icon /> : <VolumeXIcon />}
+            </Button>
+          )}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setPlaying((value) => !value)}
+            aria-pressed={playing}
+            aria-label={playing ? 'Pause' : 'Play'}
           >
-            Swipe
-            <ChevronDownIcon className="size-3.5" />
-          </motion.span>
-        )}
+            {playing && !onLastCard ? <PauseIcon /> : <PlayIcon />}
+          </Button>
+        </div>
       </div>
     </div>
   )

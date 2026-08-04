@@ -161,6 +161,17 @@ body.reel-open [data-nav-mobile] {
   display: none;
 }
 
+/* The progress tick fills over the card's own dwell time, so a reader can see
+   how long they have rather than being surprised by the cut. */
+@keyframes reel-tick {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
 /* Used by the timeline rail and the connection map to hide overflow scrollbars
    without hiding the ability to scroll. */
 .scrollbar-slim {

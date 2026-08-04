@@ -160,6 +160,13 @@ export interface ReelCard {
   beat: ReelBeat
   /** A turn in the story. Rendered in the accent colour, and given more air. */
   punch?: boolean
+  /**
+   * Renders this card as a chapter break — "Step 3" on a plain card, with the
+   * text as the step's title. It is a small device that does a lot: it turns a
+   * sequence of events into a procedure somebody followed on purpose, which is
+   * usually the honest reading and always the more gripping one.
+   */
+  step?: number
 }
 
 export type ReelBeat =
