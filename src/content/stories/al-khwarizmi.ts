@@ -12,13 +12,14 @@ export const alKhwarizmi: Story = {
   tags: ['mathematics', 'science', 'islamic-golden-age', 'computing', 'ideas'],
   readingMinutes: 9,
   reviewed: '2026-08-03',
+  mood: 'lapis',
 
   reel: [
     { beat: 'hook', punch: true, text: 'Every app on your phone runs on a word. The word is a man’s name.' },
     { beat: 'hook', text: 'He died about 1,200 years ago, and Latin scribes spelled him wrong.' },
     { beat: 'worldBefore', text: 'Try multiplying 148 by 39 in Roman numerals. CXLVIII by XXXIX.' },
     { beat: 'worldBefore', text: 'You cannot. There are no columns to line up. There is no symbol for nothing.' },
-    { beat: 'worldBefore', punch: true, text: 'So arithmetic is not something you do. It is someone you hire.' },
+    { beat: 'worldBefore', punch: true, mark: 'gate', text: 'So arithmetic is not something you do. It is someone you hire.' },
     { beat: 'problem', kicker: '762', text: 'Baghdad is built as a perfect circle. Within decades it is the largest city on earth.' },
     { beat: 'problem', text: 'An empire that size runs on numbers. Land, canals, taxes, the direction of Mecca.' },
     { beat: 'problem', text: 'And one problem that turns up in every town, every week. Inheritance.' },
@@ -27,7 +28,7 @@ export const alKhwarizmi: Story = {
     { beat: 'story', kicker: 'around 820', text: 'A scholar called al-Khwārizmī writes a book to fix it.' },
     { beat: 'story', text: 'Two moves. Restore what was taken from one side. Cancel what appears on both.' },
     { beat: 'story', text: 'In Arabic: al-jabr, and al-muqābala.' },
-    { beat: 'story', punch: true, text: 'al-jabr → algebra.' },
+    { beat: 'story', punch: true, mark: 'chain', text: 'al-jabr → algebra.' },
     { beat: 'story', text: 'Here is the strange part. There is no x in it. No equals sign. Those get invented centuries later.' },
     { beat: 'story', text: 'Every equation is a sentence. Every proof is a drawing.' },
     { beat: 'story', text: '"Completing the square" was not a metaphor. He drew an actual square.' },
@@ -43,7 +44,7 @@ export const alKhwarizmi: Story = {
     { beat: 'consequences', punch: true, text: 'It was not. It was him.' },
     { beat: 'whyItMatters', text: 'That is where "algorithm" comes from.' },
     { beat: 'whyItMatters', text: 'A word that now means: steps so exact you do not need to understand them to follow them.' },
-    { beat: 'whyItMatters', punch: true, text: 'Which is the only reason a machine can.' },
+    { beat: 'whyItMatters', punch: true, mark: 'echo', text: 'Which is the only reason a machine can.' },
   ],
 
   beats: {

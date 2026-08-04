@@ -32,7 +32,12 @@ await build({
 })
 
 const content = await import(pathToFileURL(outFile).href)
-const { STORIES, NODES, EDGES, nextSteps } = content
+const { STORIES, NODES, EDGES, nextSteps, MOODS } = content
+
+/** Marks are drawn by hand in ReelMarks.tsx; a typo would silently render nothing. */
+const MARKS = new Set([
+  'imbalance', 'drain', 'reversal', 'chain', 'spike', 'collapse', 'web', 'gate', 'press', 'echo',
+])
 
 const failures = []
 const warnings = []
@@ -120,6 +125,8 @@ for (const story of STORIES) {
    */
   const reelWords = story.reel.reduce((n, card) => n + card.text.split(/\s+/).length, 0)
 
+  check(MOODS.includes(story.mood), `${where}: unknown reel mood "${story.mood}"`)
+
   check(story.reel.length >= 12, `${where}: reel has only ${story.reel.length} cards; it needs at least 12`)
   check(story.reel.length <= 40, `${where}: reel has ${story.reel.length} cards; over 40 stops being a reel`)
   check(reelWords <= 450, `${where}: reel is ${reelWords} words; the budget is 450`)
@@ -131,6 +138,9 @@ for (const story of STORIES) {
       `${where}: reel card ${cardIndex + 1} is ${words} words — "${card.text.slice(0, 50)}…"`,
     )
     check(card.text.trim().length > 0, `${where}: reel card ${cardIndex + 1} is empty`)
+    if (card.mark) {
+      check(MARKS.has(card.mark), `${where}: reel card ${cardIndex + 1} uses unknown mark "${card.mark}"`)
+    }
   }
 
   // The reel has to carry the whole arc, not just the exciting middle.
@@ -139,6 +149,13 @@ for (const story of STORIES) {
     check(reelBeats.has(required), `${where}: reel never reaches the "${required}" beat`)
   }
   check(story.reel[0]?.beat === 'hook', `${where}: the reel does not open on the hook`)
+
+  // A mark on every card is wallpaper, and stops meaning anything.
+  const marked = story.reel.filter((card) => card.mark).length
+  check(
+    marked <= Math.ceil(story.reel.length / 5),
+    `${where}: ${marked} marked cards out of ${story.reel.length} — marks should stay rare`,
+  )
 
   // The hook is beat one and carries the whole page.
   check(story.hook.trim().length > 30, `${where}: the hook is too short to hook anyone`)

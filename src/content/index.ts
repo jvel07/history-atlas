@@ -3,11 +3,12 @@ import { connectionsFor, nodeById, NODES } from './graph'
 import { opiumWars } from './stories/opium-wars'
 import { alKhwarizmi } from './stories/al-khwarizmi'
 import { vladTepes } from './stories/vlad-tepes'
+import { unitedFruit } from './stories/united-fruit'
 
 export * from './types'
 export * from './graph'
 
-export const STORIES: Story[] = [vladTepes, opiumWars, alKhwarizmi]
+export const STORIES: Story[] = [unitedFruit, vladTepes, opiumWars, alKhwarizmi]
 
 export const STORY_BY_SLUG = new Map(STORIES.map((s) => [s.slug, s]))
 

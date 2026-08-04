@@ -161,6 +161,83 @@ body.reel-open [data-nav-mobile] {
   display: none;
 }
 
+/*
+  Reel moods.
+
+  Only the reel changes register; the rest of the atlas stays one surface,
+  because a site that changes identity per page reads as broken rather than as
+  designed. Each mood is written out for both themes rather than tinted
+  algorithmically, so every pairing below could be measured — and every one of
+  them clears 4.5:1 for body text and 3:1 for the marks.
+*/
+[data-mood] {
+  background-color: var(--reel-bg);
+  color: var(--reel-ink);
+}
+
+[data-mood='ember'] {
+  --reel-bg: oklch(97.5% 0.018 75);
+  --reel-ink: oklch(20% 0.03 50);
+  --reel-dim: oklch(43% 0.03 55);
+  --reel-accent: oklch(50% 0.17 40);
+  --reel-rule: oklch(87% 0.03 70);
+}
+.dark [data-mood='ember'] {
+  --reel-bg: oklch(16.5% 0.02 50);
+  --reel-ink: oklch(94% 0.012 80);
+  --reel-dim: oklch(72% 0.02 70);
+  --reel-accent: oklch(76% 0.15 55);
+  --reel-rule: oklch(29% 0.025 50);
+}
+
+/* Vlad. Cold, near-black, one bloodied accent. */
+[data-mood='noir'] {
+  --reel-bg: oklch(94% 0.006 280);
+  --reel-ink: oklch(18% 0.015 280);
+  --reel-dim: oklch(42% 0.02 280);
+  --reel-accent: oklch(45% 0.19 22);
+  --reel-rule: oklch(84% 0.01 280);
+}
+.dark [data-mood='noir'] {
+  --reel-bg: oklch(13% 0.014 285);
+  --reel-ink: oklch(92% 0.008 280);
+  --reel-dim: oklch(69% 0.014 280);
+  --reel-accent: oklch(66% 0.19 25);
+  --reel-rule: oklch(26% 0.02 285);
+}
+
+/* Al-Khwārizmī. Parchment and ink-blue. */
+[data-mood='lapis'] {
+  --reel-bg: oklch(97% 0.012 230);
+  --reel-ink: oklch(20% 0.03 250);
+  --reel-dim: oklch(43% 0.035 250);
+  --reel-accent: oklch(46% 0.15 250);
+  --reel-rule: oklch(87% 0.02 235);
+}
+.dark [data-mood='lapis'] {
+  --reel-bg: oklch(15.5% 0.025 260);
+  --reel-ink: oklch(93% 0.01 240);
+  --reel-dim: oklch(71% 0.02 240);
+  --reel-accent: oklch(75% 0.13 245);
+  --reel-rule: oklch(28% 0.03 260);
+}
+
+/* United Fruit. Plantation green, and a yellow that is doing the work. */
+[data-mood='jungle'] {
+  --reel-bg: oklch(96.5% 0.02 130);
+  --reel-ink: oklch(19% 0.035 150);
+  --reel-dim: oklch(42% 0.04 155);
+  --reel-accent: oklch(46% 0.13 152);
+  --reel-rule: oklch(86% 0.03 135);
+}
+.dark [data-mood='jungle'] {
+  --reel-bg: oklch(15% 0.028 155);
+  --reel-ink: oklch(93% 0.014 120);
+  --reel-dim: oklch(71% 0.025 130);
+  --reel-accent: oklch(76% 0.15 135);
+  --reel-rule: oklch(27% 0.035 155);
+}
+
 /* The progress tick fills over the card's own dwell time, so a reader can see
    how long they have rather than being surprised by the cut. */
 @keyframes reel-tick {

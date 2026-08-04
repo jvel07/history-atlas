@@ -167,7 +167,34 @@ export interface ReelCard {
    * usually the honest reading and always the more gripping one.
    */
   step?: number
+  /**
+   * An abstract mark drawn above the line. These are *diagrams of the sentence*,
+   * not pictures of the scene — a hub with spokes for a company holding every
+   * utility, arrows leaving a vessel for silver draining east. Illustration
+   * would need licensed art or a generator; a shape that means something needs
+   * neither and cannot be wrong about a face.
+   *
+   * Use them sparingly. A mark on every card is wallpaper.
+   */
+  mark?: MarkName
 }
+
+export type MarkName =
+  | 'imbalance'
+  | 'drain'
+  | 'reversal'
+  | 'chain'
+  | 'spike'
+  | 'collapse'
+  | 'web'
+  | 'gate'
+  | 'press'
+  | 'echo'
+
+/** Reel colour registers. Defined in `index.css`, one block per theme. */
+export type Mood = 'ember' | 'noir' | 'lapis' | 'jungle'
+
+export const MOODS: Mood[] = ['ember', 'noir', 'lapis', 'jungle']
 
 export type ReelBeat =
   | 'hook'
@@ -213,6 +240,13 @@ export interface Story {
    * Same eight beats, same facts, roughly a fiftieth of the words.
    */
   reel: ReelCard[]
+  /**
+   * The reel's colour register. Only the reel uses it — the rest of the atlas
+   * stays one consistent surface, because a site that changes identity per page
+   * reads as broken rather than as designed. Each mood is defined for both
+   * themes and every pairing is checked at 4.5:1.
+   */
+  mood: Mood
   beats: {
     worldBefore: Beat
     problem: Beat

@@ -14,6 +14,7 @@ import {
 import type { NextStep } from '@/content'
 import type { Story } from '@/content/types'
 import { REEL_BEAT_LABEL } from '@/content/types'
+import { ReelMark } from '@/components/ReelMarks'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -164,15 +165,15 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
   }, [])
 
   return (
-    <div className="bg-paper fixed inset-x-0 top-14 bottom-0 z-30">
+    <div data-mood={story.mood} className="fixed inset-x-0 top-14 bottom-0 z-30 transition-colors duration-500">
       {/* Segmented progress. The active tick fills over the card's own dwell
           time, so the pacing is visible rather than a surprise. */}
       <div className="absolute top-0 right-0 left-0 z-20 flex gap-[3px] px-3 pt-3" aria-hidden>
         {Array.from({ length: total }, (_, i) => (
-          <span key={i} className="bg-rule h-[3px] flex-1 overflow-hidden rounded-full">
+          <span key={i} className="h-[3px] flex-1 overflow-hidden rounded-full bg-[var(--reel-rule)]">
             <span
               key={`${i}-${index}-${playing}-${narrating}`}
-              className={cn('bg-ember block h-full origin-left', i < index && 'w-full')}
+              className={cn('block h-full origin-left bg-[var(--reel-accent)]', i < index && 'w-full')}
               style={
                 i === index && playing && !narrating && !onLastCard
                   ? { animation: `reel-tick ${dwell}ms linear forwards` }
@@ -218,17 +219,18 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
                   of events into a procedure someone followed on purpose. */}
               {item.step !== undefined ? (
                 <>
-                  <span className="border-rule text-ink-soft inline-block rounded-md border px-4 py-1.5 font-mono text-sm tracking-widest uppercase">
+                  <span className="inline-block rounded-md border border-[var(--reel-rule)] px-4 py-1.5 font-mono text-sm tracking-widest text-[var(--reel-dim)] uppercase">
                     Step {item.step}
                   </span>
-                  <p className="font-display text-ink mt-6 text-[clamp(1.75rem,6vw,3rem)] leading-[1.15] font-semibold text-balance">
+                  <p className="font-display mt-6 text-[clamp(1.75rem,6vw,3rem)] leading-[1.15] font-semibold text-balance text-[var(--reel-ink)]">
                     {item.text}
                   </p>
                 </>
               ) : (
                 <>
+                  {item.mark && <ReelMark name={item.mark} />}
                   {item.kicker && (
-                    <p className="text-ember mb-3 font-mono text-sm tracking-widest uppercase">
+                    <p className="mb-3 font-mono text-sm tracking-widest text-[var(--reel-accent)] uppercase">
                       {item.kicker}
                     </p>
                   )}
@@ -236,7 +238,7 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
                     className={cn(
                       'font-display leading-[1.12] font-semibold tracking-tight text-balance',
                       'text-[clamp(2.125rem,7vw,3.5rem)]',
-                      item.punch ? 'text-ember' : 'text-ink',
+                      item.punch ? 'text-[var(--reel-accent)]' : 'text-[var(--reel-ink)]',
                     )}
                   >
                     {item.text}
@@ -253,7 +255,7 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
           aria-label="Where this goes next"
         >
           <div className="mx-auto w-full max-w-2xl">
-            <p className="text-ink-soft mb-4 font-mono text-sm tracking-widest uppercase">
+            <p className="mb-4 font-mono text-sm tracking-widest text-[var(--reel-dim)] uppercase">
               Where this goes next
             </p>
             <div className="flex flex-col gap-2.5">
@@ -263,26 +265,26 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
                     key={node.id}
                     to="/story/$slug"
                     params={{ slug: node.story! }}
-                    className="group border-rule hover:border-ember/60 rounded-[calc(var(--radius)+2px)] border p-4 transition-colors"
+                    className="group rounded-[calc(var(--radius)+2px)] border border-[var(--reel-rule)] p-4 transition-colors hover:border-[var(--reel-accent)]"
                   >
-                    <p className="font-display text-ink group-hover:text-ember flex items-center gap-2 text-xl font-semibold transition-colors">
+                    <p className="font-display flex items-center gap-2 text-xl font-semibold text-[var(--reel-ink)] transition-colors group-hover:text-[var(--reel-accent)]">
                       {node.label}
                       <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
                     </p>
-                    <p className="text-ink-soft mt-1 text-sm leading-relaxed">{why}</p>
+                    <p className="mt-1 text-sm leading-relaxed text-[var(--reel-dim)]">{why}</p>
                   </Link>
                 ) : (
                   <Link
                     key={node.id}
                     to="/explore"
                     search={{ focus: node.id }}
-                    className="group border-rule hover:border-ember/60 rounded-[calc(var(--radius)+2px)] border border-dashed p-4 transition-colors"
+                    className="group rounded-[calc(var(--radius)+2px)] border border-dashed border-[var(--reel-rule)] p-4 transition-colors hover:border-[var(--reel-accent)]"
                   >
-                    <p className="font-display text-ink group-hover:text-ember flex flex-wrap items-center gap-2 text-xl font-semibold transition-colors">
+                    <p className="font-display flex flex-wrap items-center gap-2 text-xl font-semibold text-[var(--reel-ink)] transition-colors group-hover:text-[var(--reel-accent)]">
                       {node.label}
                       <Badge variant="outline">on the map · not written yet</Badge>
                     </p>
-                    <p className="text-ink-soft mt-1 text-sm leading-relaxed">{why}</p>
+                    <p className="mt-1 text-sm leading-relaxed text-[var(--reel-dim)]">{why}</p>
                   </Link>
                 ),
               )}
@@ -296,10 +298,10 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
           aria-label="Go deeper"
         >
           <div className="mx-auto w-full max-w-2xl">
-            <p className="font-display text-ink text-[clamp(1.5rem,4.5vw,2.25rem)] leading-tight font-semibold text-balance">
+            <p className="font-display text-[clamp(1.5rem,4.5vw,2.25rem)] leading-tight font-semibold text-balance text-[var(--reel-ink)]">
               That is the short version. It is accurate, and it leaves things out.
             </p>
-            <p className="text-ink-soft mt-4 leading-relaxed">
+            <p className="mt-4 leading-relaxed text-[var(--reel-dim)]">
               The long one has the {story.sources.length} sources, the {story.myths.length} things
               most people get wrong, and the parts historians still argue about.
             </p>
@@ -336,7 +338,7 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
       <div className="absolute right-0 bottom-4 left-0 z-20 flex items-end justify-between gap-3 px-6 sm:px-10">
         <span
           data-reel-beat
-          className="text-ink-soft pointer-events-none font-mono text-[0.6875rem] tracking-widest uppercase"
+          className="pointer-events-none font-mono text-[0.6875rem] tracking-widest text-[var(--reel-dim)] uppercase"
         >
           {index < story.reel.length
             ? REEL_BEAT_LABEL[story.reel[index]!.beat]
