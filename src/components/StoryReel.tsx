@@ -212,13 +212,13 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
             before asking for any attention. A hook with no frame around it is
             just a sentence someone shouted at you. */}
         <section
-          className="flex h-full snap-start snap-always items-center px-6 sm:px-10"
+          className="relative flex h-full snap-start snap-always items-center px-6 sm:px-10"
           aria-label="Title"
         >
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ root: scroller, amount: 0.6, once: false }}
+            viewport={{ amount: 0.6, once: false }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="mx-auto w-full max-w-2xl"
           >
@@ -239,7 +239,10 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
           <section
             key={i}
             className={cn(
-              'flex h-full snap-start snap-always items-center px-6 sm:px-10',
+              // `relative` scopes each card's absolute backdrop to its own
+              // section; without it the backdrop escapes to the fixed reel
+              // container and every card's backdrop stacks over the whole screen.
+              'relative flex h-full snap-start snap-always items-center px-6 sm:px-10',
               item.step !== undefined && 'justify-center',
             )}
             aria-label={`Card ${i + 1} of ${story.reel.length}`}
@@ -248,7 +251,7 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
             <motion.div
               initial={reduceMotion ? false : { opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ root: scroller, amount: 0.6, once: false }}
+              viewport={{ amount: 0.6, once: false }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
               className={cn(
                 'relative z-10 mx-auto w-full max-w-2xl',
@@ -292,7 +295,7 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
 
         {/* Closing card 1: the onward journey, which is the whole point. */}
         <section
-          className="flex h-full snap-start snap-always items-center px-6 sm:px-10"
+          className="relative flex h-full snap-start snap-always items-center px-6 sm:px-10"
           aria-label="Where this goes next"
         >
           <div className="mx-auto w-full max-w-2xl">
@@ -335,7 +338,7 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
 
         {/* Closing card 2: everything the reel deliberately left out. */}
         <section
-          className="flex h-full snap-start snap-always items-center px-6 sm:px-10"
+          className="relative flex h-full snap-start snap-always items-center px-6 sm:px-10"
           aria-label="Go deeper"
         >
           <div className="mx-auto w-full max-w-2xl">

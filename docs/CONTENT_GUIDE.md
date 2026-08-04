@@ -39,6 +39,39 @@ stumbled into the Guatemalan coup or the opium trade. People took steps.
 Do not force it. If the story is a collision rather than a procedure, numbering
 it is a lie about agency.
 
+### The voice: a narrator, not an explainer
+
+The reel is told like the opening of a documentary, not like a summary. The
+difference is the whole thing.
+
+- **A thesis title, not a label.** Name the *angle*, not the subject. "He Fought
+  With Fear", not "Vlad Țepeș". "A War to Keep Selling a Drug", not "The Opium
+  Wars". The subject arrives in the first card or two; the title's job is to make
+  a stranger stop.
+- **Open by stating the thesis, and close by transforming it.** The reel is
+  organised around one idea. State it up top, earn it through the middle, and
+  land it changed at the end. Vlad opens "the vampire is the least interesting
+  thing about him" and closes "he built a reputation — and then everyone else
+  built one for him."
+- **Set the scene with sensory fragments.** "Mud roads, cold stone, smoke in the
+  valleys." "Fires. Screams. The wrong tent." Atmosphere is allowed to spend a
+  card. It is what turns a fact into a place.
+- **Present tense, always.** "Vlad takes the throne." "China sends its most
+  honest man." It puts the reader in the room instead of the archive.
+- **One aphorism per turn.** At each hinge, state the *meaning* in a line someone
+  could repeat. "A reputation arrives before the soldiers do." "A debt is easier
+  to defend than a drug." "The hard part is never seeing it. It is being
+  believed." These are the lines the reel is remembered by — but see the caution.
+- **Build to short payoffs.** A one-word card lands a beat: "Silver." "Zero."
+  "Fear." Give the turn its own screen.
+
+**The caution that keeps it honest.** Atmosphere must be *generically* true —
+"mud roads and smoke in the valleys" is fifteenth-century Wallachia, not an
+invented specific. An aphorism must be *defensible* — a claim you would stand
+behind in the long article, not a flourish that overstates. And the cinematic
+voice never softens the myth-turn: Vlad still becomes "a story used to sell fear",
+because that is the accurate reading, however good the sentence sounds.
+
 ### What a card is
 
 One idea. One breath. If it needs a second clause to land, it is two cards.
