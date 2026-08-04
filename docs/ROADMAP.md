@@ -14,9 +14,30 @@ this.
       cold.
 - [ ] **The Baghdad chain, end to end.** `house-of-wisdom`, `islamic-golden-age`,
       `mongol-invasion`, `european-renaissance`.
-- [ ] **A third cluster that touches both.** The printing press, or paper. The
-      moment three clusters interlock, the graph stops being two lines and starts
-      being a map.
+- [x] **A third cluster that touches both.** Done via Vlad Țepeș: the pamphlets
+      that made him a monster hang off `printing-press`, and the fall of
+      Constantinople reaches both `european-renaissance` and `mongol-invasion`.
+      The graph is now a map rather than two lines.
+
+- [ ] **More "beyond the legend" stories.** The strongest strand the atlas has —
+      a famous legend on the outside, real history underneath, and the myth's
+      own origin as the punchline. Vlad is the template. Candidates where the
+      documentary record actually supports a reversal:
+      - **Cleopatra** — a scholar and administrator who spoke nine languages,
+        turned into a seductress by Octavian's propaganda and then by Hollywood.
+      - **The Salem trials** — the interesting question is not witches, it is
+        land disputes, refugee trauma and a legal system that admitted spectral
+        evidence for eighteen months and then stopped.
+      - **Rasputin** — the murder story everyone knows comes almost entirely
+        from the memoir of one of his killers.
+      - **Genghis Khan** — the census, the postal system and the religious
+        tolerance, against a body count recorded largely by the conquered.
+      - **The Borgias** — where the poison actually comes from a rival family
+        that inherited the papacy and the archives.
+
+      The rule that makes these work: the myth has to be *documented*, with a
+      traceable origin, or it is just contrarianism. Vlad has Wilkinson's
+      footnote and a 1972 bestseller. Do not write one without that.
 
 Target: fifteen stories. That is roughly where "you might also like" starts
 producing surprises rather than the obvious neighbour.

@@ -283,6 +283,9 @@ export type EdgeRelation =
   | 'preserved'
   | 'inspired'
   | 'destroyed'
+  | 'named'
+  | 'held'
+  | 'fought'
 
 export const RELATION_PHRASE: Record<EdgeRelation, string> = {
   caused: 'caused',
@@ -297,6 +300,9 @@ export const RELATION_PHRASE: Record<EdgeRelation, string> = {
   preserved: 'preserved',
   inspired: 'inspired',
   destroyed: 'destroyed',
+  named: 'gave its name to',
+  held: 'held captive',
+  fought: 'fought',
 }
 
 export interface GraphEdge {

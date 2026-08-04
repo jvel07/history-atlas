@@ -41,6 +41,19 @@ const STOP_WORDS = new Set([
 const QUESTION_WORDS = new Set(['why', 'what', 'who', 'when', 'where', 'how', 'which', 'whom'])
 
 /**
+ * Verbs that are almost always the *frame* of a question rather than its
+ * subject. "Who invented algorithms?" is a question about algorithms; matching
+ * on "invented" found a myth about Vlad Țepeș inventing impalement and ranked it
+ * first. These still count — an entry containing them is marginally better than
+ * one that does not — but they never anchor a result and never boost a title.
+ */
+const WEAK_VERBS = new Set([
+  'invented', 'invent', 'created', 'create', 'made', 'make', 'called', 'named',
+  'started', 'start', 'began', 'begin', 'caused', 'cause', 'used', 'use',
+  'happened', 'happen', 'become', 'became', 'known',
+])
+
+/**
  * The cheapest possible stand-in for embeddings: a hand-built association list.
  * It is small and honest about being small. Each entry earns its place by being
  * a query someone actually types that the corpus answers under another word.
@@ -85,17 +98,32 @@ function tokenise(text: string): string[] {
     .filter((token) => token.length > 1 && !STOP_WORDS.has(token))
 }
 
-function expand(tokens: string[]): string[] {
-  const out = new Set<string>()
+/**
+ * Expand a query into weighted terms.
+ *
+ * The weights matter more than the expansion does. "Who invented algorithms?"
+ * once returned a myth about Vlad Țepeș, because `algorithms` was stemmed to
+ * `algorithm` and lost its status as a word the reader had typed, while the
+ * generic verb `invented` kept full weight and matched a heading elsewhere.
+ * A morphological variant of a typed word is still that word; only a synonym
+ * we guessed at deserves a discount.
+ */
+function expand(tokens: string[]): Map<string, number> {
+  const out = new Map<string, number>()
+  const put = (term: string, weight: number) => {
+    if ((out.get(term) ?? 0) < weight) out.set(term, weight)
+  }
+
   for (const token of tokens) {
     if (QUESTION_WORDS.has(token)) continue
-    out.add(token)
+    const weak = WEAK_VERBS.has(token)
+    put(token, weak ? 0.4 : 1)
     // Crude stemming: enough to match "invented"/"invent", "numerals"/"numeral".
-    if (token.endsWith('s') && token.length > 3) out.add(token.slice(0, -1))
-    if (token.endsWith('ed') && token.length > 4) out.add(token.slice(0, -2))
-    for (const related of ASSOCIATIONS[token] ?? []) out.add(related)
+    if (token.endsWith('s') && token.length > 3) put(token.slice(0, -1), weak ? 0.4 : 0.9)
+    if (token.endsWith('ed') && token.length > 4) put(token.slice(0, -2), weak ? 0.4 : 0.9)
+    for (const related of ASSOCIATIONS[token] ?? []) put(related, 0.45)
   }
-  return [...out]
+  return out
 }
 
 interface IndexEntry {
@@ -190,39 +218,64 @@ function nodeEntry(node: GraphNode): IndexEntry {
 }
 
 let INDEX: IndexEntry[] | null = null
+/** Inverse document frequency, so a rare word outranks a common one. */
+let IDF: Map<string, number> | null = null
 
 function index(): IndexEntry[] {
-  INDEX ??= [...STORIES.flatMap(storyEntries), ...NODES.map(nodeEntry)]
+  if (!INDEX) {
+    INDEX = [...STORIES.flatMap(storyEntries), ...NODES.map(nodeEntry)]
+
+    // Without this, "invented" and "algorithm" count the same, and a query is
+    // won by whichever entry happens to repeat the commonest word in it.
+    const documentFrequency = new Map<string, number>()
+    for (const entry of INDEX) {
+      for (const term of new Set([...entry.bag.keys(), ...entry.titleBag])) {
+        documentFrequency.set(term, (documentFrequency.get(term) ?? 0) + 1)
+      }
+    }
+    IDF = new Map()
+    for (const [term, df] of documentFrequency) {
+      IDF.set(term, Math.log(1 + INDEX.length / df))
+    }
+  }
   return INDEX
+}
+
+function idf(term: string): number {
+  // An unseen term cannot match anything, so its weight is never used; the
+  // fallback just keeps the arithmetic total.
+  return IDF?.get(term) ?? 1
 }
 
 export function searchLocal(query: string, limit = 8): SearchResult[] {
   const raw = tokenise(query)
   if (raw.length === 0) return []
+  const entries = index()
   const terms = expand(raw)
-  // Terms the reader actually typed count more than ones we inferred for them.
-  const typed = new Set(raw)
 
   const scored: SearchResult[] = []
 
-  for (const entry of index()) {
+  for (const entry of entries) {
     let score = 0
     let matched = 0
 
-    for (const term of terms) {
-      const weight = typed.has(term) ? 1 : 0.45
+    for (const [term, weight] of terms) {
+      const rarity = idf(term)
       const count = entry.bag.get(term) ?? 0
       if (count > 0) {
         matched += 1
-        score += weight * (1 + Math.log(count))
+        score += weight * rarity * (1 + Math.log(count))
       }
-      if (entry.titleBag.has(term)) score += weight * 2.5
+      // Only words the reader actually typed, and that carry content, are worth
+      // a title boost. Boosting a guessed synonym or a framing verb is how a
+      // heading wins a query that is not about it.
+      if (weight >= 0.9 && entry.titleBag.has(term)) score += weight * rarity * 2.5
     }
 
     if (matched === 0) continue
 
     // Reward covering more of the question rather than repeating one word.
-    score *= 0.6 + 0.4 * (matched / terms.length)
+    score *= 0.6 + 0.4 * (matched / terms.size)
     // A whole story beats a fragment of one when both match equally well.
     if (entry.kind === 'story') score *= 1.25
     if (entry.kind === 'node') score *= 0.9
