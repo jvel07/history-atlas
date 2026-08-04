@@ -1,5 +1,6 @@
 import {
   Outlet,
+  createHashHistory,
   createRootRoute,
   createRoute,
   createRouter,
@@ -102,10 +103,19 @@ const routeTree = rootRoute.addChildren([
   aboutRoute,
 ])
 
+/**
+ * Path routing normally, hash routing when the app is embedded somewhere whose
+ * URL it does not control — a single-file build dropped on an arbitrary path.
+ * Clean paths are worth keeping for the real site (shareable, indexable), so
+ * this is opt-in at build time rather than the default.
+ */
+const embedded = import.meta.env.VITE_EMBED === '1'
+
 export const router = createRouter({
   routeTree,
+  ...(embedded ? { history: createHashHistory() } : {}),
   // Vite's BASE_URL carries the repo subpath on GitHub Pages and "/" elsewhere.
-  basepath: import.meta.env.BASE_URL,
+  basepath: embedded ? '/' : import.meta.env.BASE_URL,
   defaultPreload: 'intent',
   scrollRestoration: true,
 })

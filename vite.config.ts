@@ -15,7 +15,11 @@ export default defineConfig({
   },
   build: {
     target: 'es2022',
-    rollupOptions: {
+    // SINGLE_FILE collapses every chunk into one so the whole app can be
+    // inlined into a standalone .html with no network requests at all.
+    rollupOptions: process.env.SINGLE_FILE === '1' ? {
+      output: { inlineDynamicImports: true },
+    } : {
       output: {
         // Motion and the story corpus are both large and both change on a
         // different cadence to the framework, so they get their own chunks:
