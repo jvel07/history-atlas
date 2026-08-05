@@ -27,6 +27,10 @@ import { semmelweis } from './stories/semmelweis'
 import { penicillin } from './stories/penicillin'
 import { semmelweisEs } from './es/stories/semmelweis'
 import { penicillinEs } from './es/stories/penicillin'
+import { blackDeath } from './stories/black-death'
+import { meijiRestoration } from './stories/meiji-restoration'
+import { blackDeathEs } from './es/stories/black-death'
+import { meijiRestorationEs } from './es/stories/meiji-restoration'
 
 export * from './types'
 export * from './graph'
@@ -43,8 +47,8 @@ export * from './labels'
  * a language boundary mid-journey.
  */
 const STORIES_BY_LANG: Record<Lang, Story[]> = {
-  en: [markopolos, cannae, fallOfConstantinople, unitedFruit, printingPress, transatlanticCable, vladTepes, libraryOfAlexandria, bronzeAgeCollapse, opiumWars, semmelweis, penicillin, alKhwarizmi],
-  es: [markopolosEs, cannaeEs, fallOfConstantinopleEs, unitedFruitEs, printingPressEs, transatlanticCableEs, vladTepesEs, libraryOfAlexandriaEs, bronzeAgeCollapseEs, opiumWarsEs, semmelweisEs, penicillinEs, alKhwarizmiEs],
+  en: [markopolos, cannae, fallOfConstantinople, unitedFruit, printingPress, transatlanticCable, vladTepes, libraryOfAlexandria, bronzeAgeCollapse, opiumWars, semmelweis, penicillin, blackDeath, meijiRestoration, alKhwarizmi],
+  es: [markopolosEs, cannaeEs, fallOfConstantinopleEs, unitedFruitEs, printingPressEs, transatlanticCableEs, vladTepesEs, libraryOfAlexandriaEs, bronzeAgeCollapseEs, opiumWarsEs, semmelweisEs, penicillinEs, blackDeathEs, meijiRestorationEs, alKhwarizmiEs],
 }
 
 /**

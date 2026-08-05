@@ -506,6 +506,66 @@ export const NODE_ES: Record<string, { label: string; blurb: string }> = {
     label: 'La resistencia a los antibióticos',
     blurb: 'Las bacterias evolucionan. El hombre que encontró la penicilina lo dijo en su discurso Nobel, en 1945, y describió exactamente cómo lo provocaríamos.',
   },
+
+  /* ------------------------------------------------ la gran mortandad ---- */
+  'black-death': {
+    label: 'La Peste Negra',
+    blurb: 'En siete años mató a entre un tercio y la mitad de toda Europa, y después Europa se hizo más rica.',
+  },
+  'yersinia-pestis': {
+    label: 'Yersinia pestis',
+    blurb: 'La bacteria en sí, identificada en 1894 y recuperada por fin de unos dientes del siglo XIV en 2011.',
+  },
+  'silk-road': {
+    label: 'La Ruta de la Seda',
+    blurb: 'No una ruta: una red de caminos por Eurasia que llevaba seda, plata, papel, ideas y, una vez, una bacteria.',
+  },
+  'mongol-empire': {
+    label: 'El Imperio mongol',
+    blurb: 'El mayor imperio terrestre continuo de la historia, que hizo Eurasia segura de cruzar — para los mercaderes y para todo lo que llevaban.',
+  },
+  feudalism: {
+    label: 'La servidumbre',
+    blurb: 'Mano de obra atada a la tierra por ley y no por salario. Sobrevivió mil años y no sobrevivió a una escasez de trabajadores.',
+  },
+  'statute-of-labourers': {
+    label: 'El Estatuto de los Trabajadores',
+    blurb: 'El intento inglés de 1351 de congelar los salarios en lo que eran antes de que muriera media plantilla. No se sostuvo.',
+  },
+  'peasants-revolt': {
+    label: 'La revuelta campesina de 1381',
+    blurb: 'Jornaleros ingleses marchando sobre Londres por un impuesto de capitación, tras treinta años con prohibición legal de cobrar lo que valían.',
+  },
+  'plague-pogroms': {
+    label: 'Las matanzas de 1348–49',
+    blurb: 'Comunidades judías de Renania acusadas de envenenar los pozos y destruidas — mientras la peste las estaba matando también a ellas.',
+  },
+
+  /* --------------------------------------------- el país se reabre ---- */
+  'meiji-restoration': {
+    label: 'La Restauración Meiji',
+    blurb: 'Un país decide, a propósito y a toda velocidad, convertirse en la clase de Estado al que no se puede volver a abrir por la fuerza.',
+  },
+  'tokugawa-shogunate': {
+    label: 'El shogunato Tokugawa',
+    blurb: 'Dos siglos y medio de paz bajo un gobierno militar, con el contacto exterior reducido a unos pocos canales controlados.',
+  },
+  'perry-expedition': {
+    label: 'Los barcos negros de Perry',
+    blurb: 'Cuatro buques de guerra estadounidenses en la bahía de Edo en 1853, dos de ellos de vapor, con una carta que no era una petición.',
+  },
+  samurai: {
+    label: 'Los samuráis',
+    blurb: 'Una clase guerrera hereditaria de unos dos millones de personas, abolida en una década por un gobierno formado íntegramente por sus miembros.',
+  },
+  'charter-oath': {
+    label: 'El Juramento de los Cinco Artículos',
+    blurb: 'Cinco frases de 1868, la última de las cuales dice que se buscará el conocimiento por todo el mundo. Lo decían literalmente.',
+  },
+  'modern-japan': {
+    label: 'El Japón moderno',
+    blurb: 'El primer Estado no occidental que se industrializó en sus propios términos — y que luego hizo a sus vecinos lo que casi le hacen a él.',
+  },
 }
 
 export const EDGE_NOTE_ES: Record<string, string> = {
@@ -845,4 +905,46 @@ export const EDGE_NOTE_ES: Record<string, string> = {
     'Cada dosis selecciona a las bacterias que la sobreviven. Eso no es un mal uso de la tecnología: es cómo funciona la tecnología.',
   'alexander-fleming>antibiotic-resistance':
     'En su discurso Nobel de 1945 describió a un hombre comprando poca penicilina, tratándose de menos y criando una cepa resistente.',
+
+  /* ------------------------------------------------ la gran mortandad ---- */
+  'yersinia-pestis>black-death':
+    'Se discutió un siglo y lo zanjó el ADN recuperado de los dientes de unas víctimas de la peste enterradas en Londres en 1349.',
+  'mongol-empire>silk-road':
+    'Una sola autoridad de Hungría a Corea hizo las rutas terrestres lo bastante seguras como para usarlas, y por eso subió tanto el tráfico por Eurasia.',
+  'mongol-empire>mongol-invasion':
+    'La misma expansión que reabrió las rutas comerciales destruyó Bagdad en 1258 al pasar por allí.',
+  'silk-road>black-death':
+    'Una Eurasia conectada mueve mercancías más rápido, y una bacteria es una mercancía que viaja en el pelo de un animal dentro de un saco de grano.',
+  'black-death>feudalism':
+    'Cuando muere un tercio de la mano de obra, los supervivientes pueden poner precio — y ninguna ley que diga lo contrario aguanta mucho.',
+  'black-death>statute-of-labourers':
+    'La respuesta inglesa a la subida de los salarios fue prohibirlos por encima de la tarifa de 1346. Las actas de aplicación muestran lo mal que funcionó.',
+  'statute-of-labourers>peasants-revolt':
+    'Treinta años con prohibición legal de cobrar lo que vales, y encima un impuesto de capitación.',
+  'black-death>plague-pogroms':
+    'Se acusó a comunidades enteras de envenenar los pozos y se las quemó. El papa publicó dos bulas señalando que los judíos también morían de aquello.',
+  'black-death>european-renaissance':
+    'Menos gente heredando la misma riqueza, y una escasez de mano de obra que premiaba la máquina. El vínculo se discute, no es evidente.',
+
+  /* --------------------------------------------- el país se reabre ---- */
+  'tokugawa-shogunate>samurai':
+    'Una clase guerrera mantenida con estipendios hereditarios durante doscientos cincuenta años sin ninguna guerra que librar.',
+  'opium-wars>tokugawa-shogunate':
+    'Las noticias de la derrota china llegaron por los holandeses de Nagasaki, y en Edo entendieron la lección exacta: esto es lo que cuesta negarse.',
+  'steam-engine>perry-expedition':
+    'Dos de los cuatro barcos eran de vapor. Entraron en la bahía de Edo contra el viento, que es la parte que no admitía discusión.',
+  'perry-expedition>tokugawa-shogunate':
+    'Demostró en una semana que el gobierno no podía hacer lo único para lo que existía, que era mantener fuera a los extranjeros.',
+  'perry-expedition>unequal-treaties':
+    'Kanagawa en 1854, y luego Harris en 1858: aranceles fijados y tribunales extranjeros en suelo japonés, con la misma plantilla usada con China.',
+  'tokugawa-shogunate>meiji-restoration':
+    'Una guerra civil en 1868-69 sustituyó al shogun por un emperador de quince años y por los hombres que habían ganado en su nombre.',
+  'meiji-restoration>charter-oath':
+    'Cinco artículos, abril de 1868. El último —buscar el conocimiento por todo el mundo— resultó ser una descripción de la política real.',
+  'meiji-restoration>samurai':
+    'Estipendios conmutados, espadas prohibidas, servicio militar obligatorio. La clase la abolió un gobierno compuesto íntegramente por sus miembros.',
+  'meiji-restoration>unequal-treaties':
+    'Ese era todo el objetivo. La extraterritorialidad fuera en 1899, la autonomía arancelaria en 1911: cuarenta años para deshacer once páginas.',
+  'meiji-restoration>modern-japan':
+    'Ferrocarriles, reclutamiento, una constitución y una armada — y luego, con las mismas herramientas, un imperio propio.',
 }
