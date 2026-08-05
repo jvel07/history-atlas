@@ -394,6 +394,66 @@ export const NODE_ES: Record<string, { label: string; blurb: string }> = {
     label: 'William Thomson (lord Kelvin)',
     blurb: 'El físico que explicó por qué un cable largo emborrona la señal, y luego construyó el instrumento capaz de leer el borrón.',
   },
+
+  /* ---------------------------------------------- el mito de la biblioteca ---- */
+  'library-of-alexandria': {
+    label: 'La Biblioteca de Alejandría',
+    blurb: 'La biblioteca más famosa de la historia, y aquella cuya destrucción casi con seguridad no ocurrió como te la contaron.',
+  },
+  alexandria: {
+    label: 'Alejandría',
+    blurb: 'Una ciudad griega en una costa egipcia, construida para ser la capital de un Mediterráneo que antes de ella no existía.',
+  },
+  'ptolemaic-egypt': {
+    label: 'El Egipto ptolemaico',
+    blurb: 'Tres siglos de faraones griegos que financiaron la erudición por prestigio de Estado, hasta que dejaron de hacerlo.',
+  },
+  eratosthenes: {
+    label: 'Eratóstenes',
+    blurb: 'Bibliotecario jefe en Alejandría, que midió el tamaño de la tierra con un palo, un pozo y un rato de aritmética.',
+  },
+  'julius-caesar': {
+    label: 'Julio César',
+    blurb: 'Atrapado en Alejandría en el 48 a. C. con pocas fuerzas, prendió fuego al puerto — y cargó con una biblioteca durante dos mil años.',
+  },
+
+  /* ------------------------------------------- cuando cayó todo ---- */
+  'bronze-age-collapse': {
+    label: 'El colapso del Bronce Final',
+    blurb: 'En unos cincuenta años, hacia el 1200 a. C., casi todos los reinos del Mediterráneo oriental dejaron de existir.',
+  },
+  'sea-peoples': {
+    label: 'Los Pueblos del Mar',
+    blurb: 'Un nombre que los escribas egipcios dieron a unos enemigos llegados en barco. Si fueron causa o síntoma del colapso todavía se discute.',
+  },
+  'hittite-empire': {
+    label: 'El Imperio hitita',
+    blurb: 'Una de las grandes potencias de la época, con una capital de puertas de piedra y archivos, abandonada tan del todo que se olvidó tres mil años.',
+  },
+  ugarit: {
+    label: 'Ugarit',
+    blurb: 'Un puerto sirio rico que ardió hacia el 1190 a. C. y dejó sus últimas cartas entre las ruinas para que las leamos.',
+  },
+  'mycenaean-greece': {
+    label: 'La Grecia micénica',
+    blurb: 'Reinos palaciales con escritura contable, burocracia y una historia sobre Troya — y todo eso se detuvo a la vez.',
+  },
+  'greek-dark-age': {
+    label: 'La Edad Oscura griega',
+    blurb: 'Cuatro siglos en los que Grecia olvidó cómo escribir, cómo construir en piedra y cómo hacer nada que un palacio hubiera querido.',
+  },
+  phoenicia: {
+    label: 'Fenicia',
+    blurb: 'Las ciudades portuarias del Levante que sobrevivieron al colapso y heredaron un Mediterráneo sin nadie a quien rendir cuentas.',
+  },
+  'phoenician-alphabet': {
+    label: 'El alfabeto',
+    blurb: 'Veintidós signos que un mercader aprendía en una semana, en vez de cientos que solo un escriba de palacio podía permitirse dominar.',
+  },
+  'iron-working': {
+    label: 'El hierro',
+    blurb: 'Al principio peor que el bronce, y en todas partes. Ganó porque dejaron de funcionar las rutas que traían el estaño.',
+  },
 }
 
 export const EDGE_NOTE_ES: Record<string, string> = {
@@ -647,4 +707,52 @@ export const EDGE_NOTE_ES: Record<string, string> = {
     'Hacia 1900 una orden salida de Londres llegaba el mismo día a Bombay, Ciudad del Cabo o Sídney, por cable de propiedad británica.',
   'transatlantic-cable>free-trade':
     'Los precios de Londres y Nueva York convergieron a los pocos días de abrirse, porque el arbitraje pasó a moverse más rápido que la mercancía.',
+
+  /* ---------------------------------------------- el mito de la biblioteca ---- */
+  'ptolemaic-egypt>library-of-alexandria':
+    'Era un proyecto de prestigio estatal, y por eso funcionó — y por eso murió cuando el Estado dejó de pagarlo.',
+  'library-of-alexandria>alexandria':
+    'La ciudad se recuerda por un edificio del que nadie ha encontrado nunca los cimientos.',
+  'eratosthenes>library-of-alexandria':
+    'Bibliotecario jefe, y el hombre que midió la circunferencia de la tierra con pocos puntos de error desde un pozo de Asuán.',
+  'julius-caesar>library-of-alexandria':
+    'Su incendio del puerto en el 48 a. C. quemó libros. Si llegó a la Biblioteca es la pregunta sin resolver más vieja de esta historia.',
+  'library-of-alexandria>hellenistic-science':
+    'Euclides, Ptolomeo y Galeno nos llegan por las ediciones hechas y corregidas aquí, no por su propia mano.',
+  'library-of-alexandria>house-of-wisdom':
+    'No es un linaje: es una comparación que el atlas hace a propósito. Ambas son instituciones reales enterradas bajo una leyenda mucho mayor.',
+  'ptolemaic-egypt>roman-republic':
+    'Cleopatra fue la última de la línea. Roma anexionó Egipto en el 30 a. C. y heredó la provincia más rica que llegaría a tener.',
+  'julius-caesar>roman-republic':
+    'Estuvo sitiado en Alejandría en plena guerra civil que acabó con ella. Catorce años después había un emperador.',
+  'byzantine-empire>alexandria':
+    'La ciudad siguió siendo romana, y luego bizantina, seis siglos después de los Ptolomeos — y todavía discutía de teología cuando llegaron los árabes.',
+
+  /* ------------------------------------------- cuando cayó todo ---- */
+  'bronze-age-collapse>hittite-empire':
+    'La capital se vació —archivos retirados, puertas tapiadas— y luego ardió. Eso se lee como una evacuación, no como un saqueo.',
+  'bronze-age-collapse>mycenaean-greece':
+    'Todos los palacios ardieron o quedaron abandonados en un par de generaciones, y la escritura se fue con ellos.',
+  'bronze-age-collapse>ugarit':
+    'La ciudad ardió hacia el 1190 a. C. y no volvió a ocuparse, y por eso sus últimas cartas diplomáticas siguen siendo legibles.',
+  'sea-peoples>bronze-age-collapse':
+    'La versión egipcia, tallada en el muro de un templo por el único rey que los venció. Si fueron causa o síntoma sigue sin resolverse.',
+  'hittite-empire>ugarit':
+    'Un puerto vasallo que pagaba tributo y mandaba tropas — incluidas, en su último año, las tropas que necesitaba en casa.',
+  'hittite-empire>iron-working':
+    'Trabajaban el hierro pronto y parece que lo mantuvieron escaso. Cuánto de monopolio fue aquello se discute.',
+  'bronze-age-collapse>iron-working':
+    'El bronce necesita estaño traído de miles de kilómetros. El mineral de hierro lo tienes bajo los pies. Muertas las rutas largas, ganó el metal local.',
+  'bronze-age-collapse>greek-dark-age':
+    'Grecia dejó de escribir unos cuatrocientos años. Homero se compone dentro de ese silencio, y sobre el mundo anterior a él.',
+  'bronze-age-collapse>phoenicia':
+    'Las ciudades portuarias que salieron adelante heredaron un mar sin grandes potencias, y se volvieron los comerciantes de la era siguiente.',
+  'phoenicia>phoenician-alphabet':
+    'Una escritura hecha para listas de carga y no para palacios, que es exactamente por lo que se extendió más allá de quienes la crearon.',
+  'phoenician-alphabet>hellenistic-science':
+    'El griego se escribe con letras fenicias prestadas. Todo lo escrito después en griego se apoya en la taquigrafía de un comerciante.',
+  'phoenicia>carthage':
+    'Tiro plantó una colonia en la costa norteafricana hacia el 814 a. C. Seis siglos después peleaba con Roma por el mar occidental.',
+  'greek-dark-age>phoenician-alphabet':
+    'Grecia salió del silencio volviendo a escribir — pero con el alfabeto de un mercader, no con el silabario palacial que había perdido.',
 }

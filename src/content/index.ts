@@ -19,6 +19,10 @@ import { printingPress } from './stories/printing-press'
 import { transatlanticCable } from './stories/transatlantic-cable'
 import { printingPressEs } from './es/stories/printing-press'
 import { transatlanticCableEs } from './es/stories/transatlantic-cable'
+import { libraryOfAlexandria } from './stories/library-of-alexandria'
+import { bronzeAgeCollapse } from './stories/bronze-age-collapse'
+import { libraryOfAlexandriaEs } from './es/stories/library-of-alexandria'
+import { bronzeAgeCollapseEs } from './es/stories/bronze-age-collapse'
 
 export * from './types'
 export * from './graph'
@@ -35,8 +39,8 @@ export * from './labels'
  * a language boundary mid-journey.
  */
 const STORIES_BY_LANG: Record<Lang, Story[]> = {
-  en: [markopolos, cannae, fallOfConstantinople, unitedFruit, printingPress, transatlanticCable, vladTepes, opiumWars, alKhwarizmi],
-  es: [markopolosEs, cannaeEs, fallOfConstantinopleEs, unitedFruitEs, printingPressEs, transatlanticCableEs, vladTepesEs, opiumWarsEs, alKhwarizmiEs],
+  en: [markopolos, cannae, fallOfConstantinople, unitedFruit, printingPress, transatlanticCable, vladTepes, libraryOfAlexandria, bronzeAgeCollapse, opiumWars, alKhwarizmi],
+  es: [markopolosEs, cannaeEs, fallOfConstantinopleEs, unitedFruitEs, printingPressEs, transatlanticCableEs, vladTepesEs, libraryOfAlexandriaEs, bronzeAgeCollapseEs, opiumWarsEs, alKhwarizmiEs],
 }
 
 /**
