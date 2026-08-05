@@ -1134,6 +1134,100 @@ export const NODES: GraphNode[] = [
     era: 'modern',
     years: [1889, 2026],
   },
+
+  /* ------------------------------------------------ the machine note ---- */
+  {
+    id: 'ada-lovelace',
+    label: 'Ada Lovelace',
+    kind: 'person',
+    blurb: 'She saw that a calculating machine did not have to be about numbers — a hundred years before there was one to try it on.',
+    era: 'industrial',
+    years: [1815, 1852],
+    story: 'ada-lovelace',
+  },
+  {
+    id: 'charles-babbage',
+    label: 'Charles Babbage',
+    kind: 'person',
+    blurb: 'He designed two computers in the 1830s, built neither, and was right about almost everything except how to finish anything.',
+    era: 'industrial',
+    years: [1791, 1871],
+  },
+  {
+    id: 'difference-engine',
+    label: 'The Difference Engine',
+    kind: 'technology',
+    blurb: 'A machine for calculating and printing mathematical tables without human error. Funded, never completed, and correct — a working one was built in 1991.',
+    era: 'industrial',
+    years: [1822, 1842],
+  },
+  {
+    id: 'analytical-engine',
+    label: 'The Analytical Engine',
+    kind: 'technology',
+    blurb: 'A general-purpose programmable computer designed in 1834, with memory, a processor, loops and branching. Nobody built it for a century.',
+    era: 'industrial',
+    years: [1834, 1871],
+  },
+  {
+    id: 'jacquard-loom',
+    label: 'The Jacquard loom',
+    kind: 'technology',
+    blurb: 'A loom that read its pattern off punched cards — the first machine to take its instructions from something you could swap out.',
+    era: 'industrial',
+    years: [1804, 1900],
+  },
+  {
+    id: 'computing',
+    label: 'Computing',
+    kind: 'idea',
+    blurb: 'The realisation that a machine following exact instructions can operate on anything you can represent as symbols, not merely on quantity.',
+    era: 'modern',
+    years: [1843, 2026],
+  },
+
+  /* ------------------------------------------------- the gold empire ---- */
+  {
+    id: 'mansa-musa',
+    label: 'Mansa Musa',
+    kind: 'person',
+    blurb: 'He crossed the Sahara to Mecca in 1324 with so much gold that Cairo’s currency was still depressed a decade later.',
+    era: 'medieval',
+    years: [1280, 1337],
+    story: 'mansa-musa',
+  },
+  {
+    id: 'mali-empire',
+    label: 'The Mali Empire',
+    kind: 'empire',
+    blurb: 'A West African state the size of western Europe, whose real business was not mining gold but taxing everything that moved.',
+    era: 'medieval',
+    years: [1235, 1670],
+  },
+  {
+    id: 'timbuktu',
+    label: 'Timbuktu',
+    kind: 'place',
+    blurb: 'A trading town on the Niger that became a university city, and then a European byword for the impossibly far away.',
+    era: 'medieval',
+    years: [1100, 1591],
+  },
+  {
+    id: 'trans-saharan-trade',
+    label: 'The trans-Saharan trade',
+    kind: 'trade',
+    blurb: 'Gold and enslaved people north, salt and books and horses south, across a desert crossing that took two months and killed people.',
+    era: 'medieval',
+    years: [700, 1600],
+  },
+  {
+    id: 'catalan-atlas',
+    label: 'The Catalan Atlas',
+    kind: 'idea',
+    blurb: 'A map made on Majorca in 1375 with a West African king holding a lump of gold at the bottom of it, captioned as the richest in the world.',
+    era: 'medieval',
+    years: [1375, 1375],
+  },
 ]
 
 export const EDGES: GraphEdge[] = [
@@ -2259,6 +2353,112 @@ export const EDGES: GraphEdge[] = [
     to: 'modern-japan',
     relation: 'enabled',
     note: 'Railways, conscription, a constitution and a navy — and then, using the same tools, an empire of its own.',
+  },
+
+  /* ------------------------------------------------ the machine note ---- */
+  {
+    from: 'charles-babbage',
+    to: 'difference-engine',
+    relation: 'enabled',
+    note: 'A machine to calculate and print mathematical tables, so that the errors in the printed ones would stop killing sailors.',
+  },
+  {
+    from: 'charles-babbage',
+    to: 'analytical-engine',
+    relation: 'enabled',
+    note: 'Having failed to finish the simpler machine, he designed a far harder one that could be told what to do rather than built to do it.',
+  },
+  {
+    from: 'difference-engine',
+    to: 'analytical-engine',
+    relation: 'inspired',
+    note: 'The first machine does one thing very well. The second was the answer to asking why a machine should be limited to one thing.',
+  },
+  {
+    from: 'industrial-revolution',
+    to: 'jacquard-loom',
+    relation: 'enabled',
+    note: 'A weaving trade under pressure to produce complex patterns at speed paid for the first machine that read its instructions off cards.',
+  },
+  {
+    from: 'jacquard-loom',
+    to: 'analytical-engine',
+    relation: 'inspired',
+    note: 'Punched cards, taken directly from the loom. It is where the idea of separating the machine from the instructions comes from.',
+  },
+  {
+    from: 'ada-lovelace',
+    to: 'analytical-engine',
+    relation: 'wrote',
+    note: 'Her 1843 notes on it run to three times the length of the paper they annotate, and are the only substantial contemporary account of what it was for.',
+  },
+  {
+    from: 'ada-lovelace',
+    to: 'algorithm',
+    relation: 'wrote',
+    note: 'Note G sets out a step-by-step procedure for a machine to follow — a thousand years after a scholar in Baghdad gave the idea its name.',
+  },
+  {
+    from: 'ada-lovelace',
+    to: 'computing',
+    relation: 'inspired',
+    note: 'The leap nobody else made: if you can represent something as symbols, a machine that manipulates symbols can operate on it. Even music.',
+  },
+  {
+    from: 'analytical-engine',
+    to: 'computing',
+    relation: 'enabled',
+    note: 'Memory, a processor, loops and conditional branching, in 1834. Every one of those is still in the machine you are reading this on.',
+  },
+
+  /* ------------------------------------------------- the gold empire ---- */
+  {
+    from: 'mali-empire',
+    to: 'mansa-musa',
+    relation: 'ruled',
+    note: 'The ninth or tenth ruler of a state already a century old when he inherited it. He did not build it; he was its most visible export.',
+  },
+  {
+    from: 'trans-saharan-trade',
+    to: 'mali-empire',
+    relation: 'funded',
+    note: 'The empire did not own the gold mines. It taxed everything that crossed its territory, which was more reliable and much easier.',
+  },
+  {
+    from: 'mansa-musa',
+    to: 'trans-saharan-trade',
+    relation: 'ran',
+    note: 'Two months of desert each way, moving gold and enslaved people north and salt, horses and books south.',
+  },
+  {
+    from: 'mansa-musa',
+    to: 'timbuktu',
+    relation: 'ruled',
+    note: 'He annexed it on the way home from Mecca and brought an architect back with him. The scholarship came later, and lasted longer.',
+  },
+  {
+    from: 'paper-making',
+    to: 'timbuktu',
+    relation: 'enabled',
+    note: 'Books need paper, and paper came across the desert by camel — which is why a manuscript there cost more than a horse.',
+  },
+  {
+    from: 'islamic-golden-age',
+    to: 'timbuktu',
+    relation: 'inspired',
+    note: 'Law, medicine and astronomy travelled south with the caravans, and Timbuktu bought the manuscripts by the load.',
+  },
+  {
+    from: 'mansa-musa',
+    to: 'catalan-atlas',
+    relation: 'inspired',
+    note: 'Fifty years after the hajj, a Majorcan mapmaker drew him holding a gold nugget — the image that fixed Mali in the European mind.',
+  },
+  {
+    from: 'trans-saharan-trade',
+    to: 'european-renaissance',
+    relation: 'funded',
+    note: 'The gold in a Florentine florin came up through the Sahara. Europe’s first stable gold coinage in five centuries ran on West African metal.',
   },
 ]
 

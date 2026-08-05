@@ -150,66 +150,41 @@ The generative half is the easiest way to destroy this project, so it is fenced:
 - `vite.config.ts` — `base` must match the repo name or Pages serves a blank page.
   `BASE=/ npm run build` for a root-served host.
 
-## In progress: categories, and two stories in each
+## Categories, and the twelve stories — done
 
-Last commit is `fc51351` (the EN/ES toggle). The tree is clean; **none of the
-work below has been started.** This is the next job, requested with a screenshot
-of six category chips.
+Requested with a screenshot of six category chips: a taxonomy matching them, and
+two stories in each. **The literal reading — twelve new stories on top of the
+existing five — is what was built**, so every category has at least two new
+pieces and the shelves the old stories sit on have more.
 
-**What was asked:** a category taxonomy matching those six chips, and two
-stories in each.
-
-| category | emoji | status |
+| category | emoji | stories |
 | --- | --- | --- |
-| Epic battles | 🛡️ | 0 — needs 2 |
-| Key milestones | 🧭 | 0 — needs 2 |
-| Ancient worlds | 🏺 | 0 — needs 2 |
-| Great discoveries | 💡 | 0 — needs 2 |
-| Ages & eras | 🕰️ | 0 — needs 2 |
-| Historic icons | 🎩 | 0 — needs 2 |
+| Epic battles 🛡️ | | Cannae, the fall of Constantinople |
+| Key milestones 🧭 | | the printing press, the Atlantic cable, Opium Wars, El Pulpo |
+| Ancient worlds 🏺 | | the Library of Alexandria, the Bronze Age collapse |
+| Great discoveries 💡 | | Semmelweis, penicillin, al-Khwārizmī |
+| Ages & eras 🕰️ | | the Black Death, the Meiji Restoration |
+| Historic icons 🎩 | | Ada Lovelace, Mansa Musa, Vlad Țepeș, Markopolos |
 
-**Decide first, with the user if possible:** whether the existing five stories
-count toward the two (Opium Wars → milestones, Al-Khwārizmī → discoveries, Vlad
-→ icons, El Pulpo → milestones, Markopolos → icons), which needs ~7 new, or
-whether "2 for each" means twelve *new* stories on top. The literal reading is
-twelve new. Assume twelve unless told otherwise, and say which you assumed.
+`Category` is a union in `types.ts` alongside `CATEGORY_ORDER` and
+`CATEGORY_EMOJI` (a shield is not language); `CATEGORY_LABELS` is per `Lang` in
+`labels.ts`. `/stories` renders a filter chip only for a category with something
+behind it, and `check-content.mjs` both compares `category` across languages and
+fails if any category empties out — because the page hides an empty shelf rather
+than render a dead end, so nothing else would notice.
 
-**Shape of the work, in order:**
+**Each story names the register it is written in**, in a comment at the top of
+the file: Keegan for Cannae, Runciman for Constantinople, Eisenstein's argument
+for the press, Standage for the cable, Mary Beard for Alexandria, Cline for the
+Bronze Age, Nuland for Semmelweis, Lax for penicillin, Tuchman for the Black
+Death, Jansen for Meiji, Gleick for Lovelace, Gomez for Mansa Musa. Register
+borrowed, never wording — the rule above still holds.
 
-1. `Category` union in `types.ts`, a required `category` on `Story`,
-   `CATEGORY_LABELS` (per `Lang`) and `CATEGORY_EMOJI` in `labels.ts`. Assign a
-   category to the five existing stories.
-2. Browse-by-category on `/stories` — chips that filter, matching the
-   screenshot's ordering. A category with no story behind it must not render.
-3. Add a check: every category has at least one story, and the parity check
-   already in `check-content.mjs` should compare `category` between languages.
-4. Then the stories, **in batches of two, verifying and committing each batch**.
-   Each needs graph nodes and edges too (`≥3` onward connections, primary node
-   pointing back at the slug) and the Spanish twin.
-
-**Candidate stories, chosen because the primary sources are real and citable and
-because several already exist as graph nodes:**
-
-- Battles: Cannae 216 BC (Polybius, Livy, Goldsworthy); the fall of
-  Constantinople 1453 (Runciman, Barbaro's diary, Crowley) — `fall-of-constantinople`
-  is already a node and already links to Vlad.
-- Milestones: the printing press (Eisenstein, Füssel) — already a node, already
-  linked to the Dracula pamphlets; the transatlantic cable 1866 (Standage,
-  Gordon).
-- Ancient worlds: the Library of Alexandria and the myth that it burned in one
-  night (Bagnall 2002, El-Abbadi); the Bronze Age collapse c.1177 BC (Cline, the
-  Ugarit letters).
-- Discoveries: Semmelweis and handwashing 1847 (his 1861 *Ätiologie*, Nuland) —
-  pairs with Markopolos on the warning-ignored thread the atlas already runs;
-  penicillin and the myth that Fleming did it alone (Fleming 1929, Lax).
-- Ages & eras: the Black Death (Benedictow, Herlihy); the Meiji Restoration
-  (Jansen, the 1868 Charter Oath) — connects to the unequal treaties.
-- Icons: Ada Lovelace and Note G (Menabrea/Lovelace 1843, Hollings/Martin/Rice) —
-  already in the al-Khwārizmī timeline; Mansa Musa and the 1324 hajj (al-Umari,
-  Ibn Khaldun, the 1375 Catalan Atlas, Gomez).
-
-Swap any of these freely — what matters is that the sources are checkable and
-the story earns its place. Do not bulk-generate; the rule above still holds.
+**If you add more stories,** the shape that worked: graph nodes and edges first
+(≥3 onward connections, primary node pointing back at the slug, ES overlay
+entries for every node and edge), then the English reel, then the beats, then
+the Spanish twin with the structure matched field for field. Verify and commit
+in batches of two. The parity check is unforgiving and that is the point.
 
 **Browser suites live outside the repo**, in the session scratchpad:
 `browser-check.mjs` (60 checks), `reel-check.mjs` (52) and `lang-check.mjs`

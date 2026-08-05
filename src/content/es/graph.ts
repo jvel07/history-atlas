@@ -566,6 +566,54 @@ export const NODE_ES: Record<string, { label: string; blurb: string }> = {
     label: 'El Japón moderno',
     blurb: 'El primer Estado no occidental que se industrializó en sus propios términos — y que luego hizo a sus vecinos lo que casi le hacen a él.',
   },
+
+  /* ------------------------------------------------ la nota de la máquina ---- */
+  'ada-lovelace': {
+    label: 'Ada Lovelace',
+    blurb: 'Vio que una máquina de calcular no tenía por qué ir de números — cien años antes de que hubiera una con la que probarlo.',
+  },
+  'charles-babbage': {
+    label: 'Charles Babbage',
+    blurb: 'Diseñó dos ordenadores en la década de 1830, no construyó ninguno y acertó en casi todo salvo en cómo terminar algo.',
+  },
+  'difference-engine': {
+    label: 'La máquina diferencial',
+    blurb: 'Una máquina para calcular e imprimir tablas matemáticas sin error humano. Financiada, nunca terminada y correcta: en 1991 se construyó una que funciona.',
+  },
+  'analytical-engine': {
+    label: 'La máquina analítica',
+    blurb: 'Un ordenador programable de propósito general diseñado en 1834, con memoria, procesador, bucles y bifurcaciones. Nadie lo construyó en un siglo.',
+  },
+  'jacquard-loom': {
+    label: 'El telar de Jacquard',
+    blurb: 'Un telar que leía su patrón en tarjetas perforadas: la primera máquina que tomaba sus instrucciones de algo intercambiable.',
+  },
+  computing: {
+    label: 'La computación',
+    blurb: 'Darse cuenta de que una máquina que sigue instrucciones exactas puede operar sobre cualquier cosa representable como símbolos, y no solo sobre cantidades.',
+  },
+
+  /* ------------------------------------------------- el imperio del oro ---- */
+  'mansa-musa': {
+    label: 'Mansa Musa',
+    blurb: 'Cruzó el Sáhara hasta La Meca en 1324 con tanto oro que la moneda de El Cairo seguía hundida una década después.',
+  },
+  'mali-empire': {
+    label: 'El Imperio de Malí',
+    blurb: 'Un Estado de África occidental del tamaño de Europa occidental, cuyo verdadero negocio no era extraer oro sino gravar todo lo que se movía.',
+  },
+  timbuktu: {
+    label: 'Tombuctú',
+    blurb: 'Un pueblo comercial del Níger que llegó a ser ciudad universitaria, y después sinónimo europeo de lo imposiblemente lejano.',
+  },
+  'trans-saharan-trade': {
+    label: 'El comercio transahariano',
+    blurb: 'Oro y personas esclavizadas hacia el norte, sal, libros y caballos hacia el sur, por una travesía de dos meses que mataba gente.',
+  },
+  'catalan-atlas': {
+    label: 'El Atlas catalán',
+    blurb: 'Un mapa hecho en Mallorca en 1375 con un rey de África occidental sosteniendo una pepita de oro abajo del todo, rotulado como el más rico del mundo.',
+  },
 }
 
 export const EDGE_NOTE_ES: Record<string, string> = {
@@ -947,4 +995,42 @@ export const EDGE_NOTE_ES: Record<string, string> = {
     'Ese era todo el objetivo. La extraterritorialidad fuera en 1899, la autonomía arancelaria en 1911: cuarenta años para deshacer once páginas.',
   'meiji-restoration>modern-japan':
     'Ferrocarriles, reclutamiento, una constitución y una armada — y luego, con las mismas herramientas, un imperio propio.',
+
+  /* ------------------------------------------------ la nota de la máquina ---- */
+  'charles-babbage>difference-engine':
+    'Una máquina para calcular e imprimir tablas matemáticas, para que los errores de las impresas dejaran de matar marineros.',
+  'charles-babbage>analytical-engine':
+    'Tras no terminar la máquina sencilla, diseñó una mucho más difícil a la que se le podía decir qué hacer en vez de construirla para hacerlo.',
+  'difference-engine>analytical-engine':
+    'La primera máquina hace una cosa muy bien. La segunda fue la respuesta a preguntarse por qué una máquina tenía que limitarse a una cosa.',
+  'industrial-revolution>jacquard-loom':
+    'Un sector textil presionado para producir patrones complejos a toda prisa pagó la primera máquina que leía sus instrucciones en tarjetas.',
+  'jacquard-loom>analytical-engine':
+    'Tarjetas perforadas, tomadas directamente del telar. De ahí sale la idea de separar la máquina de las instrucciones.',
+  'ada-lovelace>analytical-engine':
+    'Sus notas de 1843 triplican en extensión el artículo que anotan, y son el único relato contemporáneo sustancial de para qué servía aquello.',
+  'ada-lovelace>algorithm':
+    'La Nota G expone un procedimiento paso a paso para que lo siga una máquina, mil años después de que un sabio de Bagdad diera nombre a la idea.',
+  'ada-lovelace>computing':
+    'El salto que no dio nadie más: si puedes representar algo como símbolos, una máquina que manipula símbolos puede operar sobre ello. Hasta música.',
+  'analytical-engine>computing':
+    'Memoria, procesador, bucles y bifurcación condicional, en 1834. Todo eso sigue en la máquina en la que estás leyendo esto.',
+
+  /* ------------------------------------------------- el imperio del oro ---- */
+  'mali-empire>mansa-musa':
+    'El noveno o décimo gobernante de un Estado que ya tenía un siglo cuando lo heredó. No lo construyó: fue su exportación más visible.',
+  'trans-saharan-trade>mali-empire':
+    'El imperio no era dueño de las minas de oro. Gravaba todo lo que cruzaba su territorio, que era más fiable y mucho más fácil.',
+  'mansa-musa>trans-saharan-trade':
+    'Dos meses de desierto en cada sentido, moviendo oro y personas esclavizadas al norte y sal, caballos y libros al sur.',
+  'mansa-musa>timbuktu':
+    'La anexionó al volver de La Meca y se trajo consigo a un arquitecto. La erudición llegó después, y duró más.',
+  'paper-making>timbuktu':
+    'Los libros necesitan papel, y el papel cruzaba el desierto en camello: por eso allí un manuscrito costaba más que un caballo.',
+  'islamic-golden-age>timbuktu':
+    'El derecho, la medicina y la astronomía viajaron al sur con las caravanas, y Tombuctú compraba los manuscritos por cargamentos.',
+  'mansa-musa>catalan-atlas':
+    'Cincuenta años después de la peregrinación, un cartógrafo mallorquín lo dibujó con una pepita de oro: la imagen que fijó Malí en la cabeza europea.',
+  'trans-saharan-trade>european-renaissance':
+    'El oro de un florín florentino subía por el Sáhara. La primera moneda de oro estable de Europa en cinco siglos funcionaba con metal africano.',
 }

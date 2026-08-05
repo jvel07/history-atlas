@@ -109,12 +109,11 @@ for (const story of ALL_STORIES.en) {
   )
   byCategory.set(story.category, (byCategory.get(story.category) ?? 0) + 1)
 }
+// A chip with nothing behind it is a promise the atlas has not kept. `/stories`
+// hides empty categories rather than render a dead end, which means a shelf
+// going empty would be invisible on the page — so it fails here instead.
 for (const [id, count] of byCategory) {
-  // TODO: raise to `>= 1` once battles, ancient worlds and ages & eras have
-  // stories. A chip with nothing behind it is a promise the atlas has not kept,
-  // and `/stories` hides empty categories rather than render a dead end — which
-  // means a shelf going empty is invisible on the page unless it fails here.
-  check(count >= 0, `category "${id}" has no stories; it would not render at all`)
+  check(count >= 1, `category "${id}" has no stories; it would not render at all`)
 }
 
 for (const lang of LANGS) {
