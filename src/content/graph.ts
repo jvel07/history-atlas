@@ -914,6 +914,108 @@ export const NODES: GraphNode[] = [
     era: 'ancient',
     years: [-1200, -800],
   },
+
+  /* ------------------------------------------------- wash your hands ---- */
+  {
+    id: 'semmelweis',
+    label: 'Ignaz Semmelweis',
+    kind: 'person',
+    blurb: 'He cut the death rate on his ward by ninety per cent in a month, and was dismissed, ridiculed and committed for it.',
+    era: 'industrial',
+    years: [1818, 1865],
+    story: 'semmelweis',
+  },
+  {
+    id: 'puerperal-fever',
+    label: 'Childbed fever',
+    kind: 'event',
+    blurb: 'The infection that killed women in maternity wards at rates that would have closed any other building in the city.',
+    era: 'industrial',
+    years: [1750, 1940],
+  },
+  {
+    id: 'handwashing',
+    label: 'Handwashing',
+    kind: 'idea',
+    blurb: 'Chlorinated lime, twenty seconds, before touching a patient. It worked two decades before anyone could say why.',
+    era: 'industrial',
+    years: [1847, 2026],
+  },
+  {
+    id: 'vienna-general-hospital',
+    label: 'The Vienna General Hospital',
+    kind: 'organisation',
+    blurb: 'The largest teaching hospital in Europe, whose two maternity clinics differed only in who delivered the babies — and in how many women died.',
+    era: 'industrial',
+    years: [1784, 1900],
+  },
+  {
+    id: 'institutional-denial',
+    label: 'The ignored warning',
+    kind: 'idea',
+    blurb: 'The recurring shape: someone is right early, with proof, in writing — and is rejected for what believing them would cost.',
+    era: 'modern',
+    years: [1843, 2026],
+  },
+  {
+    id: 'germ-theory',
+    label: 'Germ theory',
+    kind: 'idea',
+    blurb: 'Diseases are caused by living organisms too small to see. Once that was accepted, nearly all of medicine had to be rebuilt.',
+    era: 'industrial',
+    years: [1860, 1890],
+  },
+  {
+    id: 'joseph-lister',
+    label: 'Joseph Lister',
+    kind: 'person',
+    blurb: 'He did what Semmelweis had done, twenty years later, and was believed — because by then he could say what he was killing.',
+    era: 'industrial',
+    years: [1827, 1912],
+  },
+
+  /* ------------------------------------------------ the mould story ---- */
+  {
+    id: 'penicillin',
+    label: 'Penicillin',
+    kind: 'discovery',
+    blurb: 'A contaminated dish in 1928, a drug in 1941, and the reason a scratch stopped being a way to die.',
+    era: 'modern',
+    years: [1928, 1945],
+    story: 'penicillin',
+  },
+  {
+    id: 'alexander-fleming',
+    label: 'Alexander Fleming',
+    kind: 'person',
+    blurb: 'He noticed the mould, wrote it up, could not turn it into a medicine, and got almost all of the credit.',
+    era: 'modern',
+    years: [1881, 1955],
+  },
+  {
+    id: 'oxford-team',
+    label: 'The Oxford team',
+    kind: 'organisation',
+    blurb: 'Florey, Chain and Heatley, who spent three years turning a curiosity in a journal into something you could inject.',
+    era: 'modern',
+    years: [1938, 1945],
+  },
+  {
+    id: 'antibiotics',
+    label: 'Antibiotics',
+    kind: 'discovery',
+    blurb: 'Drugs that kill bacteria without killing you. They added years to the average human life faster than anything else ever has.',
+    era: 'modern',
+    years: [1935, 2026],
+  },
+  {
+    id: 'antibiotic-resistance',
+    label: 'Antibiotic resistance',
+    kind: 'idea',
+    blurb: 'Bacteria evolve. The man who found penicillin said so in his Nobel lecture, in 1945, and described exactly how we would cause it.',
+    era: 'contemporary',
+    years: [1945, 2026],
+  },
 ]
 
 export const EDGES: GraphEdge[] = [
@@ -1814,6 +1916,112 @@ export const EDGES: GraphEdge[] = [
     to: 'phoenician-alphabet',
     relation: 'succeeded-by',
     note: 'Greece came out of the silence writing again — but in a merchant’s alphabet, not the palace syllabary it had lost.',
+  },
+
+  /* ------------------------------------------------- wash your hands ---- */
+  {
+    from: 'semmelweis',
+    to: 'vienna-general-hospital',
+    relation: 'studied-at',
+    note: 'Assistant in the First Obstetrical Clinic from 1846, where roughly one mother in ten was dying and nobody could say why.',
+  },
+  {
+    from: 'vienna-general-hospital',
+    to: 'puerperal-fever',
+    relation: 'caused',
+    note: 'Two clinics, one disease, and a death rate three times higher in the one where doctors came straight from the autopsy room.',
+  },
+  {
+    from: 'semmelweis',
+    to: 'puerperal-fever',
+    relation: 'exposed',
+    note: 'He found the cause by counting: two wards, the same building, and the only real difference was whose hands did the delivery.',
+  },
+  {
+    from: 'semmelweis',
+    to: 'handwashing',
+    relation: 'enabled',
+    note: 'Chlorinated lime before every examination. Mortality on his ward fell from around eighteen per cent to near one, in weeks.',
+  },
+  {
+    from: 'handwashing',
+    to: 'puerperal-fever',
+    relation: 'destroyed',
+    note: 'It stopped it. Nobody could explain the mechanism for another twenty years, which turned out to be the fatal problem.',
+  },
+  {
+    from: 'semmelweis',
+    to: 'institutional-denial',
+    relation: 'exposed',
+    note: 'The evidence was a mortality table anyone could read. Accepting it meant accepting that doctors had been killing patients.',
+  },
+  {
+    from: 'institutional-denial',
+    to: 'harry-markopolos',
+    relation: 'ignored',
+    note: 'The same shape a century and a half later: proof in writing, delivered repeatedly, to a body that could not afford to believe it.',
+  },
+  {
+    from: 'joseph-lister',
+    to: 'handwashing',
+    relation: 'inspired',
+    note: 'Antiseptic surgery from 1867 did what Semmelweis had done and was accepted — because Lister could name what he was killing.',
+  },
+  {
+    from: 'joseph-lister',
+    to: 'germ-theory',
+    relation: 'enabled',
+    note: 'He read Pasteur on fermentation and asked the surgeon’s question: if living things spoil wine, what is spoiling wounds?',
+  },
+  {
+    from: 'germ-theory',
+    to: 'handwashing',
+    relation: 'enabled',
+    note: 'Not the discovery — the explanation. A practice nobody could justify became a practice nobody could argue with.',
+  },
+
+  /* ------------------------------------------------ the mould story ---- */
+  {
+    from: 'germ-theory',
+    to: 'penicillin',
+    relation: 'enabled',
+    note: 'You cannot look for something that kills bacteria until you accept that bacteria are what is killing the patient.',
+  },
+  {
+    from: 'alexander-fleming',
+    to: 'penicillin',
+    relation: 'wrote',
+    note: 'He saw the clear ring around the mould in 1928, published it in 1929, and could not make a usable drug out of it.',
+  },
+  {
+    from: 'oxford-team',
+    to: 'penicillin',
+    relation: 'enabled',
+    note: 'Chain found the paper, Heatley built the extraction, Florey ran the trial. Three years from a curiosity to an injection.',
+  },
+  {
+    from: 'penicillin',
+    to: 'antibiotics',
+    relation: 'named',
+    note: 'Not the first antibacterial — the sulfa drugs came earlier — but the one that made the whole class seem possible.',
+  },
+  {
+    from: 'antibiotics',
+    to: 'puerperal-fever',
+    relation: 'destroyed',
+    note: 'What finally ended childbed fever was not persuasion about handwashing. It was a drug that killed the streptococcus outright.',
+  },
+  {
+    from: 'antibiotics',
+    to: 'antibiotic-resistance',
+    relation: 'caused',
+    note: 'Every dose selects for the bacteria that survive it. This is not misuse of the technology; it is how the technology works.',
+  },
+  {
+    from: 'alexander-fleming',
+    to: 'antibiotic-resistance',
+    relation: 'warned',
+    note: 'In his 1945 Nobel lecture he described a man buying too little penicillin, under-treating himself, and breeding a resistant strain.',
   },
 ]
 

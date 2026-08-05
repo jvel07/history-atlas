@@ -454,6 +454,58 @@ export const NODE_ES: Record<string, { label: string; blurb: string }> = {
     label: 'El hierro',
     blurb: 'Al principio peor que el bronce, y en todas partes. Ganó porque dejaron de funcionar las rutas que traían el estaño.',
   },
+
+  /* ------------------------------------------------- lávate las manos ---- */
+  semmelweis: {
+    label: 'Ignaz Semmelweis',
+    blurb: 'Redujo la mortalidad de su sala un noventa por ciento en un mes, y por ello lo apartaron, lo ridiculizaron y lo internaron.',
+  },
+  'puerperal-fever': {
+    label: 'La fiebre puerperal',
+    blurb: 'La infección que mataba a las mujeres en las maternidades a un ritmo que habría cerrado cualquier otro edificio de la ciudad.',
+  },
+  handwashing: {
+    label: 'El lavado de manos',
+    blurb: 'Cal clorada, veinte segundos, antes de tocar a una paciente. Funcionó dos décadas antes de que nadie pudiera explicar por qué.',
+  },
+  'vienna-general-hospital': {
+    label: 'El Hospital General de Viena',
+    blurb: 'El mayor hospital docente de Europa, cuyas dos maternidades solo se diferenciaban en quién asistía los partos — y en cuántas mujeres morían.',
+  },
+  'institutional-denial': {
+    label: 'El aviso ignorado',
+    blurb: 'La forma que se repite: alguien tiene razón pronto, con pruebas y por escrito — y lo rechazan por lo que costaría creerle.',
+  },
+  'germ-theory': {
+    label: 'La teoría microbiana',
+    blurb: 'Las enfermedades las causan seres vivos demasiado pequeños para verlos. Aceptado eso, hubo que reconstruir casi toda la medicina.',
+  },
+  'joseph-lister': {
+    label: 'Joseph Lister',
+    blurb: 'Hizo lo mismo que Semmelweis veinte años después y le creyeron, porque para entonces ya podía decir qué estaba matando.',
+  },
+
+  /* ------------------------------------------------ la historia del moho ---- */
+  penicillin: {
+    label: 'La penicilina',
+    blurb: 'Una placa contaminada en 1928, un medicamento en 1941, y la razón de que un arañazo dejara de ser una forma de morir.',
+  },
+  'alexander-fleming': {
+    label: 'Alexander Fleming',
+    blurb: 'Vio el moho, lo publicó, no consiguió convertirlo en medicina y se llevó casi todo el mérito.',
+  },
+  'oxford-team': {
+    label: 'El equipo de Oxford',
+    blurb: 'Florey, Chain y Heatley, que pasaron tres años convirtiendo una curiosidad de revista en algo que podías inyectar.',
+  },
+  antibiotics: {
+    label: 'Los antibióticos',
+    blurb: 'Fármacos que matan bacterias sin matarte a ti. Han añadido años a la vida humana media más rápido que ninguna otra cosa.',
+  },
+  'antibiotic-resistance': {
+    label: 'La resistencia a los antibióticos',
+    blurb: 'Las bacterias evolucionan. El hombre que encontró la penicilina lo dijo en su discurso Nobel, en 1945, y describió exactamente cómo lo provocaríamos.',
+  },
 }
 
 export const EDGE_NOTE_ES: Record<string, string> = {
@@ -755,4 +807,42 @@ export const EDGE_NOTE_ES: Record<string, string> = {
     'Tiro plantó una colonia en la costa norteafricana hacia el 814 a. C. Seis siglos después peleaba con Roma por el mar occidental.',
   'greek-dark-age>phoenician-alphabet':
     'Grecia salió del silencio volviendo a escribir — pero con el alfabeto de un mercader, no con el silabario palacial que había perdido.',
+
+  /* ------------------------------------------------- lávate las manos ---- */
+  'semmelweis>vienna-general-hospital':
+    'Ayudante de la Primera Clínica Obstétrica desde 1846, donde moría cerca de una madre de cada diez y nadie sabía decir por qué.',
+  'vienna-general-hospital>puerperal-fever':
+    'Dos clínicas, una misma enfermedad, y una mortalidad tres veces mayor en aquella donde los médicos llegaban directos de la sala de autopsias.',
+  'semmelweis>puerperal-fever':
+    'Encontró la causa contando: dos salas, el mismo edificio, y la única diferencia real era de quién eran las manos que asistían el parto.',
+  'semmelweis>handwashing':
+    'Cal clorada antes de cada exploración. La mortalidad de su sala cayó de cerca del dieciocho por ciento a casi uno, en semanas.',
+  'handwashing>puerperal-fever':
+    'La detuvo. Nadie pudo explicar el mecanismo hasta veinte años después, y eso resultó ser el problema fatal.',
+  'semmelweis>institutional-denial':
+    'La prueba era una tabla de mortalidad que cualquiera podía leer. Aceptarla significaba aceptar que los médicos habían estado matando pacientes.',
+  'institutional-denial>harry-markopolos':
+    'La misma forma siglo y medio después: pruebas por escrito, entregadas una y otra vez, a un organismo que no podía permitirse creerlas.',
+  'joseph-lister>handwashing':
+    'La cirugía antiséptica desde 1867 hizo lo que había hecho Semmelweis y se aceptó, porque Lister sí podía nombrar lo que estaba matando.',
+  'joseph-lister>germ-theory':
+    'Leyó a Pasteur sobre la fermentación y se hizo la pregunta del cirujano: si unos seres vivos estropean el vino, ¿qué estropea las heridas?',
+  'germ-theory>handwashing':
+    'No el descubrimiento: la explicación. Una práctica que nadie sabía justificar pasó a ser una práctica que nadie podía discutir.',
+
+  /* ------------------------------------------------ la historia del moho ---- */
+  'germ-theory>penicillin':
+    'No puedes buscar algo que mate bacterias hasta que aceptas que las bacterias son lo que está matando al paciente.',
+  'alexander-fleming>penicillin':
+    'Vio el anillo transparente alrededor del moho en 1928, lo publicó en 1929 y no logró sacar de ello un medicamento utilizable.',
+  'oxford-team>penicillin':
+    'Chain encontró el artículo, Heatley montó la extracción, Florey dirigió el ensayo. Tres años de la curiosidad a la inyección.',
+  'penicillin>antibiotics':
+    'No fue el primer antibacteriano —las sulfamidas llegaron antes—, pero sí el que hizo parecer posible toda la familia.',
+  'antibiotics>puerperal-fever':
+    'Lo que terminó de verdad con la fiebre puerperal no fue convencer a nadie del lavado de manos. Fue un fármaco que mataba al estreptococo.',
+  'antibiotics>antibiotic-resistance':
+    'Cada dosis selecciona a las bacterias que la sobreviven. Eso no es un mal uso de la tecnología: es cómo funciona la tecnología.',
+  'alexander-fleming>antibiotic-resistance':
+    'En su discurso Nobel de 1945 describió a un hombre comprando poca penicilina, tratándose de menos y criando una cepa resistente.',
 }
