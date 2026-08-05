@@ -326,6 +326,7 @@ export const NODES: GraphNode[] = [
     blurb: 'Movable type in Europe around 1440: the cost of a copy collapsed, and so did control of what people read.',
     era: 'early-modern',
     years: [1440, 1600],
+    story: 'printing-press',
   },
   {
     id: 'european-renaissance',
@@ -709,6 +710,91 @@ export const NODES: GraphNode[] = [
     blurb: 'The last Roman emperor, ruling a city he could not fill and defending walls he could not man.',
     era: 'medieval',
     years: [1405, 1453],
+  },
+
+  /* -------------------------------------------- the cost of a copy ---- */
+  {
+    id: 'gutenberg',
+    label: 'Johannes Gutenberg',
+    kind: 'person',
+    blurb: 'A Mainz goldsmith who did not invent printing, and did invent the way to make identical letters by the thousand.',
+    era: 'early-modern',
+    years: [1400, 1468],
+  },
+  {
+    id: 'movable-type',
+    label: 'Movable type',
+    kind: 'technology',
+    blurb: 'Letters cast one by one and reassembled into any page you like — invented in Asia, industrialised in Mainz.',
+    era: 'medieval',
+    years: [1040, 1500],
+  },
+  {
+    id: 'textual-fixity',
+    label: 'The fixed text',
+    kind: 'idea',
+    blurb: 'When every copy says the same thing, you can cite a page number — and a mistake becomes correctable rather than eternal.',
+    era: 'early-modern',
+    years: [1460, 1700],
+  },
+  {
+    id: 'reformation',
+    label: 'The Reformation',
+    kind: 'event',
+    blurb: 'The argument that split Western Christianity, and the first one conducted in cheap pamphlets bought by ordinary people.',
+    era: 'early-modern',
+    years: [1517, 1648],
+  },
+  {
+    id: 'martin-luther',
+    label: 'Martin Luther',
+    kind: 'person',
+    blurb: 'A monk with a grievance about indulgences who turned out to be the first author of the mass-market age.',
+    era: 'early-modern',
+    years: [1483, 1546],
+  },
+
+  /* --------------------------------------------- a sentence a second ---- */
+  {
+    id: 'transatlantic-cable',
+    label: 'The transatlantic cable',
+    kind: 'technology',
+    blurb: 'From 1866, a message could cross the Atlantic in minutes instead of ten days. Nothing about distance meant the same afterwards.',
+    era: 'industrial',
+    years: [1854, 1866],
+    story: 'transatlantic-cable',
+  },
+  {
+    id: 'telegraph',
+    label: 'The electric telegraph',
+    kind: 'technology',
+    blurb: 'The first time a message could travel faster than the person carrying it, which had been true for all of previous history.',
+    era: 'industrial',
+    years: [1837, 1900],
+  },
+  {
+    id: 'cyrus-field',
+    label: 'Cyrus West Field',
+    kind: 'person',
+    blurb: 'A retired paper merchant who knew no science, and spent twelve years and four failures getting a wire across an ocean.',
+    era: 'industrial',
+    years: [1819, 1892],
+  },
+  {
+    id: 'great-eastern',
+    label: 'The Great Eastern',
+    kind: 'technology',
+    blurb: 'Brunel’s enormous failure of a passenger ship, and the only vessel on earth that could carry an ocean’s worth of cable.',
+    era: 'industrial',
+    years: [1858, 1889],
+  },
+  {
+    id: 'william-thomson',
+    label: 'William Thomson (Lord Kelvin)',
+    kind: 'person',
+    blurb: 'The physicist who worked out why long cables blur a signal, and then built the instrument delicate enough to read one.',
+    era: 'industrial',
+    years: [1824, 1907],
   },
 ]
 
@@ -1382,6 +1468,94 @@ export const EDGES: GraphEdge[] = [
     to: 'printing-press',
     relation: 'inspired',
     note: 'Greek manuscripts moved west with their owners, and within forty years the presses of Venice were selling them.',
+  },
+
+  /* -------------------------------------------- the cost of a copy ---- */
+  {
+    from: 'movable-type',
+    to: 'printing-press',
+    relation: 'enabled',
+    note: 'Korea was printing books with metal type by 1377. What Mainz added was a way to make the letters fast enough to matter.',
+  },
+  {
+    from: 'gutenberg',
+    to: 'movable-type',
+    relation: 'enabled',
+    note: 'The hand mould: one engraved punch, one copper matrix, and then as many identical letters as you can pour metal for.',
+  },
+  {
+    from: 'paper-making',
+    to: 'printing-press',
+    relation: 'enabled',
+    note: 'A press needs something cheap to print on. Paper had been moving west out of China for six hundred years to be there.',
+  },
+  {
+    from: 'printing-press',
+    to: 'textual-fixity',
+    relation: 'caused',
+    note: 'Copies stopped drifting. You could now argue with a page number, and expect the other person to be looking at the same words.',
+  },
+  {
+    from: 'printing-press',
+    to: 'reformation',
+    relation: 'enabled',
+    note: 'Hus said much the same in 1415 and was burned quietly. Luther said it into a machine that made thirty thousand copies.',
+  },
+  {
+    from: 'martin-luther',
+    to: 'reformation',
+    relation: 'led',
+    note: 'He wrote short, in German, for people who were not scholars — the first author to work out what the new medium wanted.',
+  },
+  {
+    from: 'textual-fixity',
+    to: 'double-entry-bookkeeping',
+    relation: 'enabled',
+    note: 'Pacioli’s method spread as a printed manual in 1494, identical in every copy, which is the only way a standard can become one.',
+  },
+
+  /* --------------------------------------------- a sentence a second ---- */
+  {
+    from: 'industrial-revolution',
+    to: 'telegraph',
+    relation: 'enabled',
+    note: 'Railways needed to know where their trains were, and paid for the first wires strung alongside the track.',
+  },
+  {
+    from: 'telegraph',
+    to: 'transatlantic-cable',
+    relation: 'enabled',
+    note: 'Land wires had already made a message instant inside a country. The ocean was the last gap, and the hardest.',
+  },
+  {
+    from: 'cyrus-field',
+    to: 'transatlantic-cable',
+    relation: 'funded',
+    note: 'Four failed attempts and twelve years of raising money from people who had watched him lose theirs before.',
+  },
+  {
+    from: 'great-eastern',
+    to: 'transatlantic-cable',
+    relation: 'enabled',
+    note: 'Too big to earn a living as a passenger ship, and the only hull on earth that could hold 4,000 kilometres of cable at once.',
+  },
+  {
+    from: 'william-thomson',
+    to: 'transatlantic-cable',
+    relation: 'enabled',
+    note: 'He showed that a long cable smears a signal rather than weakening it, and built a mirror galvanometer that could read the smear.',
+  },
+  {
+    from: 'telegraph',
+    to: 'british-empire',
+    relation: 'ran',
+    note: 'By 1900 an instruction from London reached Bombay, Cape Town or Sydney the same day, over cable Britain owned.',
+  },
+  {
+    from: 'transatlantic-cable',
+    to: 'free-trade',
+    relation: 'enabled',
+    note: 'Prices in London and New York converged within days of it opening, because arbitrage now moved faster than the goods.',
   },
 ]
 

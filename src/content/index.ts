@@ -15,6 +15,10 @@ import { cannae } from './stories/cannae'
 import { fallOfConstantinople } from './stories/fall-of-constantinople'
 import { cannaeEs } from './es/stories/cannae'
 import { fallOfConstantinopleEs } from './es/stories/fall-of-constantinople'
+import { printingPress } from './stories/printing-press'
+import { transatlanticCable } from './stories/transatlantic-cable'
+import { printingPressEs } from './es/stories/printing-press'
+import { transatlanticCableEs } from './es/stories/transatlantic-cable'
 
 export * from './types'
 export * from './graph'
@@ -31,8 +35,8 @@ export * from './labels'
  * a language boundary mid-journey.
  */
 const STORIES_BY_LANG: Record<Lang, Story[]> = {
-  en: [markopolos, cannae, fallOfConstantinople, unitedFruit, vladTepes, opiumWars, alKhwarizmi],
-  es: [markopolosEs, cannaeEs, fallOfConstantinopleEs, unitedFruitEs, vladTepesEs, opiumWarsEs, alKhwarizmiEs],
+  en: [markopolos, cannae, fallOfConstantinople, unitedFruit, printingPress, transatlanticCable, vladTepes, opiumWars, alKhwarizmi],
+  es: [markopolosEs, cannaeEs, fallOfConstantinopleEs, unitedFruitEs, printingPressEs, transatlanticCableEs, vladTepesEs, opiumWarsEs, alKhwarizmiEs],
 }
 
 /**

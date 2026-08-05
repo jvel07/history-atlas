@@ -350,6 +350,50 @@ export const NODE_ES: Record<string, { label: string; blurb: string }> = {
     label: 'Constantino XI Paleólogo',
     blurb: 'El último emperador romano, al frente de una ciudad que no podía llenar y de unas murallas que no podía guarnecer.',
   },
+
+  /* -------------------------------------------- lo que cuesta una copia ---- */
+  gutenberg: {
+    label: 'Johannes Gutenberg',
+    blurb: 'Un orfebre de Maguncia que no inventó la imprenta, y sí inventó la manera de fabricar letras idénticas a millares.',
+  },
+  'movable-type': {
+    label: 'Los tipos móviles',
+    blurb: 'Letras fundidas una a una y recompuestas en la página que quieras — inventadas en Asia, industrializadas en Maguncia.',
+  },
+  'textual-fixity': {
+    label: 'El texto fijo',
+    blurb: 'Cuando todas las copias dicen lo mismo, puedes citar un número de página — y un error pasa a ser corregible en vez de eterno.',
+  },
+  reformation: {
+    label: 'La Reforma',
+    blurb: 'La discusión que partió el cristianismo occidental, y la primera que se libró en panfletos baratos comprados por gente corriente.',
+  },
+  'martin-luther': {
+    label: 'Martín Lutero',
+    blurb: 'Un monje con una queja sobre las indulgencias que resultó ser el primer autor de la era del gran público.',
+  },
+
+  /* --------------------------------------------- una frase por segundo ---- */
+  'transatlantic-cable': {
+    label: 'El cable transatlántico',
+    blurb: 'Desde 1866, un mensaje cruzaba el Atlántico en minutos y no en diez días. Después, nada relativo a la distancia significaba lo mismo.',
+  },
+  telegraph: {
+    label: 'El telégrafo eléctrico',
+    blurb: 'La primera vez que un mensaje pudo viajar más rápido que quien lo llevaba, cosa que había sido cierta durante toda la historia anterior.',
+  },
+  'cyrus-field': {
+    label: 'Cyrus West Field',
+    blurb: 'Un comerciante de papel retirado que no sabía nada de ciencia, y dedicó doce años y cuatro fracasos a cruzar un océano con un cable.',
+  },
+  'great-eastern': {
+    label: 'El Great Eastern',
+    blurb: 'El descomunal fracaso de barco de pasajeros de Brunel, y el único casco del mundo capaz de cargar un océano de cable.',
+  },
+  'william-thomson': {
+    label: 'William Thomson (lord Kelvin)',
+    blurb: 'El físico que explicó por qué un cable largo emborrona la señal, y luego construyó el instrumento capaz de leer el borrón.',
+  },
 }
 
 export const EDGE_NOTE_ES: Record<string, string> = {
@@ -571,4 +615,36 @@ export const EDGE_NOTE_ES: Record<string, string> = {
     'Casi todo texto griego que hoy se lee sobrevive porque los escribas bizantinos siguieron copiándolo mil años.',
   'fall-of-constantinople>printing-press':
     'Los manuscritos griegos se fueron al oeste con sus dueños, y en cuarenta años las imprentas de Venecia los vendían.',
+
+  /* -------------------------------------------- lo que cuesta una copia ---- */
+  'movable-type>printing-press':
+    'Corea imprimía libros con tipos de metal ya en 1377. Lo que añadió Maguncia fue una manera de fabricar las letras lo bastante rápido.',
+  'gutenberg>movable-type':
+    'El molde de mano: un punzón grabado, una matriz de cobre y luego tantas letras idénticas como metal puedas verter.',
+  'paper-making>printing-press':
+    'Una prensa necesita algo barato sobre lo que imprimir. El papel llevaba seiscientos años viajando desde China para estar allí.',
+  'printing-press>textual-fixity':
+    'Las copias dejaron de derivar. Ahora podías discutir citando una página, esperando que el otro tuviera delante las mismas palabras.',
+  'printing-press>reformation':
+    'Hus dijo casi lo mismo en 1415 y lo quemaron en silencio. Lutero lo dijo dentro de una máquina que hizo treinta mil copias.',
+  'martin-luther>reformation':
+    'Escribía corto, en alemán y para gente que no era erudita: el primer autor que entendió qué quería el medio nuevo.',
+  'textual-fixity>double-entry-bookkeeping':
+    'El método de Pacioli se difundió como manual impreso en 1494, idéntico en cada copia, que es el único modo de que un estándar lo sea.',
+
+  /* --------------------------------------------- una frase por segundo ---- */
+  'industrial-revolution>telegraph':
+    'Los ferrocarriles necesitaban saber dónde estaban sus trenes, y pagaron los primeros cables tendidos junto a la vía.',
+  'telegraph>transatlantic-cable':
+    'Los cables terrestres ya habían hecho instantáneo un mensaje dentro de un país. El océano era el último hueco, y el más difícil.',
+  'cyrus-field>transatlantic-cable':
+    'Cuatro intentos fallidos y doce años sacando dinero a gente que ya le había visto perder el suyo.',
+  'great-eastern>transatlantic-cable':
+    'Demasiado grande para ganarse la vida con pasajeros, y el único casco del mundo capaz de llevar 4.000 kilómetros de cable de una vez.',
+  'william-thomson>transatlantic-cable':
+    'Demostró que un cable largo emborrona la señal en vez de debilitarla, y construyó un galvanómetro de espejo capaz de leer el borrón.',
+  'telegraph>british-empire':
+    'Hacia 1900 una orden salida de Londres llegaba el mismo día a Bombay, Ciudad del Cabo o Sídney, por cable de propiedad británica.',
+  'transatlantic-cable>free-trade':
+    'Los precios de Londres y Nueva York convergieron a los pocos días de abrirse, porque el arbitraje pasó a moverse más rápido que la mercancía.',
 }
