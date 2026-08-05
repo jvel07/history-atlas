@@ -57,9 +57,11 @@ should stay the default: nobody arrives wanting eleven minutes.
   14) are the feature. If a reel fails them, cut it; do not raise them. The
   median is the one that matters — it catches every card drifting to the same
   comfortable length.
-- **Steps are the spine where the story allows it.** A numbered procedure beats a
-  chronology, and it is usually the honest reading: nobody stumbled into the
-  Guatemalan coup. Do not force it onto a story that was a collision.
+- **One sentence, split across cards.** A card is a breath inside a sentence that
+  keeps going, not a sentence of its own. Most cards end mid-clause on a comma,
+  dash or conjunction; full stops are rare and land a turn. Five words, full
+  stop, five words, full stop reads as a telegram — that failure mode is what
+  the current reels were rewritten to fix. No story uses `step` any more.
 - Both formats carry the same eight beats and the same facts. The reel is
   shorter, never looser.
 
@@ -86,6 +88,13 @@ These keep the site citable. Breaking one is a real bug, not a style question.
 - **Never borrow wording.** Facts are free; phrasing is not.
 - **Every story sets `reviewed` to the date a person read the whole thing.** It is
   displayed on the page as a claim.
+- **English and Spanish are the same atlas.** Structure is shared and must match
+  exactly: slugs and their order, era, years, nodes, tags, mood, reading time,
+  reel length with the same beat/punch/mark on each card, `sourceIds`, timeline
+  years and dates, lens ids, and — the one that would be invisible forever — the
+  same `answerIndex` on every quiz question. `check-content.mjs` compares all of
+  it. Spanish gets a 520-word reel budget (median 15) rather than 450/14,
+  because it runs longer per idea. Write it as Spanish, not as a gloss.
 
 ## The AI rules
 
@@ -113,8 +122,15 @@ The generative half is the easiest way to destroy this project, so it is fenced:
 - `src/content/graph.ts` — nodes and **labelled, directed** edges. Every edge note
   is a sentence, because the note is what the reader sees and "related topic" is
   what makes them close the tab.
-- `src/content/stories/*.ts` — the actual writing. This is the product. `reel` is
-  what almost everyone reads; `beats` is the long version.
+- `src/content/stories/*.ts` — the actual writing, in English. This is the
+  product. `reel` is what almost everyone reads; `beats` is the long version.
+- `src/content/es/stories/*.ts` — the same stories in Spanish, one file each.
+  `src/content/es/graph.ts` is a label/note **overlay** on the one graph.
+- `src/lib/i18n.tsx` — `Lang`, the provider, and every UI string. `ES` is typed
+  as `typeof EN`, so a string added to one language and forgotten in the other
+  does not compile.
+- `src/content/labels.ts` — enum labels (era, beat, node kind, relation, source
+  kind) per language. `src/content/useCorpus.ts` is the hook every page uses.
 - `src/components/StoryReel.tsx` — the reel player. Autoplays with a continuous
   progress bar; tap pauses. `src/components/ReelBackdrop.tsx` draws the card
   background — a sourced photo when the card has one, a procedural mood field
@@ -133,6 +149,73 @@ The generative half is the easiest way to destroy this project, so it is fenced:
   eager; everything else is lazy.
 - `vite.config.ts` — `base` must match the repo name or Pages serves a blank page.
   `BASE=/ npm run build` for a root-served host.
+
+## In progress: categories, and two stories in each
+
+Last commit is `fc51351` (the EN/ES toggle). The tree is clean; **none of the
+work below has been started.** This is the next job, requested with a screenshot
+of six category chips.
+
+**What was asked:** a category taxonomy matching those six chips, and two
+stories in each.
+
+| category | emoji | status |
+| --- | --- | --- |
+| Epic battles | 🛡️ | 0 — needs 2 |
+| Key milestones | 🧭 | 0 — needs 2 |
+| Ancient worlds | 🏺 | 0 — needs 2 |
+| Great discoveries | 💡 | 0 — needs 2 |
+| Ages & eras | 🕰️ | 0 — needs 2 |
+| Historic icons | 🎩 | 0 — needs 2 |
+
+**Decide first, with the user if possible:** whether the existing five stories
+count toward the two (Opium Wars → milestones, Al-Khwārizmī → discoveries, Vlad
+→ icons, El Pulpo → milestones, Markopolos → icons), which needs ~7 new, or
+whether "2 for each" means twelve *new* stories on top. The literal reading is
+twelve new. Assume twelve unless told otherwise, and say which you assumed.
+
+**Shape of the work, in order:**
+
+1. `Category` union in `types.ts`, a required `category` on `Story`,
+   `CATEGORY_LABELS` (per `Lang`) and `CATEGORY_EMOJI` in `labels.ts`. Assign a
+   category to the five existing stories.
+2. Browse-by-category on `/stories` — chips that filter, matching the
+   screenshot's ordering. A category with no story behind it must not render.
+3. Add a check: every category has at least one story, and the parity check
+   already in `check-content.mjs` should compare `category` between languages.
+4. Then the stories, **in batches of two, verifying and committing each batch**.
+   Each needs graph nodes and edges too (`≥3` onward connections, primary node
+   pointing back at the slug) and the Spanish twin.
+
+**Candidate stories, chosen because the primary sources are real and citable and
+because several already exist as graph nodes:**
+
+- Battles: Cannae 216 BC (Polybius, Livy, Goldsworthy); the fall of
+  Constantinople 1453 (Runciman, Barbaro's diary, Crowley) — `fall-of-constantinople`
+  is already a node and already links to Vlad.
+- Milestones: the printing press (Eisenstein, Füssel) — already a node, already
+  linked to the Dracula pamphlets; the transatlantic cable 1866 (Standage,
+  Gordon).
+- Ancient worlds: the Library of Alexandria and the myth that it burned in one
+  night (Bagnall 2002, El-Abbadi); the Bronze Age collapse c.1177 BC (Cline, the
+  Ugarit letters).
+- Discoveries: Semmelweis and handwashing 1847 (his 1861 *Ätiologie*, Nuland) —
+  pairs with Markopolos on the warning-ignored thread the atlas already runs;
+  penicillin and the myth that Fleming did it alone (Fleming 1929, Lax).
+- Ages & eras: the Black Death (Benedictow, Herlihy); the Meiji Restoration
+  (Jansen, the 1868 Charter Oath) — connects to the unequal treaties.
+- Icons: Ada Lovelace and Note G (Menabrea/Lovelace 1843, Hollings/Martin/Rice) —
+  already in the al-Khwārizmī timeline; Mansa Musa and the 1324 hajj (al-Umari,
+  Ibn Khaldun, the 1375 Catalan Atlas, Gomez).
+
+Swap any of these freely — what matters is that the sources are checkable and
+the story earns its place. Do not bulk-generate; the rule above still holds.
+
+**Browser suites live outside the repo**, in the session scratchpad:
+`browser-check.mjs` (60 checks), `reel-check.mjs` (52) and `lang-check.mjs`
+(54). They drive `npm run preview` on :4173. If a new session cannot find them,
+they are worth rewriting — `npm run verify` does not open a browser, and every
+render bug this project has hit compiled cleanly.
 
 ## Deploying
 
