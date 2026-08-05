@@ -17,27 +17,35 @@ is what a story is.
 card maximum, median card 14 words or fewer, opens on the hook, reaches `story`
 and `whyItMatters`.
 
-### Use steps as the spine, not as punctuation
+### One sentence, split across cards
 
-The strongest reels are structured as a numbered procedure. Not "here is what
-happened" but "here is how it was done, in six moves". Set `step` on the card
-that opens each move and let the cards under it do the work.
+This is the rule the reels live or die by. A card is not a sentence. It is a
+*breath* inside a sentence that keeps going on the next card.
 
 ```
-Step 1  Arrive, and be useful.
-Step 2  Own the way in, and the way out.
-Step 3  Own more than you use.
-Step 4  Wait for someone to add it up.
-Step 5  Change the subject.
-Step 6  Do not send an army. Send the sound of one.
+Then he stops paying tribute, and Mehmed II comes for him
+with the army that had already taken Constantinople.
 ```
 
-Two reasons this earns its place. It gives a reader a map they can hold in their
-head at speed, and — more importantly — it is often the honest reading. Nobody
-stumbled into the Guatemalan coup or the opium trade. People took steps.
+```
+So the state buys the unused fields and hands them to farmers,
+not seized but paid for, in government bonds,
+at exactly the value the company had been telling the tax man for years.
+```
 
-Do not force it. If the story is a collision rather than a procedure, numbering
-it is a lie about agency.
+Three cards, one sentence. The comma at the end of a card is the whole
+mechanism: it is an unfinished clause, and an unfinished clause is why a thumb
+moves. End every card on a full stop and you have written a list — the reader
+gets a complete thought, feels the click of it closing, and stops.
+
+So: **most cards end mid-sentence**, on a comma, a dash, a colon or a
+conjunction. Full stops are rare and they are a decision. Save them for the
+landing of a turn, where the closure *is* the effect — "and reaches the wrong
+tent." — and then start the next sentence rolling again.
+
+The failure mode has a shape. Five words, full stop. Five words, full stop.
+It reads as a telegram, and it makes a continuous story feel like a set of
+disconnected facts, which is exactly what the atlas is not.
 
 ### The voice: a narrator, not an explainer
 
@@ -95,8 +103,8 @@ Rules that follow:
 
 - **Present tense, mostly.** "China sends its most incorruptible official." It
   puts the reader in the moment instead of the archive.
-- **Short sentences. Full stops over commas.** A comma invites a subordinate
-  clause; a full stop invites a swipe.
+- **Commas over full stops.** A comma at the end of a card carries the reader
+  into the next one; a full stop invites them to put the phone down.
 - **Numbers land on their own card.** "Forty thousand chests a year" is a card.
 - **Set `punch: true` on the turns.** They render in the accent, and they should
   be the lines someone would screenshot. Roughly one in five.
