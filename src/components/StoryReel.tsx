@@ -13,11 +13,12 @@ import {
 } from 'lucide-react'
 import type { NextStep } from '@/content'
 import type { Story } from '@/content/types'
-import { REEL_BEAT_LABEL } from '@/content/types'
+import { REEL_BEAT_LABELS } from '@/content/labels'
 import { ReelMark } from '@/components/ReelMarks'
 import { ReelBackdrop, ReelCredit } from '@/components/ReelBackdrop'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { useLang } from '@/lib/i18n'
 import { cn, formatSpan } from '@/lib/utils'
 
 /**
@@ -52,6 +53,7 @@ export function reelSeconds(story: Story) {
 }
 
 export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] }) {
+  const { lang, t } = useLang()
   const scroller = useRef<HTMLDivElement>(null)
   const [index, setIndex] = useState(0)
   const [playing, setPlaying] = useState(true)
@@ -148,6 +150,9 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
 
     if (narrating && canNarrate && card) {
       const utterance = new SpeechSynthesisUtterance(card.text)
+      // Without this the browser reads Spanish with an English voice, which is
+      // not an accent problem — the phonemes are wrong and it is unlistenable.
+      utterance.lang = lang === 'es' ? 'es-ES' : 'en-GB'
       utterance.rate = 1.02
       utterance.onend = () => goTo(index + 1)
       window.speechSynthesis.cancel()
@@ -162,7 +167,7 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
 
     const timer = window.setTimeout(() => goTo(index + 1), dwell)
     return () => window.clearTimeout(timer)
-  }, [playing, narrating, canNarrate, card, dwell, index, onLastCard, goTo])
+  }, [playing, narrating, canNarrate, card, dwell, index, onLastCard, goTo, lang])
 
   // Never leave a voice talking to an empty room.
   useEffect(() => {
@@ -205,7 +210,7 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
         onTouchStart={() => undefined}
         className="scrollbar-slim h-full snap-y snap-mandatory overflow-y-scroll overscroll-contain"
         role="region"
-        aria-label={`${story.title} — ${total} cards, playing automatically. Space pauses; arrow keys move.`}
+        aria-label={t.reelRegion(story.title, total)}
       >
         {/* The opening card. The reference format does this and it earns its
             place: it says what you are about to get and how long it takes,
@@ -213,7 +218,7 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
             just a sentence someone shouted at you. */}
         <section
           className="relative flex h-full snap-start snap-always items-center px-6 sm:px-10"
-          aria-label="Title"
+          aria-label={t.reelTitleCard}
         >
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: 14 }}
@@ -223,14 +228,14 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
             className="mx-auto w-full max-w-2xl"
           >
             <p className="mb-4 font-mono text-sm tracking-widest text-[var(--reel-accent)] uppercase">
-              {formatSpan(story.years)}
+              {formatSpan(story.years, lang)}
             </p>
             <h1 className="font-display text-[clamp(2.5rem,9vw,4.5rem)] leading-[1.05] font-semibold tracking-tight text-balance text-[var(--reel-ink)]">
               {story.title}
             </h1>
             <p className="mt-4 text-lg leading-relaxed text-[var(--reel-dim)]">{story.subtitle}</p>
             <p className="mt-8 font-mono text-xs tracking-widest text-[var(--reel-dim)] uppercase">
-              {reelSeconds(story)} seconds · {story.reel.length} cards · {story.sources.length} sources
+              {t.reelSummary(reelSeconds(story), story.reel.length, story.sources.length)}
             </p>
           </motion.div>
         </section>
@@ -245,7 +250,7 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
               'relative flex h-full snap-start snap-always items-center px-6 sm:px-10',
               item.step !== undefined && 'justify-center',
             )}
-            aria-label={`Card ${i + 1} of ${story.reel.length}`}
+            aria-label={t.reelCardOf(i + 1, story.reel.length)}
           >
             <ReelBackdrop card={item} index={i} />
             <motion.div
@@ -264,7 +269,7 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
               {item.step !== undefined ? (
                 <>
                   <span className="inline-block rounded-md border border-[var(--reel-rule)] px-4 py-1.5 font-mono text-sm tracking-widest text-[var(--reel-dim)] uppercase">
-                    Step {item.step}
+                    {t.reelStep(item.step)}
                   </span>
                   <p className="font-display mt-6 text-[clamp(1.75rem,6vw,3rem)] leading-[1.15] font-semibold text-balance text-[var(--reel-ink)]">
                     {item.text}
@@ -296,11 +301,11 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
         {/* Closing card 1: the onward journey, which is the whole point. */}
         <section
           className="relative flex h-full snap-start snap-always items-center px-6 sm:px-10"
-          aria-label="Where this goes next"
+          aria-label={t.reelNextLabel}
         >
           <div className="mx-auto w-full max-w-2xl">
             <p className="mb-4 font-mono text-sm tracking-widest text-[var(--reel-dim)] uppercase">
-              Where this goes next
+              {t.reelNextLabel}
             </p>
             <div className="flex flex-col gap-2.5">
               {steps.slice(0, 4).map(({ node, why, hasStory }) =>
@@ -326,7 +331,7 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
                   >
                     <p className="font-display flex flex-wrap items-center gap-2 text-xl font-semibold text-[var(--reel-ink)] transition-colors group-hover:text-[var(--reel-accent)]">
                       {node.label}
-                      <Badge variant="outline">on the map · not written yet</Badge>
+                      <Badge variant="outline">{t.reelOnMapNoStory}</Badge>
                     </p>
                     <p className="mt-1 text-sm leading-relaxed text-[var(--reel-dim)]">{why}</p>
                   </Link>
@@ -339,28 +344,27 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
         {/* Closing card 2: everything the reel deliberately left out. */}
         <section
           className="relative flex h-full snap-start snap-always items-center px-6 sm:px-10"
-          aria-label="Go deeper"
+          aria-label={t.reelDeeperLabel}
         >
           <div className="mx-auto w-full max-w-2xl">
             <p className="font-display text-[clamp(1.5rem,4.5vw,2.25rem)] leading-tight font-semibold text-balance text-[var(--reel-ink)]">
-              That is the short version. It is accurate, and it leaves things out.
+              {t.reelClosingTitle}
             </p>
             <p className="mt-4 leading-relaxed text-[var(--reel-dim)]">
-              The long one has the {story.sources.length} sources, the {story.myths.length} things
-              most people get wrong, and the parts historians still argue about.
+              {t.reelClosingBody(story.sources.length, story.myths.length)}
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
               <Button asChild>
                 <Link to="/story/$slug" params={{ slug: story.slug }} search={{ full: true }}>
                   <BookOpenIcon />
-                  Read the full story · {story.readingMinutes} min
+                  {t.reelReadFull(story.readingMinutes)}
                 </Link>
               </Button>
               <Button variant="outline" asChild>
                 <Link to="/explore" search={{ focus: story.nodes[0]! }}>
                   <MapIcon />
-                  See it on the map
+                  {t.seeOnMap}
                 </Link>
               </Button>
               <Button
@@ -371,7 +375,7 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
                 }}
               >
                 <RotateCcwIcon />
-                Again
+                {t.reelAgain}
               </Button>
             </div>
           </div>
@@ -385,12 +389,12 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
           className="pointer-events-none font-mono text-[0.6875rem] tracking-widest text-[var(--reel-dim)] uppercase"
         >
           {index === 0
-            ? `${reelSeconds(story)} seconds`
+            ? t.seconds(reelSeconds(story))
             : card
-              ? REEL_BEAT_LABEL[card.beat]
+              ? REEL_BEAT_LABELS[lang][card.beat]
               : index === story.reel.length + 1
-                ? 'Keep going'
-                : 'The end'}
+                ? t.reelKeepGoing
+                : t.reelTheEnd}
         </span>
 
         <ReelCredit card={card} />
@@ -405,8 +409,8 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
                 setNarrating((value) => !value)
               }}
               aria-pressed={narrating}
-              aria-label={narrating ? 'Turn narration off' : 'Read it aloud'}
-              title={narrating ? 'Narration on — cards wait for the sentence to finish' : 'Read it aloud'}
+              aria-label={narrating ? t.reelNarrationOff : t.reelNarrationOn}
+              title={narrating ? t.reelNarrationTitle : t.reelNarrationOn}
             >
               {narrating ? <Volume2Icon /> : <VolumeXIcon />}
             </Button>
@@ -416,7 +420,7 @@ export function StoryReel({ story, steps }: { story: Story; steps: NextStep[] })
             size="icon"
             onClick={() => setPlaying((value) => !value)}
             aria-pressed={playing}
-            aria-label={playing ? 'Pause' : 'Play'}
+            aria-label={playing ? t.reelPause : t.reelPlay}
           >
             {playing && !onLastCard ? <PauseIcon /> : <PlayIcon />}
           </Button>

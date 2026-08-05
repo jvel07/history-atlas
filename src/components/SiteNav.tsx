@@ -2,7 +2,9 @@ import { Suspense, lazy, useState } from 'react'
 import { Link } from '@tanstack/react-router'
 import { CompassIcon, SearchIcon } from 'lucide-react'
 import { ThemeToggle } from '@/components/ThemeToggle'
+import { LanguageToggle } from '@/components/LanguageToggle'
 import { useSearchHotkey } from '@/components/useSearchHotkey'
+import { useT } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
 /**
@@ -14,11 +16,12 @@ const SearchDialog = lazy(() =>
   import('@/components/SearchDialog').then((module) => ({ default: module.SearchDialog })),
 )
 
+/** Routes are language-independent; only the words on them change. */
 const LINKS = [
-  { to: '/', label: 'Home' },
-  { to: '/stories', label: 'Stories' },
-  { to: '/explore', label: 'Map' },
-  { to: '/about', label: 'About' },
+  { to: '/', key: 'navHome' },
+  { to: '/stories', key: 'navStories' },
+  { to: '/explore', key: 'navMap' },
+  { to: '/about', key: 'navAbout' },
 ] as const
 
 /**
@@ -26,6 +29,7 @@ const LINKS = [
  * it — the pages import it, so reaching back would be a module cycle.
  */
 export function SiteNav() {
+  const t = useT()
   const [searchOpen, setSearchOpen] = useState(false)
   const [searchMounted, setSearchMounted] = useState(false)
 
@@ -42,14 +46,14 @@ export function SiteNav() {
         href="#main"
         className="bg-ember text-primary-foreground sr-only rounded-md px-4 py-2 focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-100"
       >
-        Skip to content
+        {t.skipToContent}
       </a>
 
       <header className="border-rule bg-paper/85 sticky top-0 z-50 border-b backdrop-blur-md">
         <nav className="mx-auto flex h-14 max-w-5xl items-center gap-1 px-4 sm:px-6" aria-label="Main">
           <Link to="/" className="mr-auto flex items-center gap-2 font-display text-[0.95rem] font-semibold">
             <CompassIcon className="text-ember size-[1.1rem]" />
-            <span>History Atlas</span>
+            <span>{t.brand}</span>
           </Link>
 
           <ul className="mr-1 hidden items-center gap-0.5 sm:flex">
@@ -63,7 +67,7 @@ export function SiteNav() {
                   activeProps={{ className: 'text-ink font-medium' }}
                   activeOptions={{ exact: link.to === '/' }}
                 >
-                  {link.label}
+                  {t[link.key]}
                 </Link>
               </li>
             ))}
@@ -73,15 +77,16 @@ export function SiteNav() {
             onClick={openSearch}
             onMouseEnter={() => setSearchMounted(true)}
             className="text-ink-soft hover:text-ink border-rule hover:border-ink-soft/40 flex items-center gap-2 rounded-full border py-1.5 pr-2 pl-3 text-sm transition-colors"
-            aria-label="Search the atlas"
+            aria-label={t.searchOpen}
           >
             <SearchIcon className="size-3.5" />
-            <span className="hidden sm:inline">Ask anything</span>
+            <span className="hidden sm:inline">{t.searchPlaceholderShort}</span>
             <kbd className="bg-muted text-ink-soft hidden rounded px-1.5 py-0.5 font-mono text-[0.6875rem] sm:inline">
               ⌘K
             </kbd>
           </button>
 
+          <LanguageToggle />
           <ThemeToggle />
         </nav>
 
@@ -99,7 +104,7 @@ export function SiteNav() {
                 activeProps={{ className: 'text-ink font-medium' }}
                 activeOptions={{ exact: link.to === '/' }}
               >
-                {link.label}
+                {t[link.key]}
               </Link>
             </li>
           ))}

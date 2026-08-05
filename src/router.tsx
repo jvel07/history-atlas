@@ -8,6 +8,7 @@ import {
   Link,
 } from '@tanstack/react-router'
 import { SiteNav } from '@/components/SiteNav'
+import { useT } from '@/lib/i18n'
 import { Home } from '@/routes/Home'
 
 /**
@@ -21,6 +22,7 @@ const Stories = lazyRouteComponent(() => import('@/routes/Stories'), 'Stories')
 const About = lazyRouteComponent(() => import('@/routes/About'), 'About')
 
 function RootLayout() {
+  const t = useT()
   return (
     <div className="flex min-h-dvh flex-col">
       <SiteNav />
@@ -29,9 +31,9 @@ function RootLayout() {
       </main>
       <footer className="border-rule text-ink-soft border-t px-4 py-8 text-center text-xs sm:px-6">
         <p>
-          History Atlas — every claim traceable, every disagreement shown.{' '}
+          {t.footerLine}{' '}
           <Link to="/about" className="hover:text-ember underline underline-offset-4">
-            How it works
+            {t.footerHow}
           </Link>
         </p>
       </footer>
@@ -40,18 +42,16 @@ function RootLayout() {
 }
 
 function NotFound() {
+  const t = useT()
   return (
     <div className="mx-auto max-w-xl px-4 py-24 text-center sm:px-6">
-      <h1 className="font-display text-3xl font-semibold">Nothing here.</h1>
-      <p className="text-ink-soft mt-3 leading-relaxed">
-        Which is itself a small piece of history: the page you wanted either never existed or has
-        not been written yet.
-      </p>
+      <h1 className="font-display text-3xl font-semibold">{t.notFoundTitle}</h1>
+      <p className="text-ink-soft mt-3 leading-relaxed">{t.notFoundBody}</p>
       <Link
         to="/"
         className="bg-ember text-primary-foreground mt-6 inline-block rounded-[var(--radius)] px-5 py-2.5 text-sm font-medium"
       >
-        Back to the start
+        {t.notFoundBack}
       </Link>
     </div>
   )

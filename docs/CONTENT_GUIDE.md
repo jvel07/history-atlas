@@ -220,6 +220,38 @@ country still talks about itself".
 knowledge graph. Your job is to add your story's nodes and their edges in
 `graph.ts`, with a sentence explaining each link.
 
+## Writing the Spanish version
+
+The Spanish atlas is a second telling, not a translation memory. Write it the
+way you would write it if Spanish were the only language — the voice rules above
+apply unchanged, and a sentence that flows in Spanish beats one that mirrors the
+English clause by clause.
+
+What must not move:
+
+- **Structure.** Same slug, same era, years, graph nodes, tags, mood, review
+  date and reading time. Those are data about the story, not the story.
+- **The reel, card for card.** Same number of cards, same beat on each, same
+  `punch`, same `mark`, same `step`, and a `kicker` wherever the English has
+  one. A Spanish card may say it differently; it may not say it somewhere else.
+- **Citations.** The same `sourceIds` on the same beats, myths and positions,
+  and the same works in `sources` — author, title, year and kind are the name of
+  a real book and do not translate. `detail` and `note` are prose and do.
+- **The timeline.** Years, dates, `pivotal` and `confidence` are identical.
+- **Quiz answers.** Same number of options, same `answerIndex`. This is the one
+  that would be wrong forever: reorder four translated options, leave the index
+  alone, and the Spanish reader is taught the wrong answer with a confident
+  explanation underneath it.
+
+`npm run verify` checks every one of those, plus that the Spanish overlay in
+`src/content/es/graph.ts` names every node and every edge on the map. It does
+not check that the Spanish is good — that is still a person's job.
+
+One limit flexes: Spanish runs about fifteen percent longer for the same idea,
+so the reel word budget is 520 rather than 450 and the median card 15 rather
+than 14. The card count and the 32-word cap are the same, because what actually
+has to hold is the pacing.
+
 ## Accuracy
 
 **Primary sources where they exist.** Treaties, letters, debates, the text

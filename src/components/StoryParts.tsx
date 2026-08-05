@@ -22,7 +22,9 @@ import type {
   Source,
   WhatIf,
 } from '@/content/types'
+import { SOURCE_KIND_LABELS } from '@/content/labels'
 import { Paragraphs, RichText } from '@/components/RichText'
+import { useLang, useT } from '@/lib/i18n'
 import { Badge } from '@/components/ui/badge'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
@@ -49,6 +51,7 @@ const ASIDE_STYLE = {
 } as const
 
 export function BeatSection({ id, beat, sources }: { id: string; beat: Beat; sources: Source[] }) {
+  const t = useT()
   const Aside = beat.aside ? ASIDE_STYLE[beat.aside.kind].icon : null
 
   return (
@@ -83,7 +86,7 @@ export function BeatSection({ id, beat, sources }: { id: string; beat: Beat; sou
 
       {beat.sourceIds && beat.sourceIds.length > 0 && (
         <p className="text-ink-soft mt-3 text-xs">
-          Sources:{' '}
+          {t.sourcesPrefix}{' '}
           {beat.sourceIds
             .map((sid) => sources.find((s) => s.id === sid))
             .filter(Boolean)
@@ -96,10 +99,11 @@ export function BeatSection({ id, beat, sources }: { id: string; beat: Beat; sou
 }
 
 export function ConsequencesSection({ beat, sources }: { beat: ConsequenceBeat; sources: Source[] }) {
+  const t = useT()
   const groups = [
-    { title: 'Straight away', items: beat.shortTerm, tone: 'text-ember' },
-    { title: 'Over the long run', items: beat.longTerm, tone: 'text-lapis' },
-    { title: 'Nobody saw these coming', items: beat.unexpected, tone: 'text-verdigris' },
+    { title: t.shortTerm, items: beat.shortTerm, tone: 'text-ember' },
+    { title: t.longTerm, items: beat.longTerm, tone: 'text-lapis' },
+    { title: t.unexpected, items: beat.unexpected, tone: 'text-verdigris' },
   ]
 
   return (
@@ -129,7 +133,7 @@ export function ConsequencesSection({ beat, sources }: { beat: ConsequenceBeat; 
 
       {beat.sourceIds && (
         <p className="text-ink-soft mt-3 text-xs">
-          Sources:{' '}
+          {t.sourcesPrefix}{' '}
           {beat.sourceIds
             .map((sid) => sources.find((s) => s.id === sid))
             .filter(Boolean)
@@ -144,6 +148,7 @@ export function ConsequencesSection({ beat, sources }: { beat: ConsequenceBeat; 
 /* ------------------------------------------------------ cause/effect -- */
 
 export function CauseEffectFlow({ items }: { items: CauseEffect[] }) {
+  const t = useT()
   return (
     <ol className="mt-5 space-y-2.5">
       {items.map((item, index) => (
@@ -157,7 +162,7 @@ export function CauseEffectFlow({ items }: { items: CauseEffect[] }) {
             <span className="text-ink flex-1 text-[0.9375rem] font-medium">{item.effect}</span>
           </div>
           <p className="text-ink-soft mt-2.5 text-[0.8125rem] leading-relaxed">
-            <span className="text-ink-soft font-medium">because </span>
+            <span className="text-ink-soft font-medium">{t.becauseWord} </span>
             {item.because}
           </p>
         </li>
@@ -169,6 +174,7 @@ export function CauseEffectFlow({ items }: { items: CauseEffect[] }) {
 /* -------------------------------------------------------------- myths -- */
 
 export function MythPanel({ myths, sources }: { myths: Myth[]; sources: Source[] }) {
+  const t = useT()
   return (
     <div className="border-rule bg-paper-raised mt-5 rounded-[calc(var(--radius)+2px)] border px-4 sm:px-5">
       <Accordion type="multiple">
@@ -189,7 +195,7 @@ export function MythPanel({ myths, sources }: { myths: Myth[]; sources: Source[]
                   </p>
                   {myth.whyItPersists && (
                     <p className="text-ink-soft mt-2 text-[0.875rem]">
-                      <span className="font-medium">Why the myth sticks: </span>
+                      <span className="font-medium">{t.whyMythSticks} </span>
                       {myth.whyItPersists}
                     </p>
                   )}
@@ -214,6 +220,7 @@ export function MythPanel({ myths, sources }: { myths: Myth[]; sources: Source[]
 /* ----------------------------------------------------- disagreements -- */
 
 export function DisagreementPanel({ items, sources }: { items: Disagreement[]; sources: Source[] }) {
+  const t = useT()
   return (
     <div className="mt-5 space-y-4">
       {items.map((item, index) => (
@@ -241,7 +248,7 @@ export function DisagreementPanel({ items, sources }: { items: Disagreement[]; s
           </div>
 
           <p className="border-ember/40 text-ink-soft mt-4 border-l-2 pl-3 text-[0.875rem] leading-relaxed">
-            <span className="text-ink font-medium">Where the atlas stands: </span>
+            <span className="text-ink font-medium">{t.atlasStands} </span>
             {item.atlasPosition}
           </p>
         </div>
@@ -284,12 +291,12 @@ export function BeforeAfterCards({ data }: { data: BeforeAfter }) {
 /* ------------------------------------------------------------ what if -- */
 
 export function WhatIfPanel({ items }: { items: WhatIf[] }) {
+  const t = useT()
   return (
     <div className="mt-5 space-y-3">
       <p className="text-ink-soft border-rule flex items-center gap-2 rounded-[var(--radius)] border border-dashed px-3.5 py-2.5 text-[0.8125rem]">
         <TriangleAlertIcon className="size-3.5 shrink-0" />
-        Everything below is speculation, not history. It is here to show which parts of the story
-        were contingent — and which were not going to change.
+        {t.whatIfWarningBody}
       </p>
 
       {items.map((item, index) => (
@@ -299,7 +306,7 @@ export function WhatIfPanel({ items }: { items: WhatIf[] }) {
             <RichText text={item.reasoning} />
           </p>
           <p className="text-ink-soft border-rule mt-3 border-t pt-3 text-[0.875rem] leading-relaxed">
-            <span className="text-ink font-medium">What holds it back: </span>
+            <span className="text-ink font-medium">{t.whatHoldsBack} </span>
             {item.constraint}
           </p>
         </div>
@@ -311,6 +318,7 @@ export function WhatIfPanel({ items }: { items: WhatIf[] }) {
 /* --------------------------------------------------------------- quiz -- */
 
 export function Quiz({ questions }: { questions: QuizQuestion[] }) {
+  const t = useT()
   const [index, setIndex] = useState(0)
   const [picked, setPicked] = useState<number | null>(null)
   const [correct, setCorrect] = useState(0)
@@ -322,12 +330,10 @@ export function Quiz({ questions }: { questions: QuizQuestion[] }) {
     return (
       <div className="border-rule bg-paper-raised mt-5 rounded-[calc(var(--radius)+2px)] border p-6 text-center">
         <p className="font-display text-ink text-xl font-semibold">
-          {correct} out of {questions.length}
+          {t.quizScore(correct, questions.length)}
         </p>
         <p className="text-ink-soft mt-2 text-sm">
-          {correct === questions.length
-            ? 'Every one. You were reading properly.'
-            : 'The explanations are the point, not the score — the questions you missed are the ones worth rereading.'}
+          {correct === questions.length ? t.quizAllRight : t.quizScoreNote}
         </p>
         <Button
           variant="outline"
@@ -340,7 +346,7 @@ export function Quiz({ questions }: { questions: QuizQuestion[] }) {
             setDone(false)
           }}
         >
-          Try again
+          {t.quizAgain}
         </Button>
       </div>
     )
@@ -349,7 +355,7 @@ export function Quiz({ questions }: { questions: QuizQuestion[] }) {
   return (
     <div className="border-rule bg-paper-raised mt-5 rounded-[calc(var(--radius)+2px)] border p-4 sm:p-5">
       <p className="text-ink-soft text-xs tracking-wide uppercase">
-        Question {index + 1} of {questions.length}
+        {t.quizQuestionOf(index + 1, questions.length)}
       </p>
       <h3 className="font-display text-ink mt-2 text-[1.0625rem] font-semibold">{question.question}</h3>
 
@@ -394,7 +400,7 @@ export function Quiz({ questions }: { questions: QuizQuestion[] }) {
               }
             }}
           >
-            {index + 1 >= questions.length ? 'See how you did' : 'Next question'}
+            {index + 1 >= questions.length ? t.quizSeeScore : t.quizNext}
           </Button>
         </motion.div>
       )}
@@ -404,15 +410,9 @@ export function Quiz({ questions }: { questions: QuizQuestion[] }) {
 
 /* ------------------------------------------------------------ sources -- */
 
-const KIND_LABEL: Record<Source['kind'], string> = {
-  primary: 'Primary source',
-  book: 'Book',
-  paper: 'Paper',
-  archive: 'Archive',
-  dataset: 'Dataset',
-}
-
 export function SourceList({ sources }: { sources: Source[] }) {
+  const { lang, t } = useLang()
+  const kindLabel = SOURCE_KIND_LABELS[lang]
   const primaryFirst = [...sources].sort(
     (a, b) => Number(b.kind === 'primary') - Number(a.kind === 'primary') || a.year - b.year,
   )
@@ -423,7 +423,7 @@ export function SourceList({ sources }: { sources: Source[] }) {
         {primaryFirst.map((source) => (
           <li key={source.id} className="border-rule border-l-2 pl-4">
             <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-              <Badge variant={source.kind === 'primary' ? 'ember' : 'outline'}>{KIND_LABEL[source.kind]}</Badge>
+              <Badge variant={source.kind === 'primary' ? 'ember' : 'outline'}>{kindLabel[source.kind]}</Badge>
               <span className="text-ink text-[0.9375rem] font-medium">{source.title}</span>
             </div>
             <p className="text-ink-soft mt-1 text-[0.8125rem]">
@@ -438,7 +438,7 @@ export function SourceList({ sources }: { sources: Source[] }) {
                 rel="noreferrer noopener"
                 className="text-ember mt-1 inline-block text-[0.8125rem] hover:underline"
               >
-                Open source
+                {t.openSource}
               </a>
             )}
           </li>
@@ -447,8 +447,7 @@ export function SourceList({ sources }: { sources: Source[] }) {
 
       <p className="text-ink-soft border-rule mt-5 flex items-start gap-2 border-t pt-4 text-xs leading-relaxed">
         <BookOpenIcon className="mt-0.5 size-3.5 shrink-0" />
-        Where historians disagree, the atlas says so rather than choosing for you. Where a claim is
-        contested it carries a label. Where no source states something, it is left out.
+        {t.sourcesFooter}
       </p>
     </div>
   )

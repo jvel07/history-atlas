@@ -26,9 +26,10 @@ Node 22 or newer.
 | **The long version** | Behind `?full`. Same story with the sources, the myth corrections and the parts historians argue about. One tap from the end of the reel. |
 | **Storytelling engine** | Eight narrative beats — hook, the world before, the problem, the story, why it happened, consequences, why it still matters, continue the journey — carried by both formats and enforced as named fields in the type system rather than as a style guide nobody reads. |
 | **Knowledge graph** | 69 topics, 83 labelled and directed relationships. Every link carries the *reason* it exists, in a sentence. "Continue the journey" is derived from it, never hand-written. |
-| **Five written stories** | Nine Years Early (Madoff), El Pulpo, Vlad Țepeș, the Opium Wars and Al-Khwārizmī — 34 sources between them. The stories are the product; the framework exists to serve them. |
+| **Five written stories** | Nine Years Early (Madoff), El Pulpo, Vlad Țepeș, the Opium Wars and Al-Khwārizmī — 34 sources between them, in two languages. The stories are the product; the framework exists to serve them. |
 | **Adaptive explanations** | Pre-written lenses ship with each story and work offline. Free-text requests ("focus on the economics", "explain it like I'm 10") go through a server-side RAG pipeline over the story's own reviewed text. |
-| **Search** | A local index with synonym expansion out of the box; pgvector semantic search when the backend is configured. |
+| **Search** | A local index with synonym expansion out of the box; pgvector semantic search when the backend is configured. Stop words, stemming and the synonym list are per language. |
+| **English and Spanish** | A toggle in the nav, and the *whole* atlas moves — stories, map labels, edge notes, interface. Not a summary in the second language: the same claims, the same sources on the same sentences, the same correct quiz answers. `npm run verify` compares the two corpora field by field and fails if they drift. |
 | **Interactive pieces** | Timeline positioned by real dates, cause→effect chains with mechanisms, myth corrections, historian disagreements, before/after, "what if?" speculation, quizzes, bookmarks. |
 
 Five stories is not an oversight. It takes an afternoon to generate a thousand

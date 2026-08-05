@@ -4,23 +4,18 @@ import { CornerDownLeftIcon, SearchIcon } from 'lucide-react'
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
 import { Badge } from '@/components/ui/badge'
 import { searchProvider, type SearchResult } from '@/lib/search'
+import { useLang } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
-const EXAMPLES = [
-  'Why did Britain sell opium?',
-  'Who invented algorithms?',
-  'What happened after the Islamic Golden Age?',
-  'Where does the word algebra come from?',
-]
-
-const KIND_LABEL: Record<SearchResult['kind'], string> = {
-  story: 'Story',
-  section: 'In a story',
-  node: 'On the map',
-  fact: 'Fact',
-}
-
 export function SearchDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boolean) => void }) {
+  const { lang, t } = useLang()
+  const examples = t.searchExamples
+  const kindLabel: Record<SearchResult['kind'], string> = {
+    story: t.searchKindStory,
+    section: t.searchKindSection,
+    node: t.searchKindNode,
+    fact: t.searchKindFact,
+  }
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<SearchResult[]>([])
   const [active, setActive] = useState(0)
@@ -33,7 +28,7 @@ export function SearchDialog({ open, onOpenChange }: { open: boolean; onOpenChan
       setResults([])
       return
     }
-    void searchProvider.search(query, 8).then((found) => {
+    void searchProvider.search(query, lang, 8).then((found) => {
       if (!cancelled) {
         setResults(found)
         setActive(0)
@@ -42,7 +37,7 @@ export function SearchDialog({ open, onOpenChange }: { open: boolean; onOpenChan
     return () => {
       cancelled = true
     }
-  }, [query])
+  }, [query, lang])
 
   useEffect(() => {
     if (open) {
@@ -53,7 +48,8 @@ export function SearchDialog({ open, onOpenChange }: { open: boolean; onOpenChan
     }
   }, [open])
 
-  const placeholder = useMemo(() => EXAMPLES[Math.floor(Math.random() * EXAMPLES.length)]!, [open])
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- a new example per opening is the point
+  const placeholder = useMemo(() => examples[Math.floor(Math.random() * examples.length)]!, [open, examples])
 
   function go(result: SearchResult) {
     onOpenChange(false)
@@ -64,10 +60,8 @@ export function SearchDialog({ open, onOpenChange }: { open: boolean; onOpenChan
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent showClose={false} className="overflow-hidden p-0">
-        <DialogTitle className="sr-only">Search the atlas</DialogTitle>
-        <DialogDescription className="sr-only">
-          Ask a question in your own words. Results cover stories, sections, map entries and facts.
-        </DialogDescription>
+        <DialogTitle className="sr-only">{t.searchOpen}</DialogTitle>
+        <DialogDescription className="sr-only">{t.searchDescription}</DialogDescription>
 
         <div className="border-rule flex items-center gap-3 border-b px-4">
           <SearchIcon className="text-ink-soft size-4 shrink-0" />
@@ -88,7 +82,7 @@ export function SearchDialog({ open, onOpenChange }: { open: boolean; onOpenChan
               }
             }}
             placeholder={placeholder}
-            aria-label="Search the atlas"
+            aria-label={t.searchOpen}
             className="text-ink placeholder:text-ink-soft h-14 w-full bg-transparent text-[0.95rem] outline-none"
           />
         </div>
@@ -96,9 +90,9 @@ export function SearchDialog({ open, onOpenChange }: { open: boolean; onOpenChan
         <div className="scrollbar-slim max-h-[55vh] overflow-y-auto p-2">
           {query.trim().length < 2 ? (
             <div className="px-3 py-4">
-              <p className="text-ink-soft text-xs tracking-wide uppercase">Try asking</p>
+              <p className="text-ink-soft text-xs tracking-wide uppercase">{t.searchTryAsking}</p>
               <ul className="mt-2 space-y-1.5">
-                {EXAMPLES.map((example) => (
+                {examples.map((example) => (
                   <li key={example}>
                     <button
                       onClick={() => setQuery(example)}
@@ -112,11 +106,8 @@ export function SearchDialog({ open, onOpenChange }: { open: boolean; onOpenChan
             </div>
           ) : results.length === 0 ? (
             <div className="px-3 py-6 text-sm">
-              <p className="text-ink font-medium">Nothing here yet.</p>
-              <p className="text-ink-soft mt-1 leading-relaxed">
-                The atlas is small on purpose — every story is sourced and reviewed before it goes
-                up. Try the map to see what is already connected.
-              </p>
+              <p className="text-ink font-medium">{t.searchEmptyTitle}</p>
+              <p className="text-ink-soft mt-1 leading-relaxed">{t.searchEmptyBody}</p>
             </div>
           ) : (
             <ul>
@@ -134,7 +125,7 @@ export function SearchDialog({ open, onOpenChange }: { open: boolean; onOpenChan
                       <div className="flex items-center gap-2">
                         <span className="text-ink truncate text-sm font-medium">{result.title}</span>
                         <Badge variant="outline" className="shrink-0 text-[0.6875rem]">
-                          {KIND_LABEL[result.kind]}
+                          {kindLabel[result.kind]}
                         </Badge>
                       </div>
                       <p className="text-ink-soft mt-0.5 line-clamp-2 text-[0.8125rem] leading-relaxed">
@@ -152,8 +143,7 @@ export function SearchDialog({ open, onOpenChange }: { open: boolean; onOpenChan
 
         {searchProvider.id === 'local' && query.trim().length >= 2 && (
           <p className="text-ink-soft border-rule border-t px-4 py-2 text-[0.6875rem]">
-            Keyword search with synonym expansion. Semantic search runs once the vector backend is
-            configured — see docs/ARCHITECTURE.md.
+            {t.searchLocalNote}
           </p>
         )}
       </DialogContent>

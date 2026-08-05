@@ -1,0 +1,453 @@
+import type { Story } from '../../types'
+
+export const vladTepesEs: Story = {
+  slug: 'vlad-tepes',
+  title: 'Luchó con el miedo',
+  subtitle: 'Vlad Țepeș — Drácula existió, y el miedo fue el arma de los dos bandos.',
+  hook: 'Drácula fue un príncipe real sin ejército, y el miedo era la única arma que podía permitirse — hasta que sus enemigos lo convirtieron en un monstruo.',
+  era: 'medieval',
+  years: [1431, 1476],
+  regions: ['Valaquia', 'Imperio otomano', 'Hungría'],
+  nodes: ['vlad-tepes', 'wallachia', 'ottoman-empire', 'dracula-pamphlets', 'dracula-novel'],
+  tags: ['legend', 'myth', 'empire', 'propaganda', 'romania', 'ottoman'],
+  readingMinutes: 10,
+  reviewed: '2026-08-03',
+  mood: 'noir',
+
+  reel: [
+    { beat: 'hook', punch: true, text: 'Drácula existió, y el vampiro es lo menos interesante de él.' },
+    { beat: 'hook', text: 'Porque antes de la leyenda era un príncipe sin ejército,' },
+    { beat: 'hook', text: 'atrapado entre dos imperios que querían su país.' },
+    { beat: 'worldBefore', kicker: '1400s', text: 'Valaquia en el siglo XV — caminos de barro, piedra fría, humo en los valles,' },
+    { beat: 'worldBefore', text: 'la máquina de guerra otomana al sur, Hungría al norte,' },
+    { beat: 'worldBefore', punch: true, text: 'y un trono que cambió de manos una docena de veces en sesenta años.' },
+    { beat: 'worldBefore', text: 'Su padre compra unos años de paz' },
+    { beat: 'worldBefore', kicker: '1442', text: 'entregando dos de sus hijos al sultán como garantía.' },
+    { beat: 'problem', text: 'Así que Vlad crece dentro del imperio contra el que pasará la vida luchando,' },
+    { beat: 'problem', text: 'aprendiendo su lengua, sus ejércitos y exactamente cómo piensa,' },
+    { beat: 'problem', kicker: '1447', text: 'mientras en casa los nobles matan a su padre y entierran vivo a su hermano.' },
+    { beat: 'problem', punch: true, text: 'Vuelve sabiendo lo que cuesta la debilidad.' },
+    { beat: 'story', kicker: '1456', text: 'Toma el trono y hace escarmiento con los hombres que se lo quitaron a su padre —' },
+    { beat: 'story', text: 'en público, a una escala que nadie que la vea olvida,' },
+    { beat: 'story', punch: true, text: 'porque una reputación llega antes que los soldados.' },
+    { beat: 'story', kicker: '1462', text: 'Luego deja de pagar el tributo, y Mehmed II viene a por él' },
+    { beat: 'story', text: 'con el ejército que ya se había llevado Constantinopla.' },
+    { beat: 'story', text: 'Vlad no puede ganar una batalla, así que no ofrece ninguna.' },
+    { beat: 'story', text: 'Quema su propio país por delante de ellos — pozos envenenados, aldeas vacías —' },
+    { beat: 'story', text: 'y entra de noche en su campamento para matar al sultán en persona' },
+    { beat: 'story', punch: true, text: 'y llega a la tienda equivocada.' },
+    { beat: 'story', text: 'Cuando los otomanos alcanzan por fin su capital, encuentran su respuesta esperando:' },
+    { beat: 'story', punch: true, text: 'un bosque de empalados.' },
+    { beat: 'story', text: 'Mehmed había conquistado un imperio. Dio media vuelta y se fue a casa.' },
+    { beat: 'whyItHappened', punch: true, mark: 'imbalance', text: 'Ahora para, porque casi todo lo más oscuro que esto lo escribieron sus enemigos —' },
+    { beat: 'whyItHappened', text: 'un rey que había cobrado un dinero de cruzada que nunca gastó,' },
+    { beat: 'whyItHappened', text: 'y que necesitaba que el hombre de su celda fuera un monstruo,' },
+    { beat: 'whyItHappened', mark: 'press', text: 'y una imprenta tan nueva que nadie había aprendido todavía a dudar de ella.' },
+    { beat: 'whyItMatters', kicker: '1897', text: 'Cuatro siglos después un novelista encuentra el nombre en una nota al pie y no coge nada más,' },
+    { beat: 'whyItMatters', kicker: '1972', punch: true, text: 'y un superventas suelda el príncipe al vampiro, así que el hombre que usó el miedo acaba siendo el relato que lo vende.' },
+  ],
+
+  beats: {
+    worldBefore: {
+      heading: 'El mundo de antes',
+      paragraphs: [
+        'Valaquia en el siglo XV era un país pequeño en un mal sitio.',
+        'Al sur estaba el Imperio otomano, que atravesaba el siglo más exitoso que ningún Estado había tenido en muchísimo tiempo. Al norte estaba el reino de Hungría, decidido a frenarlo. Valaquia quedaba justo en medio, sobre el Danubio, y pertenecía a quien hubiera llegado más recientemente.',
+        'No fue conquistada. Fue hecha tributaria — lo que significaba que conservaba su propio príncipe, su iglesia y sus leyes, y a cambio pagaba una suma anual y entregaba rehenes. Al príncipe lo elegían los boyardos, la nobleza terrateniente, entre los miembros de una familia real extensa y pendenciera.',
+        'Eso producía exactamente la política que uno esperaría. Entre 1418 y 1476 el trono cambió de manos bastante más de una docena de veces. Gobernar Valaquia era menos un cargo que un intervalo.',
+        'En 1431, en ese mundo, un noble valaco llamado Vlad ingresó en una orden de caballería fundada por el emperador del Sacro Imperio para combatir a los otomanos: la Orden del Dragón. Empezó a poner el dragón en sus monedas. La gente empezó a llamarlo Vlad Dracul — Vlad el Dragón.',
+        'Su segundo hijo, nacido más o menos ese mismo año, heredó el apodo en forma posesiva. Drăculea. Hijo del dragón.',
+      ],
+      aside: {
+        kind: 'caution',
+        label: 'Dragón, no diablo',
+        body: 'En rumano moderno, drac sí significa diablo. En el siglo XV la palabra conservaba su sentido más antiguo, del latín draco, y la familia la tomó de una orden de caballeros cristianos. La lectura diabólica llegó después — y es la lectura que un novelista del siglo XIX encontró por casualidad.',
+      },
+      sourceIds: ['treptow-2000'],
+    },
+
+    problem: {
+      heading: 'El problema',
+      paragraphs: [
+        'En 1442 Vlad Dracul fue convocado a ver al sultán y, al llegar, arrestado. Lo soltaron con una condición que era práctica habitual y no por ello menos brutal: dejaría atrás a dos de sus hijos como garantía de su lealtad.',
+        'Vlad tenía unos once años. Su hermano menor Radu quizá ocho.',
+        'Pasaron la adolescencia dentro de la corte otomana. Aquello no era una mazmorra. A los rehenes reales se los educaba — lenguas, equitación, logística, el Corán, la administración del Estado más sofisticado de la región. Era una educación excelente, impartida bajo la condición permanente de que el comportamiento de su padre decidía si vivían.',
+        'Los dos hermanos salieron de ahí siendo opuestos. Radu se adaptó, se convirtió y se hizo favorito de Mehmed, el hijo del sultán. Vlad no.',
+        'Y entonces, en 1447, el arreglo dejó de importar. Boyardos valacos, respaldados por el regente húngaro, mataron al padre de Vlad. A su hermano mayor Mircea, según el relato que ha llegado hasta nosotros, lo cegaron y lo enterraron vivo.',
+        'En ese momento, un joven criado por los enemigos de su familia, rehén de los otros enemigos de su familia, se convirtió en aspirante a un trono que ocupaban quienes acababan de asesinar a su padre y a su hermano.',
+      ],
+      sourceIds: ['treptow-2000', 'chalkokondyles'],
+    },
+
+    story: {
+      heading: 'La historia',
+      paragraphs: [
+        'Vlad tomó el trono de verdad en 1456, con unos veinticinco años, y lo mantuvo seis. Esos seis años son la base entera de su reputación.',
+        'Empezó por los boyardos. El relato tradicional —y aquí la procedencia importa, así que sostenlo con cuidado— dice que invitó a las familias nobles a un banquete de Pascua, hizo empalar a los mayores y llevó al resto a las montañas a reconstruir la fortaleza de Poenari hasta que se les cayeron encima las ropas de corte. Lo que no está en duda es que la clase boyarda de Valaquia quedó sustancialmente destruida durante su reinado, y que la sustituyó por hombres que se lo debían todo a él.',
+        'También dejó de pagar el tributo otomano, y dejó de enviar el cupo anual de muchachos para el cuerpo de jenízaros.',
+        '**En 1462, Mehmed II fue a por él.** El mismo Mehmed que había tomado Constantinopla nueve años antes, acabando con el Imperio romano, llevó un ejército varias veces mayor que cualquier cosa que Valaquia pudiera reunir.',
+        'Vlad entendía exactamente lo que no podía hacer. No podía ganar una batalla. Así que no ofreció ninguna.',
+        'Vació y quemó su propio país por delante del avance — cosechas, aldeas, pozos envenenados, ganado arreado lejos. Se dice que envió deliberadamente al campamento otomano a enfermos de peste y de lepra. Hostigó la columna sin parar y no se plantó nunca delante de ella.',
+        'La noche del 17 de junio de 1462 llevó la lógica hasta el final y entró en el propio campamento otomano, a oscuras, con la intención de encontrar y matar al sultán en persona. Llegó en cambio a las tiendas de dos visires. El Ataque Nocturno falló por lo que mide un campamento.',
+        'Y entonces, según el historiador griego Calcocondilas, el ejército otomano llegó a las afueras de Târgoviște y encontró un campo de cuerpos empalados, quizá veinte mil, colocados en filas. Mehmed —un hombre no fácil de impresionar con violencia— habría mirado aquello, comentado que quien era capaz de eso merecía su país, y se habría retirado.',
+        'Es lo más famoso que hizo Vlad, y funcionó.',
+        'Tampoco lo salvó. Mehmed dejó atrás a un candidato que los valacos podían aceptar, y ese candidato era Radu — el propio hermano de Vlad, criado en la misma corte, ahora al mando de tropas otomanas. Los boyardos, tras ver gobernar a Vlad seis años, se pasaron. Vlad huyó al norte, a Hungría, a pedir ayuda a sus aliados cristianos.',
+        'El rey Matías Corvino lo arrestó y lo tuvo preso unos doce años.',
+      ],
+      aside: {
+        kind: 'voice',
+        label: 'Calcocondilas, sobre Mehmed en Târgoviște',
+        body: 'Se cuenta que el sultán, al ver el campo de estacas, dijo que un hombre capaz de tales cosas era digno de más, y que no podía quitarle el país a quien había hecho un uso tan admirable de su poder y de sus súbditos.',
+        sourceId: 'chalkokondyles',
+      },
+      sourceIds: ['treptow-2000', 'chalkokondyles', 'pamphlets-1488'],
+    },
+
+    whyItHappened: {
+      heading: 'Por qué se convirtió en monstruo',
+      paragraphs: [
+        'Los empalamientos fueron reales. La escala está genuinamente discutida, y la razón por la que se discute merece entenderse, porque es la verdadera lección de esta historia.',
+        '**El empalamiento no fue invención suya.** Era un castigo judicial reconocido en toda la región, usado por otomanos y por húngaros, y se aplicaba a enemigos, criminales y traidores. Lo distintivo de Vlad fue la escala y la constancia, no la novedad.',
+        '**El terror era una estrategia, y se leía como tal.** Un gobernante sin ejército permanente, sin nobleza fiable y sin profundidad territorial tiene muy pocos instrumentos. Hacer escarmiento con la gente es uno de ellos. Eso es una explicación, no una defensa.',
+        '**Pero el hombre que lo anotó todo tenía un motivo.** Después de 1462 Vlad estaba bajo la custodia de Matías Corvino, que había aceptado fondos considerables del papado para una cruzada contra los otomanos, y no había ido a ninguna. Producir pruebas de que su aliado valaco era un psicópata indigno del apoyo cristiano resultaba extremadamente conveniente. Los primeros relatos de atrocidades circulan precisamente desde ahí, precisamente entonces.',
+        '**Y luego cambió la tecnología.** Las historias las recogieron los sajones de habla alemana de Transilvania, cuyas ciudades mercantiles Vlad había saqueado y gravado y que por tanto lo odiaban por cuenta propia. Desde 1463 circulan en manuscrito. Desde la década de 1480 se *imprimen*, en Núremberg, Bamberg, Lübeck, Augsburgo — con xilografías de un príncipe cenando tranquilamente entre las estacas.',
+        'La imprenta tenía unas pocas décadas. Estos panfletos estuvieron entre las primeras cosas que popularizó en todo un continente. Los primeros medios de masas de Europa descubrieron de inmediato el contenido de atrocidades, y vendía.',
+        'Un contraste sobre todo esto: un relato ruso escrito hacia 1486, desde otra corte con otros intereses, describe la misma violencia — y la lee como justicia dura de un gobernante que odiaba el delito y la deshonestidad. Los mismos actos. Veredicto opuesto. Todo depende de quién sostiene la pluma.',
+      ],
+      sourceIds: ['treptow-2000', 'pamphlets-1488', 'skazanie-1486'],
+    },
+
+    consequences: {
+      heading: 'Qué cambió',
+      paragraphs: [
+        'Recuperó su trono en 1476 y lo perdió, junto con la cabeza, en cuestión de meses.',
+      ],
+      shortTerm: [
+        'Vlad murió a finales de 1476 o principios de 1477, en circunstancias que no están claras. Se dice que su cabeza fue enviada a Mehmed a Constantinopla.',
+        'Valaquia siguió siendo tributaria otomana otros tres siglos y medio, que es justo lo que él no había conseguido evitar.',
+        'La clase boyarda que había quebrado no recuperó su posición anterior.',
+      ],
+      longTerm: [
+        'Los panfletos impresos siguieron vendiéndose y reimprimiéndose hasta bien entrado el siglo XVI, fijando su reputación en la Europa de habla alemana mucho después de que nadie recordara la política.',
+        'En la tradición rumana sobrevivió la figura contraria: un príncipe severo pero justo que defendió el país y ahorcó ladrones, recordado en cuentos populares y no en panfletos.',
+        'En 1897 Bram Stoker le dio el nombre a un vampiro, y el nombre dejó de pertenecer al hombre por completo.',
+        'El turismo rumano funciona hoy en buena medida gracias a una novela sobre un personaje que su autor situó en un país que nunca visitó.',
+      ],
+      unexpected: [
+        'Los panfletos de atrocidades se estudian hoy menos como prueba sobre Vlad que como prueba sobre la imprenta: están entre los ejemplos más tempranos de propaganda política producida en masa, y muestran el mecanismo funcionando a la perfección en su estreno.',
+        'El castillo de Bran, vendido en todo el mundo como el castillo de Drácula, no tiene conexión sólida con él. La fortaleza que sí tuvo y reconstruyó, Poenari, es una ruina a 1.480 escalones y recibe una fracción de las visitas.',
+        'Bajo Ceaușescu, Rumanía promovió a Vlad como héroe nacional y patriota antiotomano — usando a un príncipe del siglo XV para hacer un comentario del siglo XX sobre la injerencia extranjera.',
+        'El conde de la novela es transilvano. El Vlad real gobernó Valaquia, el principado vecino, y saqueaba Transilvania.',
+      ],
+      sourceIds: ['treptow-2000', 'miller-2000'],
+    },
+
+    whyItMatters: {
+      heading: 'Por qué sigue importando',
+      paragraphs: [
+        'La historia de Drácula suele contarse como una curiosidad: *¿sabías que el vampiro estaba basado en un príncipe real?* La versión interesante va al revés.',
+        'Bram Stoker escribía una novela sobre un vampiro transilvano al que había llamado provisionalmente conde Wampyr. Leyendo en Whitby se topó con el relato de Valaquia y Moldavia de William Wilkinson, de 1820, que menciona a un voivoda llamado Drácula y trae una nota al pie explicando que Drácula significa diablo en lengua valaca.',
+        'Se conservan las notas de trabajo de Stoker. Cogió el nombre y esa nota al pie. En ellas no hay nada sobre empalamientos, nada sobre las guerras otomanas, nada sobre la vida del hombre. El conde de la novela dice ser un székely, que Vlad no era, y describe una historia familiar que no es la suya.',
+        'Los dos se fundieron en la cabeza del público en 1972, por un libro superventas que defendió la conexión y se convirtió en la versión aceptada. Es decir: la conexión tiene unos cincuenta años — es más joven que la llegada a la Luna.',
+        'Lo que deja la conclusión que merece llevarse. La reputación de un hombre la construyó su carcelero, la imprimieron sus rivales comerciales, la distribuyó una tecnología nueva que premiaba la versión más extrema y, cuatro siglos después, quedó pegada para siempre a un monstruo con el que no tenía nada que ver.',
+        'Todas y cada una de esas fases siguen funcionando. Solo se ha sustituido la imprenta.',
+      ],
+      sourceIds: ['miller-2000', 'wilkinson-1820', 'mcnally-florescu-1972'],
+    },
+  },
+
+  timeline: [
+    { year: 1408, title: 'Se funda la Orden del Dragón', detail: 'Segismundo de Luxemburgo crea una orden de caballería comprometida a combatir a los otomanos. El padre de Vlad entra en 1431 y toma el nombre de Dracul.' },
+    { year: 1431, title: 'Nace Vlad III', detail: 'Probablemente en Sighișoara, en Transilvania. La fecha es una estimación.', confidence: 'contested' },
+    { year: 1442, title: 'Rehén de los otomanos', detail: 'Vlad y su hermano menor Radu quedan en la corte otomana como garantía de la lealtad de su padre.', pivotal: true },
+    { year: 1447, title: 'Matan a su padre y a su hermano', detail: 'Boyardos respaldados por el regente húngaro asesinan a Vlad Dracul. A su hermano mayor Mircea se le cegó y enterró vivo, según los relatos.', pivotal: true },
+    { year: 1453, title: 'Cae Constantinopla', detail: 'Mehmed II toma la ciudad a los veintiuno. El Imperio otomano se vuelve la potencia dominante de la región.', pivotal: true },
+    { year: 1456, title: 'Vlad toma el trono', detail: 'Empieza su segundo y más largo reinado. Dura seis años y produce la leyenda entera.', pivotal: true },
+    { year: 1459, title: 'Se acaba el tributo', detail: 'Vlad se niega a pagar la suma anual y a entregar la leva de muchachos para los jenízaros.' },
+    { year: 1462, date: '1462-06-17', title: 'El Ataque Nocturno', detail: 'Vlad entra a oscuras en el campamento otomano con la intención de matar a Mehmed II en persona, y llega a las tiendas equivocadas.', pivotal: true },
+    { year: 1462, title: 'El bosque de empalados', detail: 'Calcocondilas cuenta que el ejército otomano encuentra un campo de cuerpos empalados a las afueras de Târgoviște, y que Mehmed se retira.', confidence: 'contested', pivotal: true },
+    { year: 1462, title: 'Radu toma el trono', detail: 'Los otomanos instalan como príncipe de Valaquia al hermano menor de Vlad, criado a su lado en la misma corte.' },
+    { year: 1463, title: 'Empiezan a circular las historias', detail: 'Los relatos de atrocidades se difunden en manuscrito desde la corte húngara y las ciudades sajonas de Transilvania mientras Vlad está preso.', pivotal: true },
+    { year: 1476, title: 'Un tercer reinado, y la muerte', detail: 'Vlad recupera el trono y muere en cuestión de meses. Se dice que su cabeza se envió a Mehmed a Constantinopla.' },
+    { year: 1488, title: 'Se imprimen los panfletos', detail: 'Aparecen ediciones impresas en Núremberg y otras ciudades, con xilografías, y se reimprimen durante décadas. Entre los primeros superventas populares de Europa.', pivotal: true },
+    { year: 1820, title: 'Se escribe una nota al pie', detail: 'El relato de Valaquia de William Wilkinson menciona a un voivoda llamado Drácula y anota que la palabra significa diablo.' },
+    { year: 1897, title: 'Stoker publica Drácula', detail: 'En los borradores el vampiro se llamaba conde Wampyr. El nombre se toma de Wilkinson; casi nada más.', pivotal: true },
+    { year: 1972, title: 'Se funden los dos', detail: 'In Search of Dracula sostiene que la novela se basó en Vlad III, se convierte en superventas y crea la versión que hoy todo el mundo cree.', pivotal: true },
+  ],
+
+  causeEffect: [
+    { cause: 'Valaquia queda entre dos imperios', effect: 'Sus príncipes son puestos y quitados sin parar', because: 'Quien sea más fuerte esa década elige al candidato, y los boyardos siguen al más fuerte.' },
+    { cause: 'El padre de Vlad necesita demostrar lealtad', effect: 'Vlad pasa la adolescencia bajo custodia otomana', because: 'Los rehenes reales eran la garantía habitual en una relación tributaria.' },
+    { cause: 'Los boyardos asesinan a su padre y a su hermano', effect: 'Destruye la clase boyarda al llegar al poder', because: 'La nobleza que elegía príncipes era la misma que los mataba, y él la eliminó como factor.' },
+    { cause: 'Deja de pagar el tributo', effect: 'Mehmed II invade en 1462', because: 'Un tributario que deja de pagar y se queda con sus muchachos es un precedente que el imperio no puede permitir.' },
+    { cause: 'No puede ganar una batalla campal', effect: 'Tierra quemada, enfermedad y un ataque nocturno', because: 'El terror y la privación eran los únicos instrumentos de un gobernante sin ejército y sin profundidad.' },
+    { cause: 'Pide ayuda a Hungría', effect: 'Doce años en una prisión húngara', because: 'Matías Corvino tenía dinero de cruzada que no había gastado en cruzar, y necesitaba que el fracaso fuera de otro.' },
+    { cause: 'Su carcelero y sus rivales comerciales escriben los relatos', effect: 'Queda documentado un monstruo con todo detalle', because: 'Ambos tenían un interés directo en la peor versión posible, y nadie tenía interés en comprobarla.' },
+    { cause: 'La imprenta existe en la década de 1480', effect: 'La peor versión se vuelve la permanente', because: 'La imprenta premiaba el relato más sensacional, y reimprimirlo lo dejó como el único en circulación.' },
+  ],
+
+  myths: [
+    {
+      myth: 'Bram Stoker basó al conde Drácula en Vlad III.',
+      reality: 'Las notas de trabajo conservadas de Stoker muestran que cogió el nombre y una sola nota al pie —la observación de Wilkinson en 1820 de que Drácula significa diablo— y esencialmente nada más. Su villano se llamaba conde Wampyr hasta entonces. El conde de la novela es un székely con una historia que no es la de Vlad.',
+      whyItPersists: 'Un superventas de 1972, In Search of Dracula, defendió la conexión con tal eficacia que en una década era la versión recibida. La idea es más joven de lo que casi todos suponen.',
+      sourceIds: ['miller-2000', 'wilkinson-1820', 'mcnally-florescu-1972'],
+    },
+    {
+      myth: 'El castillo de Bran era el castillo de Drácula.',
+      reality: 'No hay buenas pruebas de que Vlad lo tuviera nunca. La fortaleza que sí reconstruyó y usó fue Poenari, hoy una ruina en lo alto de 1.480 escalones. La asociación de Bran es una creación turística del siglo XX, ayudada por su aspecto.',
+      whyItPersists: 'Sale extraordinariamente bien en las fotos, es accesible, y nadie que venda entradas tiene incentivo para corregirlo.',
+      sourceIds: ['treptow-2000'],
+    },
+    {
+      myth: 'Vlad inventó el empalamiento, o era excepcionalmente sanguinario para su época.',
+      reality: 'El empalamiento era un castigo establecido, usado por los otomanos y en Hungría. El siglo XV era violento en las alturas por todas partes. Su reputación descansa en la escala y en quién la puso por escrito, no en inventar un método.',
+      whyItPersists: 'El apodo Țepeș —el Empalador— es póstumo y muy vívido, y lo vívido viaja.',
+      sourceIds: ['treptow-2000', 'pamphlets-1488'],
+    },
+    {
+      myth: 'Drácula significa diablo, así que el nombre siempre fue siniestro.',
+      reality: 'Viene de la Orden del Dragón, una orden cristiana de caballería en la que su padre entró en 1431. Dracul significaba dragón. El sentido de diablo se impuso después — y es ese sentido posterior el que recogió una nota al pie del siglo XIX.',
+      whyItPersists: 'La palabra rumana moderna sí significa diablo, así que es un error de traducción facilísimo de repetir.',
+      sourceIds: ['treptow-2000', 'wilkinson-1820'],
+    },
+  ],
+
+  disagreements: [
+    {
+      question: '¿A cuánta gente mató realmente?',
+      positions: [
+        { view: 'Las cifras de los panfletos alemanes —decenas de miles, incluidos veinte mil en Târgoviște— indican en líneas generales la escala.', heldBy: 'La lectura tradicional, siguiendo los relatos impresos y a Calcocondilas', sourceId: 'chalkokondyles' },
+        { view: 'Las cifras vienen de fuentes hostiles con motivos claros y no pueden sostener ese peso. La matanza fue real; la aritmética es propaganda.', heldBy: 'La mayor parte de la investigación moderna sobre el periodo', sourceId: 'treptow-2000' },
+      ],
+      atlasPosition: 'El atlas afirma que usó el empalamiento de forma extensa y como política, lo cual no se discute, y trata las cifras concretas como no verificables. No repite los números como hechos.',
+    },
+    {
+      question: '¿Fue un defensor de su país o un tirano?',
+      positions: [
+        { view: 'Un tirano. Los relatos de atrocidades, tomados en conjunto entre fuentes alemanas, húngaras y algunas otomanas, describen una crueldad sostenida contra sus propios súbditos.', heldBy: 'La tradición de los panfletos alemanes y sus herederos', sourceId: 'pamphlets-1488' },
+        { view: 'Un gobernante duro haciendo lo que el cargo exigía, y el único príncipe valaco que resistió en serio la expansión otomana.', heldBy: 'La historiografía nacional rumana, y un relato ruso de 1486 que lee los mismos actos como justicia', sourceId: 'skazanie-1486' },
+      ],
+      atlasPosition: 'El atlas no elige. Informa de lo que hizo, y de quién estaba escribiendo — porque el desacuerdo aquí no va realmente sobre los hechos, sino sobre qué política de qué siglo está juzgando.',
+    },
+  ],
+
+  didYouKnow: [
+    'El villano de Stoker se llamaba conde Wampyr hasta que encontró un nombre mejor en un libro de biblioteca en Whitby.',
+    'A Vlad lo educaron los otomanos. Hablaba su lengua, conocía su ejército y los combatió con lo que le habían enseñado.',
+    'El hermano que ocupó su trono, respaldado por tropas otomanas, se había criado a su lado en el mismo cautiverio.',
+    'Un relato ruso escrito hacia 1486 describe los mismos actos como justicia dura, no como tiranía. Las mismas pruebas, veredicto opuesto.',
+    'Los panfletos de atrocidades se estudian hoy sobre todo como prueba sobre la imprenta temprana, no como prueba sobre Vlad.',
+    'El castillo de Bran, vendido en todo el mundo como el castillo de Drácula, no tiene ninguna conexión sólida con él.',
+    'El vínculo entre el príncipe y el vampiro se popularizó en 1972 — es más joven que la llegada a la Luna.',
+  ],
+
+  lenses: [
+    {
+      id: 'one-minute',
+      label: 'En un minuto',
+      kind: 'length',
+      paragraphs: [
+        'Vlad III gobernó Valaquia, un pequeño Estado tributario entre el Imperio otomano y Hungría. Su padre había entrado en la Orden del Dragón y tomado el nombre de Dracul; Drăculea significa hijo del dragón.',
+        'Entregado a los otomanos como rehén de niño, volvió para tomar el trono en 1456, destruyó a la nobleza que había asesinado a su padre, dejó de pagar el tributo y en 1462 se enfrentó a una invasión de Mehmed II. No podía ganar una batalla, así que quemó su propio país, extendió enfermedad en el campamento otomano, intentó asesinar al sultán de noche y dejó un campo de cuerpos empalados a las afueras de su capital. Mehmed se retiró. Vlad perdió el trono igualmente, a manos de su propio hermano.',
+        'Huyó a Hungría y allí lo tuvo preso doce años un rey que había cobrado fondos de cruzada sin cruzar — y que necesitaba que su aliado fuera un monstruo. Las historias de atrocidades que siguieron se imprimieron desde la década de 1480 y fueron de los primeros superventas de Europa.',
+        'En 1897 Bram Stoker tomó el nombre de una nota al pie en un libro de biblioteca. Casi nada más. El vampiro y el príncipe los fundió un superventas en 1972.',
+      ],
+    },
+    {
+      id: 'age-16',
+      label: 'Explícamelo con 16 años',
+      kind: 'age',
+      paragraphs: [
+        'Valaquia era un Estado tributario, no uno ocupado: conservaba su príncipe, su iglesia y su ley, y pagaba un tributo anual más rehenes. Ese arreglo es la clave de todo — hacía del príncipe a la vez cliente otomano y aliado húngaro, y ninguno de los dos podía fiarse del todo.',
+        'La estrategia de Vlad en 1462 es una campaña asimétrica de manual. Rechaza la batalla decisiva, niega el abastecimiento al enemigo destruyendo tu propio territorio, degrádalo con enfermedad, hostiga sin parar e intenta decapitar el mando. El campo de empalados en Târgoviște pertenece a la misma lógica — era un mensaje calculado para un público concreto.',
+        'La historia reputacional es la mitad más interesante. Sus relatos vienen de dos fuentes con motivos claros: Matías Corvino, que lo tenía preso y había desviado financiación de cruzada, y los mercaderes sajones de Transilvania cuyas ciudades había saqueado. Ambos alimentaron una industria de imprenta que era nueva, hambrienta y sin regular.',
+        'Compáralo con una narración rusa de hacia 1486, producida en una corte sin nada en juego en ninguno de los dos agravios. Describe actos comparables y los enmarca como severidad al servicio del orden. La divergencia te dice que las fuentes registran juicios, no solo hechos.',
+      ],
+    },
+    {
+      id: 'scholar',
+      label: 'Nivel universitario',
+      kind: 'age',
+      paragraphs: [
+        'La historiografía se divide limpiamente según las fuentes. La tradición alemana de las Geschichte, transmitida por las ciudades sajonas e impresa desde la década de 1480, se lee hoy en general como un corpus políticamente motivado más que documental; la biografía de Treptow es el correctivo estándar, al situar el reinado dentro de la política faccional valaca y de la frontera húngaro-otomana en vez de dentro de una psicología de la crueldad.',
+        'Calcocondilas sigue siendo el testigo menos partidista y más valioso para 1462, y su relato del campo de Târgoviște y de la retirada de Mehmed es la base de la mayoría de las reconstrucciones, con las cautelas habituales sobre las convenciones numéricas bizantinas.',
+        'El Skazanie eslavo de hacia 1486 es el texto de control imprescindible: contenido sustancialmente coincidente, encuadre moral invertido. Leído frente a los panfletos alemanes demuestra que la divergencia entre «tirano» y «gobernante justo» es interpretativa y no probatoria.',
+        'Sobre la posteridad literaria, el trabajo de crítica de fuentes de Miller sobre las notas Rosenbach de Stoker zanjó la cuestión: el préstamo es onomástico, mediado por Wilkinson (1820), sin conocimiento demostrable del reinado histórico. McNally y Florescu (1972) deben citarse como origen de la confusión, no como prueba de ella — un caso raro en que puede fecharse el momento en que un mito entró en circulación general.',
+      ],
+    },
+    {
+      id: 'propaganda',
+      label: 'Cómo funciona la propaganda',
+      kind: 'angle',
+      paragraphs: [
+        'Este es un caso de estudio completo, y todas sus fases siguen en servicio.',
+        '**Un autor con motivos.** Matías Corvino había cogido dinero papal para una cruzada que no libró. Un aliado monstruoso convierte un escándalo financiero en un juicio moral. No necesitaba inventar mucho — necesitaba seleccionar y amplificar.',
+        '**Un público que ya estaba de acuerdo.** Las ciudades sajonas de Transilvania habían sido saqueadas y gravadas por Vlad. No se las persuadió; se las confirmó. El material se difunde más rápido entre quienes ya quieren que sea cierto.',
+        '**Una tecnología de difusión con sus propios incentivos.** La imprenta en la década de 1480 era nueva, barata y comercial. Las versiones que vendían eran las extremas, y reimprimir seleccionaba por extremidad. No había mecanismo de corrección porque no había mercado para una corrección.',
+        '**Y el tiempo.** Al cabo de un siglo los panfletos eran el único relato superviviente en esa lengua, así que dejaron de parecer afirmaciones y empezaron a parecer el registro. Ese es el paso que se le escapa a la gente: la propaganda no tiene que ganar una discusión, solo tiene que sobrevivir a la alternativa.',
+      ],
+    },
+    {
+      id: 'from-romania',
+      label: 'Desde el lado rumano',
+      kind: 'contrast',
+      paragraphs: [
+        'Desde Bucarest esto no es una historia de terror. Es la historia del único príncipe que se negó.',
+        'Valaquia pagó tributo y entregó a sus hijos durante cien años antes de Vlad y trescientos cincuenta después. En medio de eso hay seis años en los que un gobernante dejó de pagar, dejó de mandar muchachos al cuerpo de jenízaros e hizo dar media vuelta al ejército más poderoso de Europa.',
+        'La tradición popular recuerda a un príncipe obsesionado con el orden — los cuentos van de ladrones que no robaban y de mercaderes que dejaban copas de oro sin vigilar en plazas públicas, porque el castigo era seguro. La severidad, en un país donde al príncipe anterior lo habían asesinado sus propios nobles, no era accesoria al buen gobierno. Era la oferta.',
+        'La incomodidad es real, y los rumanos también discuten sobre ella. Pero conviene notar que la versión que se vende a los turistas —el vampiro, el castillo equivocado, la novela extranjera— sustituyó una memoria nacional por un monstruo inventado en otra parte. Es la segunda vez que le pasa lo mismo.',
+      ],
+    },
+  ],
+
+  beforeAfter: {
+    label: 'El hombre y la leyenda',
+    before: {
+      title: 'Lo que sostienen las fuentes',
+      points: [
+        'Príncipe de Valaquia, tres reinados, unos siete años en total',
+        'Criado como rehén otomano; hablaba su lengua y conocía sus métodos',
+        'Usó el empalamiento de forma extensa y deliberada, como política',
+        'Cortó el tributo y forzó la retirada de Mehmed II en 1462',
+        'Perdió el trono a manos de su propio hermano, y murió hacia 1476',
+      ],
+    },
+    after: {
+      title: 'Lo que añadió la leyenda',
+      points: [
+        'Un vampiro, cuatrocientos años después, en una novela en la que no aparece',
+        'Un castillo en Bran que casi con seguridad nunca tuvo',
+        'Cifras exactas de víctimas procedentes de su carcelero y de sus rivales',
+        'Beber sangre — una acusación ausente de los relatos contemporáneos',
+        'Un apellido que significa diablo, y no dragón',
+      ],
+    },
+  },
+
+  whatIf: [
+    {
+      question: '¿Y si la imprenta hubiera llegado cincuenta años más tarde?',
+      reasoning: 'Los relatos de atrocidades se habrían quedado en manuscrito, circulando entre unos pocos cientos de lectores en Hungría y Transilvania, y lo más probable es que se hubieran desvanecido con la política que los produjo. Vlad sería una figura regional conocida por especialistas, como una docena de contemporáneos que hicieron cosas comparables.',
+      constraint: 'Las historias existían antes de la imprenta y ya hacían su trabajo político. La imprenta no creó el relato; lo hizo permanente y continental. Sería menos famoso, no recordado de otra manera.',
+    },
+    {
+      question: '¿Y si Stoker se hubiera quedado con el nombre de conde Wampyr?',
+      reasoning: 'La novela probablemente habría triunfado igual — el trabajo lo hace el vampiro que inventa, no el nombre. Y Vlad III se habría quedado en el siglo XV, donde le corresponde, discutido por historiadores de la frontera otomana.',
+      constraint: 'Es probable que algo se hubiera cruzado con él tarde o temprano. Los panfletos ya lo habían convertido en el príncipe cruel más famoso de Europa, que es exactamente el estante que hojea un novelista gótico.',
+    },
+  ],
+
+  quiz: [
+    {
+      question: '¿De dónde viene el nombre «Drácula»?',
+      options: [
+        'De una palabra valaca para vampiro',
+        'De la Orden del Dragón, en la que entró su padre',
+        'De un título concedido por el sultán otomano',
+        'Del nombre de su castillo',
+      ],
+      answerIndex: 1,
+      explains: 'Dracul significaba dragón, por la orden de caballería en la que su padre entró en 1431. Drăculea es el posesivo: hijo del dragón. El sentido de diablo llegó después.',
+    },
+    {
+      question: '¿Cómo consiguió Vlad que Mehmed II se retirara en 1462?',
+      options: [
+        'Ganó una batalla campal a las afueras de Târgoviște',
+        'Pagó un tributo enorme',
+        'Negó el abastecimiento al ejército, extendió enfermedad y dejó un campo de empalados en su ruta',
+        'Hungría intervino con un ejército',
+      ],
+      answerIndex: 2,
+      explains: 'Nunca ofreció una batalla que no pudiera ganar. Quemó su propio país por delante del avance, hostigó la columna, intentó asesinar al sultán de noche y dejó un mensaje a las afueras de su capital.',
+    },
+    {
+      question: '¿Quién ocupó el trono de Vlad después de 1462?',
+      options: [
+        'Matías Corvino de Hungría',
+        'Mehmed II directamente',
+        'Su hermano menor Radu, respaldado por los otomanos',
+        'El consejo de boyardos',
+      ],
+      answerIndex: 2,
+      explains: 'Radu había sido rehén de niño en la misma corte otomana, se quedó, se convirtió y ascendió. Los otomanos lo instalaron contra su hermano.',
+    },
+    {
+      question: '¿Qué cogió realmente Bram Stoker de Vlad III?',
+      options: [
+        'Su biografía, su castillo y sus métodos',
+        'El nombre, y una nota al pie que decía que significaba diablo',
+        'Nada — el parecido es coincidencia',
+        'Su escudo de armas y su historia familiar',
+      ],
+      answerIndex: 1,
+      explains: 'Se conservan las notas de trabajo de Stoker. Encontró el nombre en el libro de Wilkinson de 1820, con una nota al pie que lo glosaba como diablo, y hasta entonces llamaba a su villano conde Wampyr.',
+    },
+  ],
+
+  sources: [
+    {
+      id: 'chalkokondyles',
+      kind: 'primary',
+      author: 'Laonikos Chalkokondyles',
+      title: 'The Histories',
+      year: 1465,
+      detail: 'En griego; compuesta hacia la década de 1460. Edición Dumbarton Oaks Medieval Library, 2014',
+      note: 'El relato casi contemporáneo más valioso sobre la campaña de 1462, incluido el campo de estacas y la retirada de Mehmed. La fecha es aproximada.',
+    },
+    {
+      id: 'pamphlets-1488',
+      kind: 'primary',
+      author: 'Anonymous German pamphlets',
+      title: 'Von einem wütrich der hieß Trakle waida von der Walachei',
+      year: 1488,
+      detail: 'Impresos en Núremberg y otras ciudades; versiones manuscritas circulan desde 1463',
+      note: 'La literatura de atrocidades. Se cita aquí como prueba de cómo se fabricó la reputación, no como registro fiable de lo ocurrido.',
+    },
+    {
+      id: 'skazanie-1486',
+      kind: 'primary',
+      author: 'Fyodor Kuritsyn (attributed)',
+      title: 'Skazanie o Drakule voevode',
+      year: 1486,
+      detail: 'En eslavo eclesiástico; tradición manuscrita de la corte rusa',
+      note: 'Describe más o menos la misma violencia y la lee como severidad al servicio de la justicia. El control imprescindible sobre el relato alemán.',
+    },
+    {
+      id: 'wilkinson-1820',
+      kind: 'primary',
+      author: 'William Wilkinson',
+      title: 'An Account of the Principalities of Wallachia and Moldavia',
+      year: 1820,
+      detail: 'Longman, Hurst, Rees, Orme and Brown, Londres',
+      note: 'El libro que leyó Stoker. Su nota al pie glosando «Drácula» como diablo es el vínculo documentado entero entre el príncipe y la novela.',
+    },
+    {
+      id: 'treptow-2000',
+      kind: 'book',
+      author: 'Kurt W. Treptow',
+      title: 'Vlad III Dracula: The Life and Times of the Historical Dracula',
+      year: 2000,
+      detail: 'Center for Romanian Studies. ISBN 978-973-98392-2-8',
+      note: 'La biografía académica de referencia, y la explicación más clara de cómo se produjeron las fuentes.',
+    },
+    {
+      id: 'miller-2000',
+      kind: 'book',
+      author: 'Elizabeth Miller',
+      title: 'Dracula: Sense & Nonsense',
+      year: 2000,
+      detail: 'Desert Island Books. ISBN 978-1-874287-24-6',
+      note: 'Crítica de fuentes sobre las notas conservadas de Stoker. Zanja qué cogió y qué no del Vlad histórico.',
+    },
+    {
+      id: 'mcnally-florescu-1972',
+      kind: 'book',
+      author: 'Raymond T. McNally and Radu Florescu',
+      title: 'In Search of Dracula',
+      year: 1972,
+      detail: 'New York Graphic Society',
+      note: 'Se cita como origen de la confusión entre príncipe y vampiro, no como apoyo de ella. Este es el libro que generalizó el mito.',
+    },
+  ],
+}

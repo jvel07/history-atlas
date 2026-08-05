@@ -3,29 +3,50 @@ import { Link } from '@tanstack/react-router'
 import { motion } from 'motion/react'
 import { ArrowRightIcon, SparklesIcon, ZapIcon } from 'lucide-react'
 import { reelSeconds } from '@/components/StoryReel'
-import { ATLAS_STATS, CURIOS, STORIES, hubs } from '@/content'
-import { NODE_KIND_LABEL } from '@/content/types'
+import { useCorpus } from '@/content/useCorpus'
+import { NODE_KIND_LABELS } from '@/content/labels'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { useLang } from '@/lib/i18n'
+import type { Lang } from '@/lib/i18n'
 import { formatSpan, pickN } from '@/lib/utils'
 
-/** The chain from the vision doc, rendered as the promise the site is making. */
-const JOURNEY = [
-  'Britain',
-  'Industrial Revolution',
-  'Tea trade',
-  'East India Company',
-  'India',
-  'Opium Wars',
-  'Hong Kong',
-  'Modern China',
-]
+/**
+ * The chain from the vision doc, rendered as the promise the site is making.
+ * It is a display list, not graph data — the nodes it names are on the map, but
+ * the point here is the shape of an evening, so it is written per language.
+ */
+const JOURNEY: Record<Lang, string[]> = {
+  en: [
+    'Britain',
+    'Industrial Revolution',
+    'Tea trade',
+    'East India Company',
+    'India',
+    'Opium Wars',
+    'Hong Kong',
+    'Modern China',
+  ],
+  es: [
+    'Gran Bretaña',
+    'Revolución Industrial',
+    'Comercio del té',
+    'Compañía de las Indias',
+    'India',
+    'Guerras del Opio',
+    'Hong Kong',
+    'China actual',
+  ],
+}
 
 export function Home() {
+  const { lang, t } = useLang()
+  const { stories, curios: allCurios, stats, graph } = useCorpus()
   // Fresh on each visit, stable across renders within it.
-  const curios = useMemo(() => pickN(CURIOS, 3, Date.now() >> 16), [])
-  const featured = STORIES[0]!
-  const topics = hubs(10)
+  const curios = useMemo(() => pickN(allCurios, 3, Date.now() >> 16), [allCurios])
+  const featured = stories[0]!
+  const topics = graph.hubs(10)
+  const journey = JOURNEY[lang]
 
   return (
     <div className="mx-auto max-w-5xl px-4 sm:px-6">
@@ -36,7 +57,7 @@ export function Home() {
           transition={{ duration: 0.4 }}
           className="text-ember text-[0.8125rem] font-medium tracking-wide uppercase"
         >
-          Every answer starts another question
+          {t.homeEyebrow}
         </motion.p>
 
         <motion.h1
@@ -45,7 +66,7 @@ export function Home() {
           transition={{ duration: 0.5, delay: 0.05 }}
           className="font-display mt-3 max-w-3xl text-hero font-semibold text-balance"
         >
-          History is not a list of dates. It is the best story ever told.
+          {t.homeHeadline}
         </motion.h1>
 
         <motion.p
@@ -54,8 +75,7 @@ export function Home() {
           transition={{ duration: 0.5, delay: 0.12 }}
           className="text-ink-soft mt-5 max-w-2xl text-lg leading-relaxed"
         >
-          About a minute each. Why it happened, who paid, what it broke — and where to go next.
-          Simple enough for a ten-year-old, sourced well enough for a historian.
+          {t.homeStandfirst}
         </motion.p>
 
         <motion.div
@@ -71,21 +91,21 @@ export function Home() {
             </Link>
           </Button>
           <Button size="lg" variant="outline" asChild>
-            <Link to="/explore">Open the map</Link>
+            <Link to="/explore">{t.homeOpenMap}</Link>
           </Button>
         </motion.div>
       </section>
 
       {/* The endless-journey promise, made concrete. */}
-      <section aria-label="An example journey" className="border-rule border-y py-5">
-        <p className="text-ink-soft mb-3 text-xs tracking-wide uppercase">One evening on the atlas</p>
+      <section aria-label={t.homeJourneyLabel} className="border-rule border-y py-5">
+        <p className="text-ink-soft mb-3 text-xs tracking-wide uppercase">{t.homeJourneyTitle}</p>
         <ol className="scrollbar-slim flex items-center gap-2 overflow-x-auto pb-1">
-          {JOURNEY.map((step, index) => (
+          {journey.map((step, index) => (
             <li key={step} className="flex shrink-0 items-center gap-2">
               <span className="text-ink-soft border-rule rounded-full border px-3 py-1 text-[0.8125rem] whitespace-nowrap">
                 {step}
               </span>
-              {index < JOURNEY.length - 1 && <ArrowRightIcon className="text-ember size-3.5 shrink-0" />}
+              {index < journey.length - 1 && <ArrowRightIcon className="text-ember size-3.5 shrink-0" />}
             </li>
           ))}
         </ol>
@@ -93,15 +113,14 @@ export function Home() {
 
       <section className="py-12" aria-labelledby="stories-heading">
         <h2 id="stories-heading" className="font-display text-2xl font-semibold">
-          Stories
+          {t.homeStories}
         </h2>
         <p className="text-ink-soft mt-1.5 text-sm">
-          {ATLAS_STATS.stories} written and reviewed · {ATLAS_STATS.nodes} topics on the map ·{' '}
-          {ATLAS_STATS.sources} sources cited
+          {t.homeStats(stats.stories, stats.nodes, stats.sources)}
         </p>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          {STORIES.map((story) => (
+          {stories.map((story) => (
             <Link
               key={story.slug}
               to="/story/$slug"
@@ -109,9 +128,9 @@ export function Home() {
               className="group border-rule bg-paper-raised hover:border-ember/45 flex flex-col rounded-[calc(var(--radius)+2px)] border p-5 transition-colors"
             >
               <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="outline">{formatSpan(story.years)}</Badge>
+                <Badge variant="outline">{formatSpan(story.years, lang)}</Badge>
                 <Badge variant="ember">
-                  <ZapIcon /> {reelSeconds(story)} seconds
+                  <ZapIcon /> {t.seconds(reelSeconds(story))}
                 </Badge>
               </div>
               <h3 className="font-display text-ink group-hover:text-ember mt-3 text-xl leading-snug font-semibold transition-colors">
@@ -127,7 +146,7 @@ export function Home() {
       <section className="pb-12" aria-labelledby="curios-heading">
         <h2 id="curios-heading" className="font-display flex items-center gap-2 text-2xl font-semibold">
           <SparklesIcon className="text-ember size-5" />
-          Did you know?
+          {t.homeCurios}
         </h2>
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
           {curios.map((curio) => (
@@ -148,11 +167,9 @@ export function Home() {
 
       <section className="pb-16" aria-labelledby="topics-heading">
         <h2 id="topics-heading" className="font-display text-2xl font-semibold">
-          Most connected on the map
+          {t.homeHubs}
         </h2>
-        <p className="text-ink-soft mt-1.5 text-sm">
-          The topics with the most threads running through them. Pull one and see what moves.
-        </p>
+        <p className="text-ink-soft mt-1.5 text-sm">{t.homeHubsBody}</p>
         <div className="mt-5 flex flex-wrap gap-2">
           {topics.map((node) => (
             <Link
@@ -160,7 +177,7 @@ export function Home() {
               to="/explore"
               search={{ focus: node.id }}
               className="border-rule text-ink-soft hover:text-ink hover:border-ember/40 rounded-full border px-3.5 py-1.5 text-[0.8125rem] transition-colors"
-              title={`${NODE_KIND_LABEL[node.kind]} — ${node.blurb}`}
+              title={`${NODE_KIND_LABELS[lang][node.kind]} — ${node.blurb}`}
             >
               {node.label}
             </Link>

@@ -1,3 +1,4 @@
+import type { Lang } from '@/lib/i18n'
 import type { Lens, Story } from '@/content/types'
 
 /**
@@ -113,12 +114,23 @@ export const explainProvider: ExplainProvider = endpoint
   : prewrittenProvider
 
 /** Suggestions offered under the box, drawn from the vision's own examples. */
-export const INSTRUCTION_SUGGESTIONS = [
-  'Explain it like I’m 10',
-  'Go into deep detail',
-  'Focus on the economics',
-  'Focus on the military strategy',
-  'Compare this with another civilisation',
-  'Challenge the common myths',
-  'Show me the opposing historical views',
-]
+export const INSTRUCTION_SUGGESTIONS: Record<Lang, string[]> = {
+  en: [
+    'Explain it like I’m 10',
+    'Go into deep detail',
+    'Focus on the economics',
+    'Focus on the military strategy',
+    'Compare this with another civilisation',
+    'Challenge the common myths',
+    'Show me the opposing historical views',
+  ],
+  es: [
+    'Explícamelo como si tuviera 10 años',
+    'Entra en mucho detalle',
+    'Céntrate en la economía',
+    'Céntrate en la estrategia militar',
+    'Compáralo con otra civilización',
+    'Discute los mitos habituales',
+    'Enséñame las visiones históricas enfrentadas',
+  ],
+}

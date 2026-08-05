@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react'
 import { Link } from '@tanstack/react-router'
 import { BookmarkIcon, ZapIcon } from 'lucide-react'
 import { reelSeconds } from '@/components/StoryReel'
-import { STORIES, unwrittenNodes } from '@/content'
-import { ERA_LABEL } from '@/content/types'
+import { useCorpus } from '@/content/useCorpus'
+import { ERA_LABELS } from '@/content/labels'
 import { Badge } from '@/components/ui/badge'
+import { useLang } from '@/lib/i18n'
 import { formatSpan } from '@/lib/utils'
 
 export function Stories() {
+  const { lang, t } = useLang()
+  const { stories, unwrittenNodes } = useCorpus()
   const [saved, setSaved] = useState<string[]>([])
 
   useEffect(() => {
@@ -23,13 +26,13 @@ export function Stories() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 pt-10 pb-20 sm:px-6">
-      <h1 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">Stories</h1>
-      <p className="text-ink-soft mt-3 leading-relaxed">
-        About a minute each. The long version is one tap away if you want it.
-      </p>
+      <h1 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+        {t.storiesTitle}
+      </h1>
+      <p className="text-ink-soft mt-3 leading-relaxed">{t.storiesStandfirst}</p>
 
       <ul className="mt-8 space-y-4">
-        {STORIES.map((story) => (
+        {stories.map((story) => (
           <li key={story.slug}>
             <Link
               to="/story/$slug"
@@ -38,13 +41,13 @@ export function Stories() {
             >
               <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="ember">
-                  <ZapIcon /> {reelSeconds(story)} seconds
+                  <ZapIcon /> {t.seconds(reelSeconds(story))}
                 </Badge>
-                <Badge variant="outline">{ERA_LABEL[story.era]}</Badge>
-                <Badge variant="outline">{formatSpan(story.years)}</Badge>
+                <Badge variant="outline">{ERA_LABELS[lang][story.era]}</Badge>
+                <Badge variant="outline">{formatSpan(story.years, lang)}</Badge>
                 {saved.includes(story.slug) && (
                   <Badge variant="outline">
-                    <BookmarkIcon /> Saved
+                    <BookmarkIcon /> {t.saved}
                   </Badge>
                 )}
               </div>
@@ -56,10 +59,10 @@ export function Stories() {
               <p className="text-ink-soft mt-3 text-[0.875rem]">{story.subtitle}</p>
 
               <div className="text-ink-soft mt-4 flex flex-wrap gap-x-4 gap-y-1 text-xs">
-                <span>{story.reel.length} cards</span>
-                <span>{story.sources.length} sources</span>
-                <span>{story.myths.length} myths corrected</span>
-                <span>{story.readingMinutes} min if you want all of it</span>
+                <span>{t.cardsCount(story.reel.length)}</span>
+                <span>{t.sourcesCount(story.sources.length)}</span>
+                <span>{t.mythsCount(story.myths.length)}</span>
+                <span>{t.minutesIfAll(story.readingMinutes)}</span>
               </div>
             </Link>
           </li>
@@ -67,11 +70,8 @@ export function Stories() {
       </ul>
 
       <section className="border-rule mt-12 border-t pt-8">
-        <h2 className="font-display text-xl font-semibold">Not written yet</h2>
-        <p className="text-ink-soft mt-2 text-[0.9375rem] leading-relaxed">
-          These are on the map and connected to what is already here, but no one has written and
-          checked them. Listing them honestly is better than linking to a page that apologises.
-        </p>
+        <h2 className="font-display text-xl font-semibold">{t.notWrittenYet}</h2>
+        <p className="text-ink-soft mt-2 text-[0.9375rem] leading-relaxed">{t.notWrittenYetBody}</p>
         <div className="mt-4 flex flex-wrap gap-1.5">
           {unwritten.map((node) => (
             <Link

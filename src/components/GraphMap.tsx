@@ -1,8 +1,9 @@
 import { useMemo } from 'react'
 import { motion } from 'motion/react'
 import type { GraphNode, NodeKind } from '@/content/types'
-import { RELATION_PHRASE } from '@/content/types'
-import { connectionsFor, nodeById } from '@/content/graph'
+import { RELATION_PHRASES } from '@/content/labels'
+import { useCorpus } from '@/content/useCorpus'
+import { useLang } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 
 /**
@@ -54,10 +55,13 @@ function ring(cy: number, count: number, index: number, radius: number) {
 }
 
 export function GraphMap({ focusId, onFocus }: { focusId: string; onFocus: (id: string) => void }) {
-  const focus = nodeById(focusId)
+  const { lang, t } = useLang()
+  const { graph } = useCorpus()
+  const focus = graph.nodeById(focusId)
 
   const { height, cy, placed } = useMemo(() => {
-    const connections = connectionsFor(focusId)
+    const relation = RELATION_PHRASES[lang]
+    const connections = graph.connectionsFor(focusId)
     const inner = connections.slice(0, 8)
     const outer = connections.slice(8, 16)
     const height = outer.length > 0 ? TALL : SHORT
@@ -69,20 +73,20 @@ export function GraphMap({ focusId, onFocus }: { focusId: string; onFocus: (id: 
         node: connection.node,
         ...ring(cy, Math.max(inner.length, 3), index, innerRadius),
         label: connection.node.label,
-        relation: RELATION_PHRASE[connection.edge.relation],
+        relation: relation[connection.edge.relation],
         outgoing: connection.direction === 'out',
       })),
       ...outer.map((connection, index) => ({
         node: connection.node,
         ...ring(cy, Math.max(outer.length, 3), index + 0.5, 232),
         label: connection.node.label,
-        relation: RELATION_PHRASE[connection.edge.relation],
+        relation: relation[connection.edge.relation],
         outgoing: connection.direction === 'out',
       })),
     ]
 
     return { height, cy, placed: items }
-  }, [focusId])
+  }, [focusId, graph, lang])
 
   const CY = cy
 
@@ -92,7 +96,7 @@ export function GraphMap({ focusId, onFocus }: { focusId: string; onFocus: (id: 
         viewBox={`0 0 ${WIDTH} ${height}`}
         className="h-auto w-full"
         role="img"
-        aria-label={`Connections around ${focus?.label ?? 'the selected topic'}: ${placed.length} links`}
+        aria-label={`${t.mapTouching(focus?.label ?? '—')}: ${t.mapLinks(placed.length)}`}
       >
         {placed.map((item) => (
           <g key={`edge-${item.node.id}`}>

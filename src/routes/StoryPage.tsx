@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link, useParams, useSearch } from '@tanstack/react-router'
 import { motion, useScroll, useSpring } from 'motion/react'
 import { ArrowLeftIcon, BookmarkIcon, ClockIcon, MapIcon, ZapIcon } from 'lucide-react'
-import { nextSteps, relatedStories, storyBySlug } from '@/content'
-import { ERA_LABEL } from '@/content/types'
+import { useCorpus } from '@/content/useCorpus'
+import { ERA_LABELS } from '@/content/labels'
 import { StoryReel, reelSeconds } from '@/components/StoryReel'
 import { Timeline } from '@/components/Timeline'
 import { ConnectionRail } from '@/components/ConnectionRail'
@@ -22,6 +22,7 @@ import {
 } from '@/components/StoryParts'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { useLang } from '@/lib/i18n'
 import { formatSpan } from '@/lib/utils'
 
 const BOOKMARKS_KEY = 'history-atlas-bookmarks'
@@ -54,9 +55,11 @@ function useBookmark(slug: string) {
 }
 
 export function StoryPage() {
+  const { lang, t } = useLang()
+  const corpus = useCorpus()
   const { slug } = useParams({ from: '/story/$slug' })
   const { full } = useSearch({ from: '/story/$slug' })
-  const story = storyBySlug(slug)
+  const story = corpus.storyBySlug(slug)
   const { scrollYProgress } = useScroll()
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 })
   const { marked, toggle } = useBookmark(slug)
@@ -68,20 +71,17 @@ export function StoryPage() {
   if (!story) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-24 text-center sm:px-6">
-        <h1 className="font-display text-2xl font-semibold">That story is not written yet.</h1>
-        <p className="text-ink-soft mt-3 leading-relaxed">
-          The atlas only publishes what has been sourced and checked, so there are more topics on the
-          map than there are stories behind them. This is one of them.
-        </p>
+        <h1 className="font-display text-2xl font-semibold">{t.storyMissingTitle}</h1>
+        <p className="text-ink-soft mt-3 leading-relaxed">{t.storyMissingBody}</p>
         <Button className="mt-6" asChild>
-          <Link to="/explore">See what is connected</Link>
+          <Link to="/explore">{t.storyMissingCta}</Link>
         </Button>
       </div>
     )
   }
 
-  const steps = nextSteps(story)
-  const related = relatedStories(slug)
+  const steps = corpus.nextSteps(story)
+  const related = corpus.relatedStories(slug)
 
   // The reel is what a story *is* unless the reader asks for the long version.
   if (!full) return <StoryReel story={story} steps={steps} />
@@ -101,23 +101,23 @@ export function StoryPage() {
             className="text-ink-soft hover:text-ember inline-flex items-center gap-1.5 text-sm transition-colors"
           >
             <ArrowLeftIcon className="size-3.5" />
-            All stories
+            {t.allStories}
           </Link>
 
           <Button variant="outline" size="sm" asChild>
             <Link to="/story/$slug" params={{ slug: story.slug }} search={{}}>
               <ZapIcon />
-              {reelSeconds(story)}-second version
+              {t.secondVersion(reelSeconds(story))}
             </Link>
           </Button>
         </div>
 
         <header className="mt-6">
           <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="ember">{ERA_LABEL[story.era]}</Badge>
-            <Badge variant="outline">{formatSpan(story.years)}</Badge>
+            <Badge variant="ember">{ERA_LABELS[lang][story.era]}</Badge>
+            <Badge variant="outline">{formatSpan(story.years, lang)}</Badge>
             <Badge variant="outline">
-              <ClockIcon /> {story.readingMinutes} min
+              <ClockIcon /> {t.minutes(story.readingMinutes)}
             </Badge>
           </div>
 
@@ -134,12 +134,12 @@ export function StoryPage() {
           <div className="mt-6 flex flex-wrap items-center gap-2">
             <Button variant={marked ? 'default' : 'outline'} size="sm" onClick={toggle}>
               <BookmarkIcon />
-              {marked ? 'Saved' : 'Save for later'}
+              {marked ? t.saved : t.saveForLater}
             </Button>
             <Button variant="ghost" size="sm" asChild>
               <Link to="/explore" search={{ focus: story.nodes[0]! }}>
                 <MapIcon />
-                See it on the map
+                {t.seeOnMap}
               </Link>
             </Button>
           </div>
@@ -148,20 +148,16 @@ export function StoryPage() {
         <BeatSection id="worldBefore" beat={story.beats.worldBefore} sources={story.sources} />
         <BeatSection id="problem" beat={story.beats.problem} sources={story.sources} />
 
-        <SectionHeading id="timeline">How it unfolded</SectionHeading>
-        <p className="text-ink-soft text-[0.9375rem] leading-relaxed">
-          Events sit where they actually fall in time, not evenly spaced — so the quiet centuries look
-          quiet and the eighteen months that decided everything look crowded.
-        </p>
+        <SectionHeading id="timeline">{t.headingTimeline}</SectionHeading>
+        <p className="text-ink-soft text-[0.9375rem] leading-relaxed">{t.timelineBody}</p>
         <Timeline events={story.timeline} />
 
         <BeatSection id="story" beat={story.beats.story} sources={story.sources} />
         <BeatSection id="whyItHappened" beat={story.beats.whyItHappened} sources={story.sources} />
 
-        <SectionHeading id="causeEffect">One thing led to another</SectionHeading>
+        <SectionHeading id="causeEffect">{t.headingCauseEffect}</SectionHeading>
         <p className="text-ink-soft text-[0.9375rem] leading-relaxed">
-          Each step shows the mechanism, not just the sequence. The <em>because</em> is the part
-          textbooks tend to leave out.
+          {t.causeEffectBody} <em>{t.becauseWord}</em> {t.causeEffectBody2}
         </p>
         <CauseEffectFlow items={story.causeEffect} />
 
@@ -169,50 +165,41 @@ export function StoryPage() {
 
         {story.beforeAfter && (
           <>
-            <SectionHeading id="beforeAfter">Before and after</SectionHeading>
+            <SectionHeading id="beforeAfter">{t.headingBeforeAfter}</SectionHeading>
             <BeforeAfterCards data={story.beforeAfter} />
           </>
         )}
 
         <BeatSection id="whyItMatters" beat={story.beats.whyItMatters} sources={story.sources} />
 
-        <SectionHeading id="lenses">Same story, different lens</SectionHeading>
-        <p className="text-ink-soft text-[0.9375rem] leading-relaxed">
-          The article above is written to be clear to anyone. These are the same events told for a
-          different reader, or from a different angle.
-        </p>
+        <SectionHeading id="lenses">{t.headingLenses}</SectionHeading>
+        <p className="text-ink-soft text-[0.9375rem] leading-relaxed">{t.lensesBody}</p>
         <LensPicker story={story} />
 
-        <SectionHeading id="myths">What most people get wrong</SectionHeading>
+        <SectionHeading id="myths">{t.headingMyths}</SectionHeading>
         <MythPanel myths={story.myths} sources={story.sources} />
 
-        <SectionHeading id="disagreements">Where historians disagree</SectionHeading>
-        <p className="text-ink-soft text-[0.9375rem] leading-relaxed">
-          Not everything is settled. When it is not, the atlas shows the argument instead of picking a
-          side and hiding the choice.
-        </p>
+        <SectionHeading id="disagreements">{t.headingDisagreements}</SectionHeading>
+        <p className="text-ink-soft text-[0.9375rem] leading-relaxed">{t.disagreementsBody}</p>
         <DisagreementPanel items={story.disagreements} sources={story.sources} />
 
         {story.whatIf && story.whatIf.length > 0 && (
           <>
-            <SectionHeading id="whatIf">What if?</SectionHeading>
+            <SectionHeading id="whatIf">{t.headingWhatIf}</SectionHeading>
             <WhatIfPanel items={story.whatIf} />
           </>
         )}
 
-        <SectionHeading id="quiz">Did it stick?</SectionHeading>
+        <SectionHeading id="quiz">{t.headingQuiz}</SectionHeading>
         <Quiz questions={story.quiz} />
 
-        <SectionHeading id="continue">Continue the journey</SectionHeading>
-        <p className="text-ink-soft text-[0.9375rem] leading-relaxed">
-          Every card says how it connects to what you just read. These come from the map, not from a
-          list someone typed — so they cannot drift out of date.
-        </p>
+        <SectionHeading id="continue">{t.headingContinue}</SectionHeading>
+        <p className="text-ink-soft text-[0.9375rem] leading-relaxed">{t.continueBody}</p>
         <ConnectionRail steps={steps} />
 
         {related.length > 0 && (
           <div className="mt-8">
-            <p className="text-ink-soft mb-3 text-xs tracking-wide uppercase">Other stories</p>
+            <p className="text-ink-soft mb-3 text-xs tracking-wide uppercase">{t.otherStories}</p>
             <div className="grid gap-3 sm:grid-cols-2">
               {related.map((other) => (
                 <Link
@@ -231,12 +218,11 @@ export function StoryPage() {
           </div>
         )}
 
-        <SectionHeading id="sources">Where this comes from</SectionHeading>
+        <SectionHeading id="sources">{t.headingSources}</SectionHeading>
         <SourceList sources={story.sources} />
 
         <p className="text-ink-soft border-rule mt-8 border-t pt-4 text-xs">
-          Last reviewed by a person on {story.reviewed}. Found something wrong? Corrections are the
-          most useful thing you can send.
+          {t.reviewedOn(story.reviewed)}
         </p>
       </article>
     </>

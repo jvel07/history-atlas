@@ -1,8 +1,9 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowRightIcon, MapIcon } from 'lucide-react'
 import type { NextStep } from '@/content'
-import { NODE_KIND_LABEL } from '@/content/types'
+import { NODE_KIND_LABELS } from '@/content/labels'
 import { Badge } from '@/components/ui/badge'
+import { useLang } from '@/lib/i18n'
 import { formatSpan } from '@/lib/utils'
 
 /**
@@ -15,6 +16,7 @@ import { formatSpan } from '@/lib/utils'
  * Nodes without a story yet link to the map instead of a dead end, and say so.
  */
 export function ConnectionRail({ steps }: { steps: NextStep[] }) {
+  const { lang, t } = useLang()
   if (steps.length === 0) return null
 
   return (
@@ -28,8 +30,8 @@ export function ConnectionRail({ steps }: { steps: NextStep[] }) {
                   {node.label}
                 </p>
                 <p className="text-ink-soft mt-0.5 text-xs">
-                  {NODE_KIND_LABEL[node.kind]}
-                  {node.years && ` · ${formatSpan(node.years)}`}
+                  {NODE_KIND_LABELS[lang][node.kind]}
+                  {node.years && ` · ${formatSpan(node.years, lang)}`}
                 </p>
               </div>
               {hasStory ? (
@@ -42,8 +44,8 @@ export function ConnectionRail({ steps }: { steps: NextStep[] }) {
             <p className="text-ink-soft mt-2.5 text-[0.875rem] leading-relaxed">{why}</p>
 
             <div className="mt-3 flex flex-wrap items-center gap-1.5">
-              {!hasStory && <Badge variant="outline">On the map · no story yet</Badge>}
-              {contested && <Badge variant="contested">link is contested</Badge>}
+              {!hasStory && <Badge variant="outline">{t.onMapNoStory}</Badge>}
+              {contested && <Badge variant="contested">{t.linkContested}</Badge>}
             </div>
           </>
         )

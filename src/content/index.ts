@@ -1,26 +1,34 @@
+import type { Lang } from '@/lib/i18n'
 import type { GraphNode, Story } from './types'
-import { connectionsFor, nodeById, NODES } from './graph'
+import { graphFor, type GraphView } from './graph'
 import { opiumWars } from './stories/opium-wars'
 import { alKhwarizmi } from './stories/al-khwarizmi'
 import { vladTepes } from './stories/vlad-tepes'
 import { unitedFruit } from './stories/united-fruit'
 import { markopolos } from './stories/markopolos'
+import { opiumWarsEs } from './es/stories/opium-wars'
+import { alKhwarizmiEs } from './es/stories/al-khwarizmi'
+import { vladTepesEs } from './es/stories/vlad-tepes'
+import { unitedFruitEs } from './es/stories/united-fruit'
+import { markopolosEs } from './es/stories/markopolos'
 
 export * from './types'
 export * from './graph'
+export * from './labels'
 
-export const STORIES: Story[] = [markopolos, unitedFruit, vladTepes, opiumWars, alKhwarizmi]
-
-export const STORY_BY_SLUG = new Map(STORIES.map((s) => [s.slug, s]))
-
-export function storyBySlug(slug: string): Story | undefined {
-  return STORY_BY_SLUG.get(slug)
-}
-
-/** The story covering a node, if one has been written. */
-export function storyForNode(nodeId: string): Story | undefined {
-  const node = nodeById(nodeId)
-  return node?.story ? STORY_BY_SLUG.get(node.story) : undefined
+/**
+ * The corpus, per language.
+ *
+ * Order is part of the content — the first story is what the home page leads
+ * with — so it is written out per language rather than derived, and
+ * `check-content.mjs` checks the two lists carry the same slugs in the same
+ * order. Everything downstream (the map, "continue the journey", the search
+ * index) is derived from whichever corpus is active, so a reader never crosses
+ * a language boundary mid-journey.
+ */
+const STORIES_BY_LANG: Record<Lang, Story[]> = {
+  en: [markopolos, unitedFruit, vladTepes, opiumWars, alKhwarizmi],
+  es: [markopolosEs, unitedFruitEs, vladTepesEs, opiumWarsEs, alKhwarizmiEs],
 }
 
 /**
@@ -40,48 +48,6 @@ export interface NextStep {
   contested: boolean
 }
 
-export function nextSteps(story: Story, limit = 8): NextStep[] {
-  const seen = new Set<string>(story.nodes)
-  const steps: NextStep[] = []
-
-  for (const nodeId of story.nodes) {
-    for (const { edge, node } of connectionsFor(nodeId)) {
-      if (seen.has(node.id)) continue
-      seen.add(node.id)
-      steps.push({
-        node,
-        why: edge.note,
-        hasStory: Boolean(node.story),
-        contested: edge.confidence === 'contested',
-      })
-    }
-  }
-
-  return steps
-    .sort((a, b) => Number(b.hasStory) - Number(a.hasStory))
-    .slice(0, limit)
-}
-
-/** Stories other than this one, nearest first by shared graph neighbourhood. */
-export function relatedStories(slug: string): Story[] {
-  const story = STORY_BY_SLUG.get(slug)
-  if (!story) return []
-
-  const neighbourhood = new Set<string>()
-  for (const nodeId of story.nodes) {
-    neighbourhood.add(nodeId)
-    for (const { node } of connectionsFor(nodeId)) neighbourhood.add(node.id)
-  }
-
-  return STORIES.filter((other) => other.slug !== slug)
-    .map((other) => ({
-      other,
-      overlap: other.nodes.filter((n) => neighbourhood.has(n)).length,
-    }))
-    .sort((a, b) => b.overlap - a.overlap)
-    .map((entry) => entry.other)
-}
-
 /** Every "did you know?" in the atlas, tagged with where it came from. */
 export interface Curio {
   fact: string
@@ -89,18 +55,103 @@ export interface Curio {
   storyTitle: string
 }
 
-export const CURIOS: Curio[] = STORIES.flatMap((story) =>
-  story.didYouKnow.map((fact) => ({ fact, storySlug: story.slug, storyTitle: story.title })),
-)
-
-/** Nodes with no story yet — shown honestly rather than linked into a dead end. */
-export function unwrittenNodes(): GraphNode[] {
-  return NODES.filter((node) => !node.story)
+export interface Corpus {
+  lang: Lang
+  graph: GraphView
+  stories: Story[]
+  storyBySlug(slug: string): Story | undefined
+  /** The story covering a node, if one has been written. */
+  storyForNode(nodeId: string): Story | undefined
+  nextSteps(story: Story, limit?: number): NextStep[]
+  /** Stories other than this one, nearest first by shared graph neighbourhood. */
+  relatedStories(slug: string): Story[]
+  curios: Curio[]
+  /** Nodes with no story yet — shown honestly rather than linked into a dead end. */
+  unwrittenNodes(): GraphNode[]
+  stats: { stories: number; nodes: number; sources: number; minutes: number }
 }
 
-export const ATLAS_STATS = {
-  stories: STORIES.length,
-  nodes: NODES.length,
-  sources: new Set(STORIES.flatMap((s) => s.sources.map((src) => `${src.author}|${src.title}`))).size,
-  minutes: STORIES.reduce((total, s) => total + s.readingMinutes, 0),
+function build(lang: Lang): Corpus {
+  const graph = graphFor(lang)
+  const stories = STORIES_BY_LANG[lang]
+  const bySlug = new Map(stories.map((s) => [s.slug, s]))
+
+  function storyBySlug(slug: string) {
+    return bySlug.get(slug)
+  }
+
+  function nextSteps(story: Story, limit = 8): NextStep[] {
+    const seen = new Set<string>(story.nodes)
+    const steps: NextStep[] = []
+
+    for (const nodeId of story.nodes) {
+      for (const { edge, node } of graph.connectionsFor(nodeId)) {
+        if (seen.has(node.id)) continue
+        seen.add(node.id)
+        steps.push({
+          node,
+          why: edge.note,
+          hasStory: Boolean(node.story),
+          contested: edge.confidence === 'contested',
+        })
+      }
+    }
+
+    return steps
+      .sort((a, b) => Number(b.hasStory) - Number(a.hasStory))
+      .slice(0, limit)
+  }
+
+  function relatedStories(slug: string): Story[] {
+    const story = bySlug.get(slug)
+    if (!story) return []
+
+    const neighbourhood = new Set<string>()
+    for (const nodeId of story.nodes) {
+      neighbourhood.add(nodeId)
+      for (const { node } of graph.connectionsFor(nodeId)) neighbourhood.add(node.id)
+    }
+
+    return stories
+      .filter((other) => other.slug !== slug)
+      .map((other) => ({
+        other,
+        overlap: other.nodes.filter((n) => neighbourhood.has(n)).length,
+      }))
+      .sort((a, b) => b.overlap - a.overlap)
+      .map((entry) => entry.other)
+  }
+
+  return {
+    lang,
+    graph,
+    stories,
+    storyBySlug,
+    storyForNode(nodeId) {
+      const node = graph.nodeById(nodeId)
+      return node?.story ? bySlug.get(node.story) : undefined
+    },
+    nextSteps,
+    relatedStories,
+    curios: stories.flatMap((story) =>
+      story.didYouKnow.map((fact) => ({ fact, storySlug: story.slug, storyTitle: story.title })),
+    ),
+    unwrittenNodes: () => graph.nodes.filter((node) => !node.story),
+    stats: {
+      stories: stories.length,
+      nodes: graph.nodes.length,
+      sources: new Set(stories.flatMap((s) => s.sources.map((src) => `${src.author}|${src.title}`)))
+        .size,
+      minutes: stories.reduce((total, s) => total + s.readingMinutes, 0),
+    },
+  }
 }
+
+const CORPORA: Partial<Record<Lang, Corpus>> = {}
+
+export function corpusFor(lang: Lang): Corpus {
+  return (CORPORA[lang] ??= build(lang))
+}
+
+/** Every language's stories, for the checks that compare them. */
+export const ALL_STORIES = STORIES_BY_LANG

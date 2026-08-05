@@ -1,4 +1,6 @@
+import type { Lang } from '@/lib/i18n'
 import type { GraphEdge, GraphNode } from './types'
+import { EDGE_NOTE_ES, NODE_ES } from './es/graph'
 
 /**
  * The knowledge graph.
@@ -1111,12 +1113,6 @@ export const EDGES: GraphEdge[] = [
 
 /* ------------------------------------------------------- lookups ----- */
 
-export const NODE_BY_ID = new Map(NODES.map((n) => [n.id, n]))
-
-export function nodeById(id: string): GraphNode | undefined {
-  return NODE_BY_ID.get(id)
-}
-
 export interface Connection {
   edge: GraphEdge
   /** The node at the other end, from the perspective of the node you asked about. */
@@ -1124,66 +1120,121 @@ export interface Connection {
   direction: 'out' | 'in'
 }
 
-/** Everything touching a node, in both directions, with the far node resolved. */
-export function connectionsFor(id: string): Connection[] {
-  const out: Connection[] = []
-  for (const edge of EDGES) {
-    if (edge.from === id) {
-      const node = NODE_BY_ID.get(edge.to)
-      if (node) out.push({ edge, node, direction: 'out' })
-    } else if (edge.to === id) {
-      const node = NODE_BY_ID.get(edge.from)
-      if (node) out.push({ edge, node, direction: 'in' })
-    }
+/**
+ * A resolved view of the map: the same topology, with the labels and edge notes
+ * in one language.
+ *
+ * The helpers are built per view rather than reading a module-level array so
+ * that the Spanish map cannot accidentally traverse English nodes half way
+ * through a path. Ids, kinds, eras, years, relations and story links are shared
+ * — they are the graph; the sentences are what changes.
+ */
+export interface GraphView {
+  nodes: GraphNode[]
+  edges: GraphEdge[]
+  nodeById(id: string): GraphNode | undefined
+  connectionsFor(id: string): Connection[]
+  pathBetween(fromId: string, toId: string): GraphNode[] | null
+  edgeBetween(a: string, b: string): GraphEdge | undefined
+  hubs(limit: number): GraphNode[]
+}
+
+function makeGraph(nodes: GraphNode[], edges: GraphEdge[]): GraphView {
+  const byId = new Map(nodes.map((n) => [n.id, n]))
+
+  function nodeById(id: string): GraphNode | undefined {
+    return byId.get(id)
   }
-  return out
+
+  /** Everything touching a node, in both directions, with the far node resolved. */
+  function connectionsFor(id: string): Connection[] {
+    const out: Connection[] = []
+    for (const edge of edges) {
+      if (edge.from === id) {
+        const node = byId.get(edge.to)
+        if (node) out.push({ edge, node, direction: 'out' })
+      } else if (edge.to === id) {
+        const node = byId.get(edge.from)
+        if (node) out.push({ edge, node, direction: 'in' })
+      }
+    }
+    return out
+  }
+
+  /**
+   * Breadth-first shortest path, used by the "how are these connected?" tool.
+   * Edges are traversed in both directions: a reader does not care which way the
+   * arrow points when they are asking how algebra reaches the East India Company.
+   */
+  function pathBetween(fromId: string, toId: string): GraphNode[] | null {
+    if (fromId === toId) {
+      const single = byId.get(fromId)
+      return single ? [single] : null
+    }
+    const previous = new Map<string, string>()
+    const seen = new Set([fromId])
+    const queue = [fromId]
+
+    while (queue.length) {
+      const current = queue.shift()!
+      for (const { node } of connectionsFor(current)) {
+        if (seen.has(node.id)) continue
+        seen.add(node.id)
+        previous.set(node.id, current)
+        if (node.id === toId) {
+          const path: string[] = [toId]
+          let step = toId
+          while (previous.has(step)) {
+            step = previous.get(step)!
+            path.unshift(step)
+          }
+          return path.map((nodeId) => byId.get(nodeId)!).filter(Boolean)
+        }
+        queue.push(node.id)
+      }
+    }
+    return null
+  }
+
+  /** The relationship joining two adjacent nodes, in whichever direction it exists. */
+  function edgeBetween(a: string, b: string): GraphEdge | undefined {
+    return edges.find((e) => (e.from === a && e.to === b) || (e.from === b && e.to === a))
+  }
+
+  /** Most-connected first — used to pick what the home page offers a stranger. */
+  function hubs(limit: number): GraphNode[] {
+    return [...nodes]
+      .map((node) => ({ node, degree: connectionsFor(node.id).length }))
+      .sort((a, b) => b.degree - a.degree)
+      .slice(0, limit)
+      .map((entry) => entry.node)
+  }
+
+  return { nodes, edges, nodeById, connectionsFor, pathBetween, edgeBetween, hubs }
 }
 
 /**
- * Breadth-first shortest path, used by the "how are these connected?" tool.
- * Edges are traversed in both directions: a reader does not care which way the
- * arrow points when they are asking how algebra reaches the East India Company.
+ * Translation is an *overlay*, not a second copy of the map. A Spanish node
+ * carries the English node's id, kind, era, years and story; only `label` and
+ * `blurb` are replaced. A node the overlay forgot would silently render in
+ * English, so `check-content.mjs` requires an entry for every id and every edge.
  */
-export function pathBetween(fromId: string, toId: string): GraphNode[] | null {
-  if (fromId === toId) {
-    const single = NODE_BY_ID.get(fromId)
-    return single ? [single] : null
-  }
-  const previous = new Map<string, string>()
-  const seen = new Set([fromId])
-  const queue = [fromId]
+function localise(lang: Lang): GraphView {
+  if (lang === 'en') return makeGraph(NODES, EDGES)
 
-  while (queue.length) {
-    const current = queue.shift()!
-    for (const { node } of connectionsFor(current)) {
-      if (seen.has(node.id)) continue
-      seen.add(node.id)
-      previous.set(node.id, current)
-      if (node.id === toId) {
-        const path: string[] = [toId]
-        let step = toId
-        while (previous.has(step)) {
-          step = previous.get(step)!
-          path.unshift(step)
-        }
-        return path.map((nodeId) => NODE_BY_ID.get(nodeId)!).filter(Boolean)
-      }
-      queue.push(node.id)
-    }
-  }
-  return null
+  const nodes = NODES.map((node) => {
+    const es = NODE_ES[node.id]
+    return es ? { ...node, label: es.label, blurb: es.blurb } : node
+  })
+  const edges = EDGES.map((edge) => {
+    const note = EDGE_NOTE_ES[`${edge.from}>${edge.to}`]
+    return note ? { ...edge, note } : edge
+  })
+  return makeGraph(nodes, edges)
 }
 
-/** The relationship joining two adjacent nodes, in whichever direction it exists. */
-export function edgeBetween(a: string, b: string): GraphEdge | undefined {
-  return EDGES.find((e) => (e.from === a && e.to === b) || (e.from === b && e.to === a))
-}
+const VIEWS: Partial<Record<Lang, GraphView>> = {}
 
-/** Most-connected first — used to pick what the home page offers a stranger. */
-export function hubs(limit: number): GraphNode[] {
-  return [...NODES]
-    .map((node) => ({ node, degree: connectionsFor(node.id).length }))
-    .sort((a, b) => b.degree - a.degree)
-    .slice(0, limit)
-    .map((entry) => entry.node)
+export function graphFor(lang: Lang): GraphView {
+  return (VIEWS[lang] ??= localise(lang))
 }

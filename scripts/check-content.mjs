@@ -19,20 +19,40 @@ import path from 'node:path'
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const outDir = path.join(root, '.verify')
 const outFile = path.join(outDir, 'content.mjs')
+const overlayFile = path.join(outDir, 'es-graph.mjs')
 
 await mkdir(outDir, { recursive: true })
-await build({
-  entryPoints: [path.join(root, 'src/content/index.ts')],
-  bundle: true,
-  format: 'esm',
-  platform: 'node',
-  outfile: outFile,
-  logLevel: 'error',
-  alias: { '@': path.join(root, 'src') },
-})
+for (const [entry, outfile] of [
+  ['src/content/index.ts', outFile],
+  ['src/content/es/graph.ts', overlayFile],
+]) {
+  await build({
+    entryPoints: [path.join(root, entry)],
+    bundle: true,
+    format: 'esm',
+    platform: 'node',
+    outfile,
+    logLevel: 'error',
+    alias: { '@': path.join(root, 'src') },
+  })
+}
 
 const content = await import(pathToFileURL(outFile).href)
-const { STORIES, NODES, EDGES, nextSteps, MOODS } = content
+const overlay = await import(pathToFileURL(overlayFile).href)
+const { ALL_STORIES, NODES, EDGES, corpusFor, MOODS } = content
+const LANGS = ['en', 'es']
+
+/**
+ * Spanish runs roughly fifteen percent longer than English for the same idea,
+ * so a shared word budget would silently make the Spanish reel say less rather
+ * than say it in Spanish. What actually has to hold is the pacing — a card
+ * holds the screen for about as long either way — so the card count and the
+ * per-card cap are identical and only the totals flex.
+ */
+const REEL_LIMITS = {
+  en: { words: 450, median: 14 },
+  es: { words: 520, median: 15 },
+}
 
 /** Marks are drawn by hand in ReelMarks.tsx; a typo would silently render nothing. */
 const MARKS = new Set([
@@ -76,11 +96,14 @@ check(edgeKeys.size === EDGES.length, 'duplicate edges in the graph')
 
 /* ---------------------------------------------------------- stories -- */
 
-const slugs = new Set(STORIES.map((s) => s.slug))
-check(slugs.size === STORIES.length, 'duplicate story slugs')
+const slugs = new Set(ALL_STORIES.en.map((s) => s.slug))
+check(slugs.size === ALL_STORIES.en.length, 'duplicate story slugs')
 
-for (const story of STORIES) {
-  const where = `story "${story.slug}"`
+for (const lang of LANGS) {
+ const limits = REEL_LIMITS[lang]
+ const nextSteps = (story) => corpusFor(lang).nextSteps(story)
+ for (const story of ALL_STORIES[lang]) {
+  const where = `story "${story.slug}" [${lang}]`
   const sourceIds = new Set(story.sources.map((s) => s.id))
   check(sourceIds.size === story.sources.length, `${where}: duplicate source ids`)
 
@@ -129,14 +152,20 @@ for (const story of STORIES) {
 
   check(story.reel.length >= 12, `${where}: reel has only ${story.reel.length} cards; it needs at least 12`)
   check(story.reel.length <= 30, `${where}: reel has ${story.reel.length} cards; over 30 is no longer only the important events`)
-  check(reelWords <= 450, `${where}: reel is ${reelWords} words; the budget is 450`)
+  check(
+    reelWords <= limits.words,
+    `${where}: reel is ${reelWords} words; the budget is ${limits.words}`,
+  )
 
   // The cap catches the worst card; the median catches the real failure mode,
   // which is every card creeping up to fourteen or fifteen words at once. A
   // reel is short sentences with a few long ones, not uniformly medium ones.
   const lengths = story.reel.map((card) => card.text.split(/\s+/).length).sort((a, b) => a - b)
   const median = lengths[Math.floor(lengths.length / 2)]
-  check(median <= 14, `${where}: median card is ${median} words; it should be 14 or fewer`)
+  check(
+    median <= limits.median,
+    `${where}: median card is ${median} words; it should be ${limits.median} or fewer`,
+  )
 
   for (const [cardIndex, card] of story.reel.entries()) {
     const words = card.text.split(/\s+/).length
@@ -265,6 +294,173 @@ for (const story of STORIES) {
       `${where}: reading time says ${story.readingMinutes} min, body text suggests ~${estimate} min`,
     )
   }
+ }
+}
+
+/* ----------------------------------------------------- translation -- */
+
+/**
+ * The two languages must be the same atlas.
+ *
+ * A translation can be clumsy and still be fine; what it must never do is
+ * quietly change what the page *claims*. Everything compared below is
+ * structure, not prose: the same stories in the same order, the same sources
+ * attached to the same sentences, the same timeline years, and — the one that
+ * would be silently wrong forever — the same correct answer to every quiz
+ * question. If a Spanish translator reorders four options and leaves
+ * `answerIndex` alone, nothing else in the project notices.
+ */
+
+const enBySlug = new Map(ALL_STORIES.en.map((s) => [s.slug, s]))
+
+function sameList(a, b, label, where) {
+  check(
+    JSON.stringify(a ?? null) === JSON.stringify(b ?? null),
+    `${where}: ${label} differs between languages (${JSON.stringify(a)} vs ${JSON.stringify(b)})`,
+  )
+}
+
+for (const lang of LANGS.filter((l) => l !== 'en')) {
+  const translated = ALL_STORIES[lang]
+
+  sameList(
+    ALL_STORIES.en.map((s) => s.slug),
+    translated.map((s) => s.slug),
+    'story slugs and their order',
+    `corpus [${lang}]`,
+  )
+
+  for (const story of translated) {
+    const en = enBySlug.get(story.slug)
+    const where = `story "${story.slug}" [${lang}]`
+    if (!en) {
+      check(false, `${where}: has no English counterpart`)
+      continue
+    }
+
+    // Identity and placement: these are data about the story, not the story.
+    for (const field of ['era', 'mood', 'reviewed', 'readingMinutes']) {
+      sameList(en[field], story[field], field, where)
+    }
+    sameList(en.years, story.years, 'years', where)
+    sameList(en.nodes, story.nodes, 'graph nodes', where)
+    sameList(en.tags, story.tags, 'tags', where)
+
+    // The reel: same cards, same beats, same emphasis. Only the words move.
+    sameList(en.reel.length, story.reel.length, 'reel card count', where)
+    en.reel.forEach((card, index) => {
+      const other = story.reel[index]
+      if (!other) return
+      const at = `${where}: reel card ${index + 1}`
+      sameList(card.beat, other.beat, 'beat', at)
+      sameList(Boolean(card.punch), Boolean(other.punch), 'punch', at)
+      sameList(card.mark ?? null, other.mark ?? null, 'mark', at)
+      sameList(card.step ?? null, other.step ?? null, 'step', at)
+      // Kickers are dates and places, so they are translated — but a card that
+      // has one in English and not in Spanish has lost its anchor in time.
+      sameList(Boolean(card.kicker), Boolean(other.kicker), 'kicker presence', at)
+      sameList(card.image?.src ?? null, other.image?.src ?? null, 'image', at)
+    })
+
+    // Beats: same six, each citing the same works.
+    sameList(Object.keys(en.beats), Object.keys(story.beats), 'beat keys', where)
+    for (const [key, beat] of Object.entries(en.beats)) {
+      const other = story.beats[key]
+      if (!other) continue
+      const at = `${where}: beat "${key}"`
+      sameList(beat.sourceIds, other.sourceIds, 'sourceIds', at)
+      sameList(beat.aside?.kind ?? null, other.aside?.kind ?? null, 'aside kind', at)
+      sameList(beat.aside?.sourceId ?? null, other.aside?.sourceId ?? null, 'aside source', at)
+      sameList(beat.paragraphs.length, other.paragraphs.length, 'paragraph count', at)
+    }
+    for (const list of ['shortTerm', 'longTerm', 'unexpected']) {
+      sameList(
+        en.beats.consequences[list].length,
+        story.beats.consequences[list].length,
+        `consequences.${list} length`,
+        where,
+      )
+    }
+
+    // The timeline is dates. Dates do not translate.
+    sameList(
+      en.timeline.map((e) => [e.year, e.date ?? null, Boolean(e.pivotal), e.confidence ?? null]),
+      story.timeline.map((e) => [e.year, e.date ?? null, Boolean(e.pivotal), e.confidence ?? null]),
+      'timeline years, dates and flags',
+      where,
+    )
+
+    sameList(en.causeEffect.length, story.causeEffect.length, 'cause/effect count', where)
+    sameList(en.didYouKnow.length, story.didYouKnow.length, '"did you know" count', where)
+    sameList(
+      en.myths.map((m) => m.sourceIds ?? null),
+      story.myths.map((m) => m.sourceIds ?? null),
+      'myth sources',
+      where,
+    )
+    sameList(
+      en.disagreements.map((d) => d.positions.map((p) => p.sourceId ?? null)),
+      story.disagreements.map((d) => d.positions.map((p) => p.sourceId ?? null)),
+      'disagreement positions and their sources',
+      where,
+    )
+    sameList(
+      en.lenses.map((l) => [l.id, l.kind]),
+      story.lenses.map((l) => [l.id, l.kind]),
+      'lens ids and kinds',
+      where,
+    )
+    sameList(Boolean(en.beforeAfter), Boolean(story.beforeAfter), 'before/after panel', where)
+    if (en.beforeAfter && story.beforeAfter) {
+      sameList(
+        [en.beforeAfter.before.points.length, en.beforeAfter.after.points.length],
+        [story.beforeAfter.before.points.length, story.beforeAfter.after.points.length],
+        'before/after point counts',
+        where,
+      )
+    }
+    sameList((en.whatIf ?? []).length, (story.whatIf ?? []).length, '"what if" count', where)
+
+    // The one that would be invisible: a translated quiz whose right answer
+    // moved. Options are translated, so only their count and the index match.
+    sameList(
+      en.quiz.map((q) => [q.options.length, q.answerIndex]),
+      story.quiz.map((q) => [q.options.length, q.answerIndex]),
+      'quiz shape and answer positions',
+      where,
+    )
+
+    // Citations name real works. The note about a work is prose; the work is not.
+    sameList(
+      en.sources.map((src) => [src.id, src.kind, src.author, src.title, src.year]),
+      story.sources.map((src) => [src.id, src.kind, src.author, src.title, src.year]),
+      'sources',
+      where,
+    )
+  }
+}
+
+/* --------------------------------------------------- graph overlay -- */
+
+// A node the Spanish overlay forgot renders in English with no warning, which
+// is exactly the kind of half-translation a reader notices and a build does not.
+const overlayNodeIds = new Set(Object.keys(overlay.NODE_ES))
+for (const node of NODES) {
+  check(overlayNodeIds.has(node.id), `node "${node.id}" has no Spanish label`)
+  overlayNodeIds.delete(node.id)
+}
+for (const extra of overlayNodeIds) {
+  check(false, `Spanish overlay names node "${extra}", which is not on the map`)
+}
+
+const overlayEdgeKeys = new Set(Object.keys(overlay.EDGE_NOTE_ES))
+for (const edge of EDGES) {
+  const key = `${edge.from}>${edge.to}`
+  check(overlayEdgeKeys.has(key), `edge "${key}" has no Spanish note`)
+  overlayEdgeKeys.delete(key)
+}
+for (const extra of overlayEdgeKeys) {
+  check(false, `Spanish overlay notes edge "${extra}", which does not exist`)
 }
 
 /* -------------------------------------------------------- node/story -- */
@@ -286,7 +482,8 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `content ok — ${STORIES.length} stories, ${NODES.length} nodes, ${EDGES.length} edges, ` +
-    `${STORIES.reduce((n, s) => n + s.sources.length, 0)} citations` +
+  `content ok — ${ALL_STORIES.en.length} stories × ${LANGS.length} languages, ` +
+    `${NODES.length} nodes, ${EDGES.length} edges, ` +
+    `${ALL_STORIES.en.reduce((n, s) => n + s.sources.length, 0)} citations` +
     (warnings.length ? `, ${warnings.length} warning(s)` : ''),
 )

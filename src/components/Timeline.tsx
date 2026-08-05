@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { motion } from 'motion/react'
 import type { TimelineEvent } from '@/content/types'
 import { formatYear, cn } from '@/lib/utils'
+import { useLang } from '@/lib/i18n'
 import { Badge } from '@/components/ui/badge'
 
 /**
@@ -25,6 +26,7 @@ const RAIL_Y = 62
 const LANE_HEIGHT = 13
 
 export function Timeline({ events }: { events: TimelineEvent[] }) {
+  const { lang, t } = useLang()
   const [selected, setSelected] = useState<number | null>(null)
 
   const { placed, first, last } = useMemo(() => {
@@ -58,7 +60,7 @@ export function Timeline({ events }: { events: TimelineEvent[] }) {
         className="relative mb-4"
         style={{ height: RAIL_Y + 28 }}
         role="group"
-        aria-label="Timeline of events"
+        aria-label={t.timelineLabel}
       >
         <div className="bg-rule absolute right-0 left-0 h-px" style={{ top: RAIL_Y }} />
 
@@ -69,7 +71,7 @@ export function Timeline({ events }: { events: TimelineEvent[] }) {
             <button
               key={`${event.year}-${event.title}`}
               onClick={() => setSelected(isActive ? null : index)}
-              aria-label={`${formatYear(event.year)}: ${event.title}`}
+              aria-label={`${formatYear(event.year, lang)}: ${event.title}`}
               aria-pressed={isActive}
               className="group absolute w-5 -translate-x-1/2"
               style={{ left: `${x}%`, top: top - 9, height: 18, zIndex: 10 + lane }}
@@ -101,20 +103,20 @@ export function Timeline({ events }: { events: TimelineEvent[] }) {
           className="text-ink-soft absolute left-0 font-mono text-[0.6875rem]"
           style={{ top: RAIL_Y + 8 }}
         >
-          {formatYear(first)}
+          {formatYear(first, lang)}
         </span>
         <span
           className="text-ink-soft absolute right-0 font-mono text-[0.6875rem]"
           style={{ top: RAIL_Y + 8 }}
         >
-          {formatYear(last)}
+          {formatYear(last, lang)}
         </span>
         {lanes > 1 && (
           <span
             className="text-ink-soft absolute left-1/2 -translate-x-1/2 text-[0.6875rem]"
             style={{ top: RAIL_Y + 8 }}
           >
-            positioned by date · crowded years stack
+            {t.timelineHint}
           </span>
         )}
       </div>
@@ -128,9 +130,9 @@ export function Timeline({ events }: { events: TimelineEvent[] }) {
           className="border-rule bg-paper-raised mb-5 rounded-[var(--radius)] border p-4"
         >
           <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
-            <span className="text-ember font-mono text-sm font-semibold">{formatYear(active.year)}</span>
+            <span className="text-ember font-mono text-sm font-semibold">{formatYear(active.year, lang)}</span>
             <span className="text-ink font-display text-[0.95rem] font-semibold">{active.title}</span>
-            {active.confidence === 'contested' && <Badge variant="contested">contested</Badge>}
+            {active.confidence === 'contested' && <Badge variant="contested">{t.contested}</Badge>}
           </div>
           <p className="text-ink-soft mt-1.5 text-sm leading-relaxed">{active.detail}</p>
         </motion.div>
@@ -153,7 +155,7 @@ export function Timeline({ events }: { events: TimelineEvent[] }) {
               aria-expanded={selected === index}
             >
               <span className="text-ink-soft mr-2.5 font-mono text-[0.8125rem]">
-                {formatYear(event.year)}
+                {formatYear(event.year, lang)}
               </span>
               <span
                 className={cn(
