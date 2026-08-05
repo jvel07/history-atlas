@@ -286,6 +286,70 @@ export const NODE_ES: Record<string, { label: string; blurb: string }> = {
     label: 'La crisis financiera de 2008',
     blurb: 'El desplome que hizo que los inversores asustados pidieran su dinero — y descubrieran que no había.',
   },
+
+  /* ------------------------------------------- la batalla perfecta ---- */
+  'battle-of-cannae': {
+    label: 'La batalla de Cannas',
+    blurb: 'Una tarde de agosto del 216 a. C., y todavía el día más mortífero que ha tenido nunca un ejército europeo.',
+  },
+  hannibal: {
+    label: 'Aníbal Barca',
+    blurb: 'Venció a Roma en el campo durante quince años sin poder vencer nunca a Roma.',
+  },
+  carthage: {
+    label: 'Cartago',
+    blurb: 'Una ciudad comercial de la costa norteafricana que era dueña del Mediterráneo occidental, hasta que dejó de existir.',
+  },
+  'roman-republic': {
+    label: 'La República romana',
+    blurb: 'Un Estado cuya arma de verdad no era su ejército, sino su negativa a aceptar que había perdido uno.',
+  },
+  'second-punic-war': {
+    label: 'La Segunda Guerra Púnica',
+    blurb: 'Diecisiete años que decidieron qué ciudad mandaría en el Mediterráneo durante los seiscientos siguientes.',
+  },
+  polybius: {
+    label: 'Polibio',
+    blurb: 'Un rehén griego en Roma que escribió la guerra como un problema de causas y efectos, no como una lista de héroes.',
+  },
+  'double-envelopment': {
+    label: 'El doble envolvimiento',
+    blurb: 'Deja que el enemigo entre solo en la bolsa, y ciérrala. Todas las academias militares del mundo siguen estudiando esa tarde.',
+  },
+  'fabian-strategy': {
+    label: 'La estrategia fabiana',
+    blurb: 'Rechaza la batalla que perderías y sigue existiendo hasta que el otro no pueda. Lleva el nombre del hombre del que Roma se burló por hacerlo.',
+  },
+  'scipio-africanus': {
+    label: 'Escipión el Africano',
+    blurb: 'Un oficial joven que sobrevivió a la matanza, pasó catorce años aprendiendo de ella y se la aplicó a su inventor.',
+  },
+  'battle-of-zama': {
+    label: 'La batalla de Zama',
+    blurb: 'En el 202 a. C. Aníbal perdió por fin una batalla, en África, contra un hombre que de muchacho había estado en Cannas.',
+  },
+
+  /* ------------------------------------------- caen las murallas ---- */
+  'byzantine-empire': {
+    label: 'El Imperio bizantino',
+    blurb: 'La mitad del Imperio romano que no cayó en el 476, y que siguió llamándose romana otros mil años.',
+  },
+  constantinople: {
+    label: 'Constantinopla',
+    blurb: 'Durante mil años la ciudad más grande, rica y mejor defendida de la cristiandad; en 1453, sobre todo huertos.',
+  },
+  'theodosian-walls': {
+    label: 'Las murallas teodosianas',
+    blurb: 'Una triple línea de piedra terminada en el 413 que rechazó a todos los ejércitos que fueron a por ella durante mil años.',
+  },
+  'siege-cannon': {
+    label: 'El cañón de asedio',
+    blurb: 'Artillería de pólvora lo bastante grande como para que la altura y el grosor dejaran de contar — y los castillos de piedra, de servir.',
+  },
+  'constantine-xi': {
+    label: 'Constantino XI Paleólogo',
+    blurb: 'El último emperador romano, al frente de una ciudad que no podía llenar y de unas murallas que no podía guarnecer.',
+  },
 }
 
 export const EDGE_NOTE_ES: Record<string, string> = {
@@ -455,4 +519,56 @@ export const EDGE_NOTE_ES: Record<string, string> = {
     'Cuando los inversores asustados pidieron de vuelta unos siete mil millones de dólares, detrás de los extractos no había nada que mandar.',
   'public-relations>madoff-fraud':
     'No fue cosa de Bernays — pero era la misma moneda. A Madoff lo creyeron por quién era, no porque nadie comprobara los rendimientos.',
+
+  /* ------------------------------------------- la batalla perfecta ---- */
+  'carthage>hannibal':
+    'Su familia explotaba las minas de plata del sur de Hispania, y el ejército que cruzó los Alpes salió pagado de allí.',
+  'hannibal>second-punic-war':
+    'La empezó él, tomando una ciudad hispana que Roma había declarado bajo su protección, y lo hizo a propósito.',
+  'second-punic-war>battle-of-cannae':
+    'Dos derrotas en dos años ya habían dejado a Roma lo bastante desesperada como para intentar lo único que Aníbal quería.',
+  'hannibal>battle-of-cannae':
+    'Eligió el terreno, la forma de su propia línea y el momento en que debía ceder.',
+  'roman-republic>battle-of-cannae':
+    'Ocho legiones, el mayor ejército que la República había puesto nunca en un solo campo, y la razón de que murieran tantos.',
+  'hannibal>roman-republic':
+    'Quince años dentro de Italia, sin perder allí una sola batalla campal, y sin poder tomar nunca la ciudad.',
+  'battle-of-cannae>double-envelopment':
+    'Schlieffen se pasó la carrera intentando repetirlo, y los ejércitos todavía llaman así a un cerco perfecto.',
+  'battle-of-cannae>fabian-strategy':
+    'Roma se había burlado del que retrasaba, dio la batalla a su manera y después volvió con él para siempre.',
+  'polybius>battle-of-cannae':
+    'Recorrió el terreno, preguntó a supervivientes de los dos bandos y escribió el relato con el que discute todo lo demás.',
+  'hellenistic-science>polybius':
+    'La costumbre griega de preguntar por qué pasó algo, en vez de enumerar a quién le pasó, es lo que él llevó a la historia romana.',
+  'battle-of-cannae>scipio-africanus':
+    'Era un oficial joven metido en la trampa y salió de ella. Catorce años después le cerró la misma trampa a Aníbal.',
+  'scipio-africanus>battle-of-zama':
+    'La única batalla que perdió Aníbal, ganada por un hombre que usó contra él su propio método.',
+  'battle-of-zama>carthage':
+    'Terminó la guerra: sin flota, sin ejército fuera de África y con una indemnización pagadera durante cincuenta años.',
+  'roman-republic>carthage':
+    'En el 146 a. C. la ciudad fue tomada, su gente vendida y el sitio dejado vacío. Eso no se llama derrota.',
+  'roman-republic>byzantine-empire':
+    'La mitad oriental sobrevivió mil años a la occidental y no dejó nunca de llamarse romana.',
+
+  /* ------------------------------------------- caen las murallas ---- */
+  'byzantine-empire>constantinople':
+    'El imperio y la ciudad se habían encogido el uno dentro del otro: hacia 1450 uno era casi todo lo que quedaba del otro.',
+  'theodosian-walls>constantinople':
+    'Ávaros, árabes, búlgaros, rus y otomanos vinieron todos y se volvieron todos. Eso es aguantar mil años.',
+  'constantine-xi>byzantine-empire':
+    'El último emperador romano, coronado sobre una ciudad de huertos y ruinas con quizá cincuenta mil habitantes.',
+  'constantine-xi>fall-of-constantinople':
+    'Rechazó las condiciones que le habrían dejado salir vivo y murió en algún punto de la brecha con los suyos.',
+  'mehmed-ii>siege-cannon':
+    'Un fundidor húngaro llamado Orbán ofreció los cañones primero al emperador. El emperador no podía pagarlos; el sultán sí.',
+  'siege-cannon>theodosian-walls':
+    'No por ingenio. Porque hizo que el grosor y la altura dejaran de ser lo que decidía un asedio.',
+  'siege-cannon>fall-of-constantinople':
+    'Cincuenta y tres días de bombardeo hicieron lo que no habían logrado mil años de escalas, arietes y hambre.',
+  'byzantine-empire>hellenistic-science':
+    'Casi todo texto griego que hoy se lee sobrevive porque los escribas bizantinos siguieron copiándolo mil años.',
+  'fall-of-constantinople>printing-press':
+    'Los manuscritos griegos se fueron al oeste con sus dueños, y en cuarenta años las imprentas de Venecia los vendían.',
 }
