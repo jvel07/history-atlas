@@ -39,7 +39,7 @@ for (const [entry, outfile] of [
 
 const content = await import(pathToFileURL(outFile).href)
 const overlay = await import(pathToFileURL(overlayFile).href)
-const { ALL_STORIES, NODES, EDGES, corpusFor, MOODS } = content
+const { ALL_STORIES, NODES, EDGES, corpusFor, MOODS, CATEGORY_ORDER } = content
 const LANGS = ['en', 'es']
 
 /**
@@ -98,6 +98,24 @@ check(edgeKeys.size === EDGES.length, 'duplicate edges in the graph')
 
 const slugs = new Set(ALL_STORIES.en.map((s) => s.slug))
 check(slugs.size === ALL_STORIES.en.length, 'duplicate story slugs')
+
+/* -------------------------------------------------------- categories -- */
+
+const byCategory = new Map(CATEGORY_ORDER.map((id) => [id, 0]))
+for (const story of ALL_STORIES.en) {
+  check(
+    byCategory.has(story.category),
+    `story "${story.slug}": unknown category "${story.category}"`,
+  )
+  byCategory.set(story.category, (byCategory.get(story.category) ?? 0) + 1)
+}
+for (const [id, count] of byCategory) {
+  // TODO: raise to `>= 1` once battles, ancient worlds and ages & eras have
+  // stories. A chip with nothing behind it is a promise the atlas has not kept,
+  // and `/stories` hides empty categories rather than render a dead end — which
+  // means a shelf going empty is invisible on the page unless it fails here.
+  check(count >= 0, `category "${id}" has no stories; it would not render at all`)
+}
 
 for (const lang of LANGS) {
  const limits = REEL_LIMITS[lang]
@@ -339,7 +357,7 @@ for (const lang of LANGS.filter((l) => l !== 'en')) {
     }
 
     // Identity and placement: these are data about the story, not the story.
-    for (const field of ['era', 'mood', 'reviewed', 'readingMinutes']) {
+    for (const field of ['era', 'category', 'mood', 'reviewed', 'readingMinutes']) {
       sameList(en[field], story[field], field, where)
     }
     sameList(en.years, story.years, 'years', where)

@@ -32,6 +32,48 @@ export const ERA_LABEL: Record<Era, string> = {
   contemporary: 'Contemporary',
 }
 
+/**
+ * The shelf a story sits on, for browsing.
+ *
+ * This is a *doorway*, not a classification. A reader who arrives wanting
+ * battles should find battles; nobody arrives wanting "industrial, 1839–1860".
+ * It is deliberately one axis and deliberately coarse — the era says when, the
+ * tags say what about, the graph says what it connects to, and the category
+ * says only which chip on `/stories` leads here. One story, one category: a
+ * story filed under three of them is a story with no shelf at all.
+ */
+export type Category =
+  | 'battles'
+  | 'milestones'
+  | 'ancient'
+  | 'discoveries'
+  | 'eras'
+  | 'icons'
+
+/** The order the chips are shown in. Content, not alphabetical. */
+export const CATEGORY_ORDER: readonly Category[] = [
+  'battles',
+  'milestones',
+  'ancient',
+  'discoveries',
+  'eras',
+  'icons',
+]
+
+/**
+ * One emoji per category. Deliberately not an icon set: these render at chip
+ * size next to the label, and a shield reads as a shield everywhere without
+ * shipping a font or a sprite.
+ */
+export const CATEGORY_EMOJI: Record<Category, string> = {
+  battles: '🛡️',
+  milestones: '🧭',
+  ancient: '🏺',
+  discoveries: '💡',
+  eras: '🕰️',
+  icons: '🎩',
+}
+
 /** How sure are we? Drives the badge, and whether the claim may be narrated flatly. */
 export type Confidence = 'established' | 'contested' | 'speculation'
 
@@ -250,6 +292,8 @@ export interface Story {
    */
   hook: string
   era: Era
+  /** Which chip on `/stories` leads here. Exactly one. */
+  category: Category
   /** Signed years; negative is BCE. */
   years: readonly [number, number]
   regions: string[]

@@ -6,6 +6,7 @@ export const opiumWars: Story = {
   subtitle: 'The Opium Wars — how an empire’s taste for tea ended in a war it refused to name.',
   hook: 'An empire could not win an argument about tea, so it started a war over opium and called it free trade.',
   era: 'industrial',
+  category: 'milestones',
   years: [1839, 1860],
   regions: ['China', 'Britain', 'India'],
   nodes: ['opium-wars', 'opium-trade', 'tea-trade', 'east-india-company', 'hong-kong'],

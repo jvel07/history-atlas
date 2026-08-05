@@ -6,6 +6,7 @@ export const unitedFruit: Story = {
   subtitle: 'El Pulpo — how a fruit company, a PR man and the CIA ended ten years of democracy.',
   hook: 'A country offered to buy back its own idle land at the owner’s own price — and that was enough to end its democracy for forty years.',
   era: 'contemporary',
+  category: 'milestones',
   years: [1899, 1996],
   regions: ['Guatemala', 'United States'],
   nodes: ['guatemala-coup', 'united-fruit', 'guatemala', 'decree-900', 'public-relations'],

@@ -6,6 +6,7 @@ export const alKhwarizmi: Story = {
   subtitle: 'Al-Khwārizmī — the scholar whose name became the word every computer on earth runs on.',
   hook: 'Every machine on earth runs on a single word, and the word is the misspelled name of a man dead twelve hundred years.',
   era: 'medieval',
+  category: 'discoveries',
   years: [780, 850],
   regions: ['Iraq', 'Central Asia', 'Spain'],
   nodes: ['al-khwarizmi', 'algebra', 'algorithm', 'house-of-wisdom', 'baghdad'],

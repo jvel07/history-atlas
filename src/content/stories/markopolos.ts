@@ -6,6 +6,7 @@ export const markopolos: Story = {
   subtitle: 'Harry Markopolos — he proved the biggest fraud in history in an afternoon, and was ignored for nine years.',
   hook: 'The largest fraud in history was never hidden — one man proved it in an afternoon, and spent nine years being right about it alone.',
   era: 'contemporary',
+  category: 'icons',
   years: [1999, 2009],
   regions: ['United States'],
   nodes: ['harry-markopolos', 'madoff-fraud', 'bernie-madoff', 'sec', 'ponzi-scheme'],

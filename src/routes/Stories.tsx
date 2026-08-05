@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from '@tanstack/react-router'
 import { BookmarkIcon, ZapIcon } from 'lucide-react'
 import { reelSeconds } from '@/components/StoryReel'
 import { useCorpus } from '@/content/useCorpus'
-import { ERA_LABELS } from '@/content/labels'
+import { CATEGORY_LABELS, ERA_LABELS } from '@/content/labels'
+import { CATEGORY_EMOJI, CATEGORY_ORDER, type Category } from '@/content/types'
 import { Badge } from '@/components/ui/badge'
 import { useLang } from '@/lib/i18n'
 import { formatSpan } from '@/lib/utils'
@@ -12,6 +13,7 @@ export function Stories() {
   const { lang, t } = useLang()
   const { stories, unwrittenNodes } = useCorpus()
   const [saved, setSaved] = useState<string[]>([])
+  const [category, setCategory] = useState<Category | null>(null)
 
   useEffect(() => {
     try {
@@ -22,6 +24,22 @@ export function Stories() {
     }
   }, [])
 
+  /**
+   * Only categories that actually have something behind them get a chip. An
+   * empty shelf is a promise the atlas has not kept, and a reader who taps one
+   * and lands on nothing stops tapping.
+   */
+  const shelves = useMemo(() => {
+    const counts = new Map<Category, number>()
+    for (const story of stories) counts.set(story.category, (counts.get(story.category) ?? 0) + 1)
+    return CATEGORY_ORDER.filter((id) => counts.has(id)).map((id) => ({
+      id,
+      count: counts.get(id) ?? 0,
+    }))
+  }, [stories])
+
+  const shown = category ? stories.filter((story) => story.category === category) : stories
+
   const unwritten = unwrittenNodes()
 
   return (
@@ -31,8 +49,49 @@ export function Stories() {
       </h1>
       <p className="text-ink-soft mt-3 leading-relaxed">{t.storiesStandfirst}</p>
 
-      <ul className="mt-8 space-y-4">
-        {stories.map((story) => (
+      <nav aria-label={t.browseBy} className="mt-7">
+        <h2 className="text-ink-soft text-xs tracking-wide uppercase">{t.browseBy}</h2>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => setCategory(null)}
+            aria-pressed={category === null}
+            className={`rounded-full border px-3.5 py-2 text-[0.875rem] transition-colors ${
+              category === null
+                ? 'border-ember bg-ember/10 text-ink font-medium'
+                : 'border-rule text-ink-soft hover:text-ink hover:border-ember/40'
+            }`}
+          >
+            {t.categoryAll}
+          </button>
+          {shelves.map((shelf) => (
+            <button
+              key={shelf.id}
+              type="button"
+              onClick={() => setCategory(shelf.id === category ? null : shelf.id)}
+              aria-pressed={shelf.id === category}
+              className={`rounded-full border px-3.5 py-2 text-[0.875rem] transition-colors ${
+                shelf.id === category
+                  ? 'border-ember bg-ember/10 text-ink font-medium'
+                  : 'border-rule text-ink-soft hover:text-ink hover:border-ember/40'
+              }`}
+            >
+              <span aria-hidden="true" className="mr-1.5">
+                {CATEGORY_EMOJI[shelf.id]}
+              </span>
+              {CATEGORY_LABELS[lang][shelf.id]}
+              <span className="text-ink-soft ml-1.5 text-[0.75rem]">{shelf.count}</span>
+            </button>
+          ))}
+        </div>
+      </nav>
+
+      <p className="text-ink-soft mt-6 text-[0.8125rem]" aria-live="polite">
+        {t.categoryCount(shown.length)}
+      </p>
+
+      <ul className="mt-4 space-y-4">
+        {shown.map((story) => (
           <li key={story.slug}>
             <Link
               to="/story/$slug"
@@ -42,6 +101,10 @@ export function Stories() {
               <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="ember">
                   <ZapIcon /> {t.seconds(reelSeconds(story))}
+                </Badge>
+                <Badge variant="outline">
+                  <span aria-hidden="true">{CATEGORY_EMOJI[story.category]}</span>{' '}
+                  {CATEGORY_LABELS[lang][story.category]}
                 </Badge>
                 <Badge variant="outline">{ERA_LABELS[lang][story.era]}</Badge>
                 <Badge variant="outline">{formatSpan(story.years, lang)}</Badge>

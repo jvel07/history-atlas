@@ -6,6 +6,7 @@ export const vladTepes: Story = {
   subtitle: 'Vlad Țepeș — Dracula was real, and fear was the weapon on both sides.',
   hook: 'Dracula was a real prince with no army, and fear was the only weapon he could afford — until his enemies turned it into a monster.',
   era: 'medieval',
+  category: 'icons',
   years: [1431, 1476],
   regions: ['Wallachia', 'Ottoman Empire', 'Hungary'],
   nodes: ['vlad-tepes', 'wallachia', 'ottoman-empire', 'dracula-pamphlets', 'dracula-novel'],

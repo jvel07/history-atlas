@@ -6,6 +6,7 @@ export const markopolosEs: Story = {
   subtitle: 'Harry Markopolos — demostró el mayor fraude de la historia en una tarde, y lo ignoraron nueve años.',
   hook: 'El mayor fraude de la historia nunca estuvo escondido: un analista lo demostró en una tarde de 1999, y nadie le hizo caso durante nueve años.',
   era: 'contemporary',
+  category: 'icons',
   years: [1999, 2009],
   regions: ['Estados Unidos'],
   nodes: ['harry-markopolos', 'madoff-fraud', 'bernie-madoff', 'sec', 'ponzi-scheme'],

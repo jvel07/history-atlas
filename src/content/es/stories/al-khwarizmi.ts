@@ -6,6 +6,7 @@ export const alKhwarizmiEs: Story = {
   subtitle: 'Al-Juarismi — el sabio cuyo nombre mal copiado hace funcionar todas las máquinas.',
   hook: 'Cada máquina de la tierra funciona con algoritmos, y la palabra es el nombre de un hombre que murió hace mil doscientos años.',
   era: 'medieval',
+  category: 'discoveries',
   years: [780, 850],
   regions: ['Bagdad', 'Asia Central', 'al-Ándalus'],
   nodes: ['al-khwarizmi', 'algebra', 'algorithm', 'house-of-wisdom', 'baghdad'],

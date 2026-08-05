@@ -6,6 +6,7 @@ export const unitedFruitEs: Story = {
   subtitle: 'El Pulpo — cómo una frutera, un publicista y la CIA acabaron con diez años de democracia.',
   hook: 'Guatemala se ofreció a comprar unas tierras al precio que su dueño había jurado que valían, y ese fue el crimen que le costó la democracia.',
   era: 'contemporary',
+  category: 'milestones',
   years: [1899, 1996],
   regions: ['Guatemala', 'Estados Unidos', 'Centroamérica'],
   nodes: ['guatemala-coup', 'united-fruit', 'guatemala', 'decree-900', 'public-relations'],

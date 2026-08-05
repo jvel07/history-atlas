@@ -6,6 +6,7 @@ export const opiumWarsEs: Story = {
   subtitle: 'Las Guerras del Opio — cómo el gusto por el té acabó en cañoneros.',
   hook: 'Gran Bretaña fue a la guerra contra China porque no podía dejar de beber té, y encontró una sola cosa que China le compraría a cambio: opio.',
   era: 'industrial',
+  category: 'milestones',
   years: [1839, 1860],
   regions: ['China', 'Gran Bretaña', 'India'],
   nodes: ['opium-wars', 'opium-trade', 'tea-trade', 'east-india-company', 'hong-kong'],

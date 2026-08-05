@@ -137,6 +137,9 @@ const EN = {
 
   storiesTitle: 'Stories',
   storiesStandfirst: 'About a minute each. The long version is one tap away if you want it.',
+  browseBy: 'What are you in the mood for?',
+  categoryAll: 'Everything',
+  categoryCount: (n: number) => `${n} stories`,
   saved: 'Saved',
   cardsCount: (n: number) => `${n} cards`,
   sourcesCount: (n: number) => `${n} sources`,
@@ -363,6 +366,9 @@ const ES: Strings = {
 
   storiesTitle: 'Historias',
   storiesStandfirst: 'Un minuto cada una. La versión larga está a un toque, si la quieres.',
+  browseBy: '¿Qué te apetece hoy?',
+  categoryAll: 'Todo',
+  categoryCount: (n: number) => `${n} historias`,
   saved: 'Guardada',
   cardsCount: (n: number) => `${n} tarjetas`,
   sourcesCount: (n: number) => `${n} fuentes`,

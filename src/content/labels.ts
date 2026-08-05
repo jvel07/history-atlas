@@ -1,5 +1,5 @@
 import type { Lang } from '@/lib/i18n'
-import type { Era, EdgeRelation, NodeKind, ReelBeat, SourceKind } from './types'
+import type { Category, Era, EdgeRelation, NodeKind, ReelBeat, SourceKind } from './types'
 
 /**
  * The vocabulary of the content model, in both languages.
@@ -30,6 +30,29 @@ export const ERA_LABELS: Record<Lang, Record<Era, string>> = {
     industrial: 'Era industrial',
     modern: 'Época contemporánea',
     contemporary: 'Actualidad',
+  },
+}
+
+/**
+ * The browse chips. The emoji lives in `types.ts` with the category itself,
+ * because a shield is not language; only these words are.
+ */
+export const CATEGORY_LABELS: Record<Lang, Record<Category, string>> = {
+  en: {
+    battles: 'Epic battles',
+    milestones: 'Key milestones',
+    ancient: 'Ancient worlds',
+    discoveries: 'Great discoveries',
+    eras: 'Ages & eras',
+    icons: 'Historic icons',
+  },
+  es: {
+    battles: 'Batallas épicas',
+    milestones: 'Hitos decisivos',
+    ancient: 'Mundos antiguos',
+    discoveries: 'Grandes descubrimientos',
+    eras: 'Edades y épocas',
+    icons: 'Iconos de la historia',
   },
 }
 

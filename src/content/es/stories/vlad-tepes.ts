@@ -6,6 +6,7 @@ export const vladTepesEs: Story = {
   subtitle: 'Vlad Țepeș — Drácula existió, y el miedo fue el arma de los dos bandos.',
   hook: 'Drácula fue un príncipe real sin ejército, y el miedo era la única arma que podía permitirse — hasta que sus enemigos lo convirtieron en un monstruo.',
   era: 'medieval',
+  category: 'icons',
   years: [1431, 1476],
   regions: ['Valaquia', 'Imperio otomano', 'Hungría'],
   nodes: ['vlad-tepes', 'wallachia', 'ottoman-empire', 'dracula-pamphlets', 'dracula-novel'],
